@@ -25,10 +25,8 @@ class Morsedecoder(commands.Cog):
         #    os.mkdir(tmppath)
         fname = cog_data_path(self) / f"{tstamp}.wav"
         #fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
-        _fp = io.BytesIO()
-        await msg.attachments[0].save(_fp)
-        with open(fname, 'a', errors='backslashreplace') as f:
-            f.write(_fp)
+        with open(fname, 'wb', errors='backslashreplace') as f:
+            f.write(datan)
         
         the_file = SoundFile(fname)
         the_filter = SignalFilter()
