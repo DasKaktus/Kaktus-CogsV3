@@ -11,4 +11,4 @@ class Morsedecoder(commands.Cog):
         msg = copy(ctx.message)
         files: List[discord.File] = await Tunnel.files_from_attach(msg)
         for f in files:
-            await ctx.send(f)
+            await ctx.send(f.filename)
