@@ -7,6 +7,7 @@ from numpy import *
 from copy import copy
 from redbot.core import commands
 from .kaktusutils import Kaktusutils
+from redbot.core.data_manager import bundled_data_path
 
 class Morsedecoder(commands.Cog):
     """Morse Decoder cog"""
@@ -19,9 +20,9 @@ class Morsedecoder(commands.Cog):
         tstamp = int(time.time())
         #if not os.path.exists('data/morsedecoder'):
         #    os.mkdir('data/morsedecoder')
-        if not os.path.exists('data/tmp'):
-            os.mkdir('data/tmp')
-        fname = 'data/tmp/{}.log'.format(tstamp)
+        if not os.path.exists({bundled_data_path(self)} + '/tmp'):
+            os.mkdir({bundled_data_path(self)} + '/tmp')
+        fname = {bundled_data_path(self)} + '/tmp/{}.log'.format(tstamp)
         with open(fname, 'a', errors='backslashreplace') as f:
             f.write(datan)
         
