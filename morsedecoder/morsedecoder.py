@@ -23,7 +23,7 @@ class Morsedecoder(commands.Cog):
         #tmppath = f"{bundled_data_path(self)}/tmp"
         #if not os.path.exists(tmppath):
         #    os.mkdir(tmppath)
-        fname = cog_data_path(self) / f"{tstamp}.wav".lower()
+        fname = cog_data_path(self) / f"{tstamp}.wav"
         fname = fname.lower()
         #fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
         with open(fname, 'wb') as f:
