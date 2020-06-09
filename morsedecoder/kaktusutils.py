@@ -2,6 +2,7 @@ import asyncio
 
 import discord
 from redbot.core import commands
+import io
 from typing import List, Optional
 
 class Kaktusutils:
