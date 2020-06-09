@@ -9,6 +9,8 @@ from redbot.core import commands
 from .kaktusutils import Kaktusutils
 from redbot.core.data_manager import cog_data_path
 
+plotter = DummyPlotter()
+
 class Morsedecoder(commands.Cog):
     """Morse Decoder cog"""
 
@@ -81,6 +83,16 @@ class SoundFile:
 
 	def saveplot(self, fileName):
 		plotter.saveplot(fileName,self.data,length=self.length)
+
+class DummyPlotter:
+
+	def saveplot(self, name, data, length=-1, height=-1, dpi=None):
+		return None
+
+	def specgram(self, name, signal):
+		spectrogram = specgram(signal)
+		cla()
+		return spectrogram
 
 class Plotter:
 	
