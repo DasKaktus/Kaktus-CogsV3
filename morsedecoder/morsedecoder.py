@@ -15,6 +15,7 @@ class Morsedecoder(commands.Cog):
     async def decode(self, ctx):
         """Tries to decode morse from attached audio or video"""
         msg = copy(ctx.message)
+        serverid = message.server.id
         datan = await msg.attachments[0].read()
         tstamp = int(time.time())
         if not os.path.exists('data/morsedecoder/tmp/{}'.format(serverid)):
