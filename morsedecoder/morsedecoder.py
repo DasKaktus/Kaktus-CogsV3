@@ -9,9 +9,11 @@ class Morsedecoder(commands.Cog):
     async def decode(self, ctx):
         """Tries to decode morse from attached audio or video"""
         msg = copy(ctx.message)
-        files: List[discord.File] = await Kaktusutils.files_from_attach(msg)
-        for f in files:
-            await ctx.send(f.url)
+        data = await msg.attachments[0].read()
+        await ctx.send(data)
+        #files: List[discord.File] = await Kaktusutils.files_from_attach(msg)
+        #for f in files:
+        #    await ctx.send(f.url)
         #max_size = 8 * 1000 * 1000
         #if msg.attachments and sum(a.size for a in m.attachments) <= max_size:
         #    for a in m.attachments:
