@@ -7,7 +7,7 @@ from numpy import *
 from copy import copy
 from redbot.core import commands
 from .kaktusutils import Kaktusutils
-from redbot.core.data_manager import bundled_data_path
+from redbot.core.data_manager import cog_data_path
 
 class Morsedecoder(commands.Cog):
     """Morse Decoder cog"""
@@ -23,7 +23,8 @@ class Morsedecoder(commands.Cog):
         #tmppath = f"{bundled_data_path(self)}/tmp"
         #if not os.path.exists(tmppath):
         #    os.mkdir(tmppath)
-        fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
+        fname = cog_data_path(self) / f"{tstamp}.wav"
+        #fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
         with open(fname, 'a', errors='backslashreplace') as f:
             f.write(datan)
         
