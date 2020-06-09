@@ -1,5 +1,6 @@
 from copy import copy
 from redbot.core import commands
+from redbot.core.utils.tunnel import Tunnel
 
 class Morsedecoder(commands.Cog):
     """Morse Decoder cog"""
