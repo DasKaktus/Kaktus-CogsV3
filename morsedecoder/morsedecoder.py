@@ -238,7 +238,9 @@ class SignalFilter:
 		#print trans_real[frec]
 		#print frec
 		min = (frec - band / 2) if (frec > band / 2) else 0
-		filter_array = append(zeros(min), ones(band))
+        zmin = zeros(min)
+        oband = ones(band)
+		filter_array = append(zmin, oband)
 		filter_array = append(filter_array, zeros(len(trans_real) - len(filter_array)))
 		filtered_array = multiply(trans, filter_array)
 		plotter.saveplot("filtered_trans",abs(filtered_array))
