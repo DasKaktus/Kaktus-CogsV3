@@ -34,6 +34,7 @@ class Morsedecoder(commands.Cog):
         await ctx.send(wav_path)
         
         the_file = SoundFile(wav_path)
+        the_file.saveplot("original")
         the_filter = SignalFilter()
         the_filter.filter(the_file)
         analyzer = SpectreAnalyzer()
