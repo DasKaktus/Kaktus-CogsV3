@@ -8,5 +8,5 @@ class Morsedecoder(commands.Cog):
         """Tries to decode morse from attached audio or video"""
         msg = copy(ctx.message)
         files: List[discord.File] = await Tunnel.files_from_attach(msg)
-        for f in files
+        for f in files:
             await ctx.send(f)
