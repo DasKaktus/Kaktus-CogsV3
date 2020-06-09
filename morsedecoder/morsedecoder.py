@@ -28,6 +28,8 @@ class Morsedecoder(commands.Cog):
         with open(fname, 'wb') as f:
             f.write(datan)
         
+        await ctx.send(fname)
+        
         the_file = SoundFile(fname)
         the_filter = SignalFilter()
         the_filter.filter(the_file)
@@ -233,7 +235,7 @@ class SignalFilter:
 		#print trans_real[frec]
 		#print frec
 		min = (frec - band / 2) if (frec > band / 2) else 0
-		filter_array = append(int(zeros(min)), int(ones(band)))
+		filter_array = append(zeros(min), ones(band))
 		filter_array = append(filter_array, zeros(len(trans_real) - len(filter_array)))
 		filtered_array = multiply(trans, filter_array)
 		plotter.saveplot("filtered_trans",abs(filtered_array))
