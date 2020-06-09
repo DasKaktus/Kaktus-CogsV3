@@ -9,8 +9,6 @@ from redbot.core import commands
 from .kaktusutils import Kaktusutils
 from redbot.core.data_manager import cog_data_path
 
-plotter = DummyPlotter()
-
 class Morsedecoder(commands.Cog):
     """Morse Decoder cog"""
 
@@ -243,3 +241,5 @@ class SignalFilter:
 		filtered_signal = array(fft.irfft(filtered_array)[:soundfile.getlength()], dtype="int16")
 		plotter.saveplot("filtered_signal",filtered_signal)
 		soundfile.setdata(filtered_signal)
+        
+plotter = DummyPlotter()
