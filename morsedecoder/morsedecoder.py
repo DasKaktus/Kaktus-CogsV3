@@ -25,7 +25,7 @@ class Morsedecoder(commands.Cog):
         #    os.mkdir(tmppath)
         fname = cog_data_path(self) / f"{tstamp}.wav"
         #fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
-        with open(fname, 'wb', errors='backslashreplace') as f:
+        with open(fname, 'wb') as f:
             f.write(datan)
         
         the_file = SoundFile(fname)
