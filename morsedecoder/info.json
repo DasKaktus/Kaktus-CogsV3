@@ -5,7 +5,7 @@
     "DESCRIPTION" : "Tries to decode morse from atached audio file or video file",
     "INSTALL_MSG" : "Thanks for installing Morse Decoder.",
     "REQUIREMENTS" : [
-		"matplotlib.pyplot"
+		"matplotlib"
 	],
     "TAGS" : ["morse", "decoder", "bfee", "battlefield"],
     "DISABLED" : false
