@@ -3,6 +3,7 @@ import time
 import os
 import pathlib
 from numpy.fft import fft
+from matplotlib.pyplot import *
 from numpy import *
 
 from copy import copy
