@@ -20,9 +20,10 @@ class Morsedecoder(commands.Cog):
         tstamp = int(time.time())
         #if not os.path.exists('data/morsedecoder'):
         #    os.mkdir('data/morsedecoder')
-        if not os.path.exists({bundled_data_path(self)} + '/tmp'):
-            os.mkdir({bundled_data_path(self)} + '/tmp')
-        fname = {bundled_data_path(self)} + '/tmp/{}.log'.format(tstamp)
+        tmppath = {bundled_data_path(self)} + '/tmp'
+        if not os.path.exists(tmppath):
+            os.mkdir(tmppath)
+        fname = tmppath + '/{}.log'.format(tstamp)
         with open(fname, 'a', errors='backslashreplace') as f:
             f.write(datan)
         
