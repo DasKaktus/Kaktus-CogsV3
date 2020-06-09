@@ -1,6 +1,6 @@
 from copy import copy
 from redbot.core import commands
-from redbot.core.utils.tunnel import Tunnel
+from .kaktusutils import Kaktusutils
 
 class Morsedecoder(commands.Cog):
     """Morse Decoder cog"""
@@ -9,7 +9,7 @@ class Morsedecoder(commands.Cog):
     async def decode(self, ctx):
         """Tries to decode morse from attached audio or video"""
         msg = copy(ctx.message)
-        files: List[discord.File] = await Tunnel.files_from_attach(msg)
+        files: List[discord.File] = await Kaktusutils.files_from_attach(msg)
         for f in files:
             await ctx.send(f.url)
         #max_size = 8 * 1000 * 1000
