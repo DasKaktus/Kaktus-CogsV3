@@ -1,6 +1,7 @@
 import scipy.io.wavfile as wavfile
 import time
 import os
+import pathlib
 from numpy.fft import fft
 from numpy import *
 
@@ -18,20 +19,21 @@ class Morsedecoder(commands.Cog):
         msg = copy(ctx.message)
         datan = await msg.attachments[0].read()
         tstamp = int(time.time())
-        #if not os.path.exists('data/morsedecoder'):
-        #    os.mkdir('data/morsedecoder')
-        #tmppath = f"{bundled_data_path(self)}/tmp"
-        #if not os.path.exists(tmppath):
-        #    os.mkdir(tmppath)
-        fname = cog_data_path(self).lower() / f"{tstamp}.wav"
-        #fname = str(fname).lower()
-        #fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
-        with open(fname, 'wb') as f:
-            f.write(datan)
+
+        path: pathlib.Path = cog_data_path(self)
+        wav_path = path / (tstamp + ".wav")
+        with wav_path.open("wb") as file:
+            file.write(datan)
+
+        #fname = cog_data_path(self).lower() / f"{tstamp}.wav"
+        ##fname = str(fname).lower()
+        ##fname = f"{bundled_data_path(self)}/{}.log".format(tstamp)
+        #with open(fname, 'wb') as f:
+        #    f.write(datan)
         
-        await ctx.send(fname)
+        await ctx.send(wav_path)
         
-        the_file = SoundFile(fname)
+        the_file = SoundFile(wav_path)
         the_filter = SignalFilter()
         the_filter.filter(the_file)
         analyzer = SpectreAnalyzer()
