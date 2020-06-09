@@ -82,6 +82,26 @@ class SoundFile:
 	def saveplot(self, fileName):
 		plotter.saveplot(fileName,self.data,length=self.length)
 
+class Plotter:
+	
+	def __init__(self, format="pdf"):
+		self.format=format
+
+	def saveplot(self, name, data, length=-1, height=-1, dpi=None):
+		plot(data)
+		if length != -1:
+			axis(xmax=length)
+		if height != -1:
+			axis(ymax=height)
+		savefig(name + "." + self.format, format=self.format, dpi=dpi)
+		cla()
+
+	def specgram(self, name, signal):
+		spectrogram = specgram(signal)
+		savefig(name + "." + self.format, format=self.format)
+		cla()
+		return spectrogram
+
 class PulsesTranslator:
 	def tostring(self, pulses):
 		pa = PulsesAnalyzer()
