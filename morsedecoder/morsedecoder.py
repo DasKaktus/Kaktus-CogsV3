@@ -21,7 +21,7 @@ class Morsedecoder(commands.Cog):
         tstamp = int(time.time())
 
         path: pathlib.Path = cog_data_path(self)
-        wav_path = path / (tstamp + ".wav")
+        wav_path = path / (str(tstamp) + ".wav")
         with wav_path.open("wb") as file:
             file.write(datan)
 
