@@ -1,3 +1,4 @@
+from copy import copy
 from redbot.core import commands
 
 class Morsedecoder(commands.Cog):
