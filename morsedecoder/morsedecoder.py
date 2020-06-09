@@ -1,4 +1,5 @@
 import scipy.io.wavfile as wavfile
+import time
 from numpy.fft import fft
 from numpy import *
 
@@ -13,8 +14,15 @@ class Morsedecoder(commands.Cog):
     async def decode(self, ctx):
         """Tries to decode morse from attached audio or video"""
         msg = copy(ctx.message)
-        data = await msg.attachments[0].read()
-        the_file = SoundFile(data)
+        datan = await msg.attachments[0].read()
+        tstamp = int(time.time())
+        if not os.path.exists('data/morsedecoder/tmp/{}'.format(serverid)):
+            os.mkdir('data/morsedecoder/tmp/{}'.format(serverid))
+        fname = 'data/morsedecoder/tmp/{}/{}.log'.format(serverid, tstamp)
+        with open(fname, 'a', errors='backslashreplace') as f:
+            f.write(datan)
+        
+        the_file = SoundFile(fname)
         the_filter = SignalFilter()
         the_filter.filter(the_file)
         analyzer = SpectreAnalyzer()
