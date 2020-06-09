@@ -23,7 +23,7 @@ class Morsedecoder(commands.Cog):
         tmppath = "{bundled_data_path(self)}/tmp"
         if not os.path.exists(tmppath):
             os.mkdir(tmppath)
-        fname = "{tmppath}/{}.log'.format(tstamp)
+        fname = "{tmppath}/{}.log".format(tstamp)
         with open(fname, 'a', errors='backslashreplace') as f:
             f.write(datan)
         
