@@ -239,7 +239,8 @@ class SignalFilter:
 		#print trans_real[frec]
 		#print frec
 		min = (frec - band / 2) if (frec > band / 2) else 0
-		zmin = zeros(min)
+		tmin = int(min)
+		zmin = zeros(tmin)
 		oband = ones(band)
 		filter_array = append(zmin, oband)
 		filter_array = append(filter_array, zeros(len(trans_real) - len(filter_array)))
