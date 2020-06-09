@@ -11,4 +11,10 @@ class Morsedecoder(commands.Cog):
         msg = copy(ctx.message)
         files: List[discord.File] = await Tunnel.files_from_attach(msg)
         for f in files:
-            await ctx.send(f.filename)
+            await ctx.send(f.url)
+        #max_size = 8 * 1000 * 1000
+        #if msg.attachments and sum(a.size for a in m.attachments) <= max_size:
+        #    for a in m.attachments:
+        #        _fp = io.BytesIO()
+        #        await a.save(_fp)
+        #        files.append(discord.File(_fp, filename=a.filename))
