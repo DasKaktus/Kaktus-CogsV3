@@ -17,6 +17,8 @@ class Morsedecoder(commands.Cog):
         msg = copy(ctx.message)
         datan = await msg.attachments[0].read()
         tstamp = int(time.time())
+        if not os.path.exists('data/morsedecoder'):
+            os.mkdir('data/morsedecoder')
         if not os.path.exists('data/morsedecoder/tmp'):
             os.mkdir('data/morsedecoder/tmp')
         fname = 'data/morsedecoder/tmp/{}.log'.format(tstamp)
