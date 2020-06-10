@@ -138,11 +138,11 @@ class Morsedecoder(commands.Cog):
                 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
                 #Plot
-                //plt.cla()
-                //plt.figure(1)
-                //plt.title('Waveform')
-                //plt.plot(waveform)
-                //plt.show()
+                #plt.cla()
+                #plt.figure(1)
+                #plt.title('Waveform')
+                #plt.plot(waveform)
+                #plt.show()
 
 
         except:
