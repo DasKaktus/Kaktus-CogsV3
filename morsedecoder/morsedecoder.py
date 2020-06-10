@@ -68,7 +68,7 @@ class Morsedecoder(commands.Cog):
                 waveform = np.concatenate((waveform, sub_waveform))
 
             for i in waveform:
-                if i <= 1000:
+                if i <= 15000:
                     spaces_length.append(len(spaces))
                     spaces = []
                 else:
@@ -77,7 +77,7 @@ class Morsedecoder(commands.Cog):
             letter_spacing = int((max(spaces_length) + sum(spaces_length)/len(spaces_length))/3)
             encoded_list = []
             for i in waveform:
-                if i <= 500:
+                if i <= 15000:
                     dot_or_dash.append("Yes")
                     if len(spaces) >= letter_spacing:
                         encoded_list.append("|")
