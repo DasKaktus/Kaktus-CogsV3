@@ -110,7 +110,7 @@ class Morsedecoder(commands.Cog):
             encoded_word = ''.join(encoded_list)
 
             #print(encoded_word)
-            await ctx.send(encoded_word)
+            await ctx.send("```" + encoded_word + "```")
             #-----------------------------------------------
 
             #~~~~~~~~~~~~~~~~~~~~~~~ Decoding
