@@ -77,7 +77,7 @@ class Morsedecoder(commands.Cog):
             letter_spacing = int((max(spaces_length) + sum(spaces_length)/len(spaces_length))/3)
             encoded_list = []
             for i in waveform:
-                if i <= 300:
+                if i <= 500:
                     dot_or_dash.append("Yes")
                     if len(spaces) >= letter_spacing:
                         encoded_list.append("|")
