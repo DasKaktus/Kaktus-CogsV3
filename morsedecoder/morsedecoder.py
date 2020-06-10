@@ -24,6 +24,8 @@ class Morsedecoder(commands.Cog):
     async def decode(self, ctx):
         """Tries to decode morse from attached audio or video"""
         msg = copy(ctx.message)
+        _fp = io.BytesIO()
+        await msg.attachments[0].save(_fp)
         datan = await msg.attachments[0].read()
         tstamp = int(time.time())
         path: pathlib.Path = cog_data_path(self)
