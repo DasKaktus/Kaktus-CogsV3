@@ -1,6 +1,6 @@
 {
     "name" : "Morse Decoder",
-    "author" : "OGKaktus",
+    "author" : ["OGKaktus"],
     "short" : "Decodes morse from audio or video",
     "description" : "Tries to decode morse from atached audio file or video file",
     "install_msg" : "Thanks for installing Morse Decoder.",
