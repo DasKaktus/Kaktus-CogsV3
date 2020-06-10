@@ -118,4 +118,4 @@ class Morsedecoder(commands.Cog):
                     await ctx.send(encrypted)
 
         except:
-        #   await ctx.send("Error..........")
+           await ctx.send("Error..........")
