@@ -51,98 +51,98 @@ class Morsedecoder(commands.Cog):
         await ctx.send("Decoding, please wait...")
         
         #try:
-            with wave.open(wav_path,'r') as wav_file:
+        with wave.open(wav_path,'r') as wav_file:
 
-                num_channels = wav_file.getnchannels()
-                frame_rate = wav_file.getframerate()
-                downsample = math.ceil(frame_rate * num_channels / 1000) # Get 1000 samples per second!
+            num_channels = wav_file.getnchannels()
+            frame_rate = wav_file.getframerate()
+            downsample = math.ceil(frame_rate * num_channels / 1000) # Get 1000 samples per second!
 
-                process_chunk_size = 600000 - (600000 % frame_rate)
-                #
-                signal = None
+            process_chunk_size = 600000 - (600000 % frame_rate)
+            #
+            signal = None
 
 
-                while signal is None or signal.size > 0:
-                    signal = np.frombuffer(wav_file.readframes(process_chunk_size), dtype='int16')
+            while signal is None or signal.size > 0:
+                signal = np.frombuffer(wav_file.readframes(process_chunk_size), dtype='int16')
 
-                    # Take mean of absolute values per 0.001 seconds
-                    sub_waveform = np.nanmean(
-                        np.pad(np.absolute(signal), (0, ((downsample - (signal.size % downsample)) % downsample)), mode='constant', constant_values=np.NaN).reshape(-1, downsample),
-                        axis=1
-                    )
+                # Take mean of absolute values per 0.001 seconds
+                sub_waveform = np.nanmean(
+                    np.pad(np.absolute(signal), (0, ((downsample - (signal.size % downsample)) % downsample)), mode='constant', constant_values=np.NaN).reshape(-1, downsample),
+                    axis=1
+                )
 
-                    waveform = np.concatenate((waveform, sub_waveform))
-                #===========================
-                #
-                for i in waveform:  # Use wave form to find the spacing between letters
-                    if i <= 15000:
-                        spaces_length.append(len(spaces))
-                        spaces = []
-                    else:
-                        spaces.append("No")
-
-                #letter_spacing = max(spaces_length)
-                letter_spacing = int((max(spaces_length) + sum(spaces_length)/len(spaces_length))/3) # handmade expression to detect the spaces between letters
-                #print(letter_spacing)
-                #=========================================
-                # Firstly, we find the spacing interval and the we will add spaces to decoded word
-                #----------------------------------------------- Main decoding part
-                encoded_list = []
-                for i in waveform:  # Use wave form to find the peaks of code
-                    if i <= 15000:
-                        dot_or_dash.append("Yes")
-                        if len(spaces) >= letter_spacing:
-                            encoded_list.append("|")
-                        else:
-                            pass
-                        spaces = []
-                    else:
-                        spaces.append("No")
-                        if 2 < len(dot_or_dash) <= 10:
-                            encoded_list.append("*")
-                        elif len(dot_or_dash) > 10:
-                            encoded_list.append("-")
-                        else:
-                            pass
-                        dot_or_dash = []
-
-                encoded_list.append("|")            # add | for symmetry
-                encoded_word = ''.join(encoded_list)
-
-                #print(encoded_word)
-                await ctx.send(encoded_word)
-                #-----------------------------------------------
-
-                #~~~~~~~~~~~~~~~~~~~~~~~ Decoding
-                encrypted = []
-                encoded_list = encoded_word.split("|")
-                #print(encoded_list)
-                encoded_list_length = len(encoded_list)
-                ''' Here we have SOS priority'''
-                if (encoded_word == "***---***"):
-                    print("sos")
+                waveform = np.concatenate((waveform, sub_waveform))
+            #===========================
+            #
+            for i in waveform:  # Use wave form to find the spacing between letters
+                if i <= 15000:
+                    spaces_length.append(len(spaces))
+                    spaces = []
                 else:
-                    for j in range(encoded_list_length):
-                       if encoded_list[j] in morse_code:
-                           try:
-                              ''' Checking every letter in our word and changing it with normal letters '''
-                              encrypted.append(alphabetEN[morse_code.index(encoded_list[j])])
-                           except:
-                               pass
-                       else:
+                    spaces.append("No")
+
+            #letter_spacing = max(spaces_length)
+            letter_spacing = int((max(spaces_length) + sum(spaces_length)/len(spaces_length))/3) # handmade expression to detect the spaces between letters
+            #print(letter_spacing)
+            #=========================================
+            # Firstly, we find the spacing interval and the we will add spaces to decoded word
+            #----------------------------------------------- Main decoding part
+            encoded_list = []
+            for i in waveform:  # Use wave form to find the peaks of code
+                if i <= 15000:
+                    dot_or_dash.append("Yes")
+                    if len(spaces) >= letter_spacing:
+                        encoded_list.append("|")
+                    else:
+                        pass
+                    spaces = []
+                else:
+                    spaces.append("No")
+                    if 2 < len(dot_or_dash) <= 10:
+                        encoded_list.append("*")
+                    elif len(dot_or_dash) > 10:
+                        encoded_list.append("-")
+                    else:
+                        pass
+                    dot_or_dash = []
+
+            encoded_list.append("|")            # add | for symmetry
+            encoded_word = ''.join(encoded_list)
+
+            #print(encoded_word)
+            await ctx.send(encoded_word)
+            #-----------------------------------------------
+
+            #~~~~~~~~~~~~~~~~~~~~~~~ Decoding
+            encrypted = []
+            encoded_list = encoded_word.split("|")
+            #print(encoded_list)
+            encoded_list_length = len(encoded_list)
+            ''' Here we have SOS priority'''
+            if (encoded_word == "***---***"):
+                print("sos")
+            else:
+                for j in range(encoded_list_length):
+                   if encoded_list[j] in morse_code:
+                       try:
+                          ''' Checking every letter in our word and changing it with normal letters '''
+                          encrypted.append(alphabetEN[morse_code.index(encoded_list[j])])
+                       except:
                            pass
-                    ''' Joining the letters of English alphabet into word or sentence '''
-                    encrypted = ''.join(encrypted)
+                   else:
+                       pass
+                ''' Joining the letters of English alphabet into word or sentence '''
+                encrypted = ''.join(encrypted)
 
-                    await ctx.send(encrypted)
-                #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                await ctx.send(encrypted)
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                #Plot
-                #plt.cla()
-                #plt.figure(1)
-                #plt.title('Waveform')
-                #plt.plot(waveform)
-                #plt.show()
+            #Plot
+            #plt.cla()
+            #plt.figure(1)
+            #plt.title('Waveform')
+            #plt.plot(waveform)
+            #plt.show()
 
 
         #except:
