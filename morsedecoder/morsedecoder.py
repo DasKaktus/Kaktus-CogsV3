@@ -68,7 +68,7 @@ class Morsedecoder(commands.Cog):
                 waveform = np.concatenate((waveform, sub_waveform))
 
             for i in waveform:
-                if i <= 300:
+                if i <= 1000:
                     spaces_length.append(len(spaces))
                     spaces = []
                 else:
