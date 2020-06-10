@@ -117,6 +117,76 @@ class Morsedecoder(commands.Cog):
                 encrypted = ''.join(encrypted)
 
                 await ctx.send(encrypted)
+                
+        with wave.open(str(wav_path),'r') as wav_file:
+
+            num_channels = wav_file.getnchannels()
+            frame_rate = wav_file.getframerate()
+            downsample = math.ceil(frame_rate * num_channels / 1000)
+
+            process_chunk_size = 600000 - (600000 % frame_rate)
+            signal = None
+
+            while signal is None or signal.size > 0:
+                signal = np.frombuffer(wav_file.readframes(process_chunk_size), dtype='int16')
+
+                sub_waveform = np.nanmean(
+                    np.pad(np.absolute(signal), (0, ((downsample - (signal.size % downsample)) % downsample)), mode='constant', constant_values=np.NaN).reshape(-1, downsample),
+                    axis=1
+                )
+
+                waveform = np.concatenate((waveform, sub_waveform))
+
+            for i in waveform:
+                if i <= 500:
+                    spaces_length.append(len(spaces))
+                    spaces = []
+                else:
+                    spaces.append("No")
+
+            letter_spacing = int((max(spaces_length) + sum(spaces_length)/len(spaces_length))/3)
+            encoded_list = []
+            for i in waveform:
+                if i <= 500:
+                    dot_or_dash.append("Yes")
+                    if len(spaces) >= letter_spacing:
+                        encoded_list.append("|")
+                    else:
+                        pass
+                    spaces = []
+                else:
+                    spaces.append("No")
+                    if 2 < len(dot_or_dash) <= 10:
+                        encoded_list.append("*")
+                    elif len(dot_or_dash) > 10:
+                        encoded_list.append("-")
+                    else:
+                        pass
+                    dot_or_dash = []
+
+            encoded_list.append("|")
+            encoded_word = ''.join(encoded_list)
+
+            await ctx.send("```" + encoded_word[0:50] + "```")
+
+            encrypted = []
+            encoded_list = encoded_word.split("|")
+            encoded_list_length = len(encoded_list)
+            ''' Here we have SOS priority'''
+            if (encoded_word == "***---***"):
+                print("sos")
+            else:
+                for j in range(encoded_list_length):
+                   if encoded_list[j] in morse_code:
+                       try:
+                          encrypted.append(alphabetEN[morse_code.index(encoded_list[j])])
+                       except:
+                           pass
+                   else:
+                       pass
+                encrypted = ''.join(encrypted)
+
+                await ctx.send(encrypted)
 
 #    except:
 #       await ctx.send("Error..........")
