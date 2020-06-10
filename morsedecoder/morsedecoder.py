@@ -51,7 +51,7 @@ class Morsedecoder(commands.Cog):
         await ctx.send("Decoding, please wait...")
         
         #try:
-        with wave.open(wav_path,'r') as wav_file:
+        with wave.open(str(wav_path),'r') as wav_file:
 
             num_channels = wav_file.getnchannels()
             frame_rate = wav_file.getframerate()
