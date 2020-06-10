@@ -97,7 +97,7 @@ class Morsedecoder(commands.Cog):
             encoded_list.append("|")
             encoded_word = ''.join(encoded_list)
 
-            await ctx.send("```" + encoded_word + "```")
+            await ctx.send("```" + encoded_word[0:50] + "```")
 
             encrypted = []
             encoded_list = encoded_word.split("|")
