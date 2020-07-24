@@ -51,9 +51,9 @@ class Stattracker(BaseCog):
         guild = ctx.message.guild
         self.init_server(guild)
 
-        if channel.id in self.settings[server.id]['whitelist']:
+        if channel.id in self.settings[guild.id]['whitelist']:
             return await self.bot.say('Channel already whitelisted')
-        self.settings[server.id]['whitelist'].append(channel.id)
+        self.settings[guild.id]['whitelist'].append(channel.id)
         self.save_json()
         await self.bot.say('Channel whitelisted.')
 
@@ -63,12 +63,12 @@ class Stattracker(BaseCog):
         unwhitelist a channel
         """
 
-        server = ctx.message.server
-        self.init_server(server)
+        guild = ctx.message.guild
+        self.init_server(guild)
 
-        if channel.id not in self.settings[server.id]['whitelist']:
+        if channel.id not in self.settings[guild.id]['whitelist']:
             return await self.bot.say('Channel wasn\'t whitelisted')
-        self.settings[server.id]['whitelist'].remove(channel.id)
+        self.settings[guild.id]['whitelist'].remove(channel.id)
         self.save_json()
         await self.bot.say('Channel unwhitelisted.')
 
@@ -78,20 +78,20 @@ class Stattracker(BaseCog):
         resets to defaults
         """
 
-        server = ctx.message.server
-        self.init_server(server, True)
+        guild = ctx.message.guild
+        self.init_server(guild, True)
         await self.bot.say('Settings reset')
 	
     @commands.command(pass_context=True, no_pm=True, name="bfvstats")
     async def bfvstats(self, ctx, platform, *, playername):
         """Retrieves stats for BFV"""
 
-        server = ctx.message.server
+        guild = ctx.message.guild
         channel = ctx.message.channel
 		
-        if server.id not in self.settings:
+        if guild.id not in self.settings:
             return
-        if channel.id not in self.settings[server.id]['whitelist']:
+        if channel.id not in self.settings[guild.id]['whitelist']:
             return
 			
         await self.bot.send_typing(channel)
@@ -124,12 +124,12 @@ class Stattracker(BaseCog):
     async def bf1stats(self, ctx, platform, *, playername):
         """Retrieves stats for BF1"""
 
-        server = ctx.message.server
+        guild = ctx.message.guild
         channel = ctx.message.channel
 		
-        if server.id not in self.settings:
+        if guild.id not in self.settings:
             return
-        if channel.id not in self.settings[server.id]['whitelist']:
+        if channel.id not in self.settings[guild.id]['whitelist']:
             return
 			
         await self.bot.send_typing(channel)
@@ -163,11 +163,11 @@ class Stattracker(BaseCog):
 		
     async def send_cmd_help(self, ctx):
         if ctx.invoked_subcommand:
-            pages = self.bot.formatter.format_help_for(ctx, ctx.invoked_subcommand)
+            pages = command.format_text_for_context(ctx, ctx.invoked_subcommand)
             for page in pages:
                 await self.bot.send_message(ctx.message.channel, page)
         else:
-            pages = self.bot.formatter.format_help_for(ctx, ctx.command)
+            pages = self.bot.formatter.format_text_for_context(ctx, ctx.command)
             for page in pages:
                 await self.bot.send_message(ctx.message.channel, page)
 
