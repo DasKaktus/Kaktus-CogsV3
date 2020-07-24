@@ -1,10 +1,4 @@
-import discord
-from discord.ext import commands
-import pathlib
-from cogs.utils.dataIO import dataIO
-import aiohttp
-import io
-from .utils import checks
+import json
 
 path = 'data/kaktuscog/stattracker'
 
@@ -18,8 +12,10 @@ class Stattracker:
     def __init__(self, bot):
         self.bot = bot
         self.session = aiohttp.ClientSession()
+        settingspath = bundled_data_path(self) / "settings.json"
         try:
-            self.settings = dataIO.load_json(path + '/settings.json')
+            with settingspath.open() as json_data:
+                self.settings = json.load(json_data)
         except Exception:
             self.settings = {}
 
