@@ -212,9 +212,9 @@ class CustomCommandsImproved(commands.Cog):
         
         This is helpful for copy and pasting."""
         commands = await self.config.guild(ctx.guild).commands()
-        if command.lower not in commands:
+        if command not in commands:
             return await ctx.send("That command doesn't exist.")
-        command = commands[command].lower
+        command = commands[command]
         if isinstance(command["response"], str):
             raw = discord.utils.escape_markdown(command["response"])
             if len(raw) > 2000:
@@ -523,7 +523,7 @@ class CustomCommandsImproved(commands.Cog):
 
         try:
             raw_response, cooldowns = await self.commandobjimproved.get(
-                message=message, command=ctx.invoked_with
+                message=message, command=ctx.invoked_with.lower
             )
             if isinstance(raw_response, list):
                 raw_response = random.choice(raw_response)
