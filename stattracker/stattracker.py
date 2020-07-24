@@ -1,3 +1,4 @@
+import discord
 import json
 
 path = 'data/kaktuscog/stattracker'
