@@ -8,7 +8,7 @@ path = 'data/kaktuscog/stattracker'
 
 #bot = commands.Bot(command_prefix=commands.when_mentioned, description="Battlefield Stats Tracker")
 
-class Stattracker:
+class Stattracker(Cog):
 
     __author__ = "OGKaktus (OGKaktus#5299)"
     __version__ = "2.0"
