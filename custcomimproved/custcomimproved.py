@@ -85,8 +85,7 @@ class CommandObjImproved:
         # in the ccinfo dict
         return "{:%d/%m/%Y %H:%M:%S}".format(datetime.utcnow())
 
-    async def get(self, message: discord.Message, command: str) -> Tuple[str, Dict]:
-        await ctx.send(str)
+    async def get(self, message: discord.Message, command: str.lower()) -> Tuple[str.lower(), Dict]:
         if not command:
             raise NotFound()
         ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
