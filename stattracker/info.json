@@ -1,0 +1,10 @@
+{
+    "name" : "StatTracker",
+    "author" : ["OGKaktus"],
+    "short" : "Fetches stats for Battlefield V",
+    "description" : "Fetches an image with short statistics about a Battlefield V player"",
+    "install_msg" : "Thanks for installing stattracker.",
+    "requirements" : [],
+    "tags" : ["stattracker", "battlefield", "bfv", "battlefield 5"],
+    "disabled" : false
+}
