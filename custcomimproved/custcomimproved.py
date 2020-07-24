@@ -38,7 +38,7 @@ class OnCooldown(CCError):
     pass
 
 
-class CommandObjImprovedImproved:
+class CommandObjImproved:
     def __init__(self, **kwargs):
         config = kwargs.get("config")
         self.bot = kwargs.get("bot")
