@@ -4,11 +4,9 @@ import aiohttp
 from redbot.core import Config, commands
 from redbot.core.data_manager import bundled_data_path
 
-path = 'data/kaktuscog/stattracker'
+BaseCog = getattr(commands, "Cog", object)
 
-#bot = commands.Bot(command_prefix=commands.when_mentioned, description="Battlefield Stats Tracker")
-
-class Stattracker(Cog):
+class Stattracker(BaseCog):
 
     __author__ = "OGKaktus (OGKaktus#5299)"
     __version__ = "2.0"
