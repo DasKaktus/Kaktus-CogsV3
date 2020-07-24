@@ -527,7 +527,7 @@ class CustomCommandsImproved(commands.Cog):
             )
             if isinstance(raw_response, list):
                 raw_response = random.choice(raw_response)
-            elif isinstance(raw_response, str):
+            elif isinstance(raw_response, str.lower):
                 pass
             else:
                 raise NotFound()
@@ -557,11 +557,11 @@ class CustomCommandsImproved(commands.Cog):
 
     async def cc_command(self, ctx, *cc_args, raw_response, **cc_kwargs) -> None:
         cc_args = (*cc_args, *cc_kwargs.values())
-        results = re.findall(r"{([^}]+)\}", raw_response.lower)
+        results = re.findall(r"{([^}]+)\}/i", raw_response)
         for result in results:
             param = self.transform_parameter(result, ctx.message)
             raw_response = raw_response.replace("{" + result + "}", param)
-        results = re.findall(r"{((\d+)[^.}]*(\.[^:}]+)?[^}]*)\}", raw_response)
+        results = re.findall(r"{((\d+)[^.}]*(\.[^:}]+)?[^}]*)\}/i", raw_response)
         if results:
             low = min(int(result[1]) for result in results)
             for result in results:
