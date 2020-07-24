@@ -88,7 +88,7 @@ class CommandObjImproved:
     async def get(self, message: discord.Message, command: str) -> Tuple[str, Dict]:
         if not command:
             raise NotFound()
-        ccinfo = await self.db(message.guild).commands.get_raw(command.lower, default=None)
+        ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
         if not ccinfo:
             raise NotFound()
         else:
@@ -521,27 +521,19 @@ class CustomCommandsImproved(commands.Cog):
         if ctx.prefix is None:
             return
 
-        await ctx.send("1")
         try:
-            await ctx.send("2")
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=ctx.invoked_with
             )
-            await ctx.send("3")
             if isinstance(raw_response, list):
-                await ctx.send("4")
                 raw_response = random.choice(raw_response)
             elif isinstance(raw_response, str):
-                await ctx.send("5")
                 pass
             else:
-                await ctx.send("6")
                 raise NotFound()
             if cooldowns:
-                await ctx.send("7")
                 self.test_cooldowns(ctx, ctx.invoked_with, cooldowns)
         except CCError:
-            await ctx.send("8")
             return
 
         # wrap the command here so it won't register with the bot
@@ -577,6 +569,7 @@ class CustomCommandsImproved(commands.Cog):
                 arg = self.transform_arg(result[0], result[2], cc_args[index])
                 raw_response = raw_response.replace("{" + result[0] + "}", arg)
         await ctx.send(raw_response)
+        await ctx.send("tt")
 
     @staticmethod
     def prepare_args(raw_response) -> Mapping[str, Parameter]:
