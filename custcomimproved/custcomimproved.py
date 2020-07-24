@@ -88,7 +88,7 @@ class CommandObjImproved:
     async def get(self, message: discord.Message, command: str) -> Tuple[str, Dict]:
         if not command:
             raise NotFound()
-        ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
+        ccinfo = await self.db(message.guild).commands.get_raw(command.lower, default=None)
         if not ccinfo:
             raise NotFound()
         else:
@@ -525,7 +525,6 @@ class CustomCommandsImproved(commands.Cog):
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=ctx.invoked_with
             )
-            await ctx.send(raw_response)
             if isinstance(raw_response, list):
                 raw_response = random.choice(raw_response)
             elif isinstance(raw_response, str):
