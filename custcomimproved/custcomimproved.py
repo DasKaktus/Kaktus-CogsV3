@@ -522,8 +522,8 @@ class CustomCommandsImproved(commands.Cog):
             return
         
         try:
-            await ctx.send(message)
-            await ctx.send(ctx.invoked_with)
+            cclower = ctx.invoked_with.lower()
+            await ctx.send(cclower)
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=ctx.invoked_with
             )
