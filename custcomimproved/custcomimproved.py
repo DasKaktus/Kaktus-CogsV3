@@ -520,28 +520,22 @@ class CustomCommandsImproved(commands.Cog):
 
         if ctx.prefix is None:
             return
-        await ctx.send("1")
+        
         try:
-            await ctx.send("2")
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=ctx.invoked_with
             )
-            await ctx.send("3")
+            await ctx.send(raw_response)
             if isinstance(raw_response, list):
-                await ctx.send("4")
                 raw_response = random.choice(raw_response)
             elif isinstance(raw_response, str):
-                await ctx.send("5")
+                # Here is if the command exist
                 pass
             else:
-                await ctx.send("6")
                 raise NotFound()
-            await ctx.send("7")
             if cooldowns:
-                await ctx.send("8")
                 self.test_cooldowns(ctx, ctx.invoked_with, cooldowns)
         except CCError:
-            await ctx.send("9")
             return
 
         # wrap the command here so it won't register with the bot
