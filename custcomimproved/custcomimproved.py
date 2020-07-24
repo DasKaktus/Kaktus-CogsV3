@@ -86,7 +86,6 @@ class CommandObjImproved:
         return "{:%d/%m/%Y %H:%M:%S}".format(datetime.utcnow())
 
     async def get(self, message: discord.Message, command: str) -> Tuple[str, Dict]:
-        await self.ctx.send("fg")
         if not command:
             raise NotFound()
         ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
@@ -523,6 +522,8 @@ class CustomCommandsImproved(commands.Cog):
             return
         
         try:
+            await ctx.send(message)
+            await ctx.send(ctx.invoked_with)
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=ctx.invoked_with
             )
