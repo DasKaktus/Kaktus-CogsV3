@@ -207,7 +207,7 @@ class CustomCommandsImproved(commands.Cog):
         pass
 
     @customcomimproved.command(name="raw")
-    async def cc_raw(self, ctx: commands.Context, command: str.lower):
+    async def cc_raw(self, ctx: commands.Context, command: str):
         """Get the raw response of a custom command, to get the proper markdown.
         
         This is helpful for copy and pasting."""
@@ -276,7 +276,7 @@ class CustomCommandsImproved(commands.Cog):
 
     @customcomimproved.group(name="create", aliases=["add"], invoke_without_command=True)
     @checks.mod_or_permissions(administrator=True)
-    async def cc_create(self, ctx: commands.Context, command: str.lower, *, text: str):
+    async def cc_create(self, ctx: commands.Context, command: str, *, text: str):
         """Create custom commands.
 
         If a type is not specified, a simple CC will be created.
@@ -287,7 +287,7 @@ class CustomCommandsImproved(commands.Cog):
 
     @cc_create.command(name="random")
     @checks.mod_or_permissions(administrator=True)
-    async def cc_create_random(self, ctx: commands.Context, command: str.lower):
+    async def cc_create_random(self, ctx: commands.Context, command: str):
         """Create a CC where it will randomly choose a response!
 
         Note: This command is interactive.
@@ -315,7 +315,7 @@ class CustomCommandsImproved(commands.Cog):
 
     @cc_create.command(name="simple")
     @checks.mod_or_permissions(administrator=True)
-    async def cc_create_simple(self, ctx, command: str.lower, *, text: str):
+    async def cc_create_simple(self, ctx, command: str, *, text: str):
         """Add a simple custom command.
 
         Example:
@@ -343,7 +343,7 @@ class CustomCommandsImproved(commands.Cog):
     @customcomimproved.command(name="cooldown")
     @checks.mod_or_permissions(administrator=True)
     async def cc_cooldown(
-        self, ctx, command: str.lower, cooldown: int = None, *, per: str.lower = "member"
+        self, ctx, command: str, cooldown: int = None, *, per: str.lower = "member"
     ):
         """Set, edit, or view the cooldown for a custom command.
 
@@ -385,7 +385,7 @@ class CustomCommandsImproved(commands.Cog):
 
     @customcomimproved.command(name="delete", aliases=["del", "remove"])
     @checks.mod_or_permissions(administrator=True)
-    async def cc_delete(self, ctx, command: str.lower):
+    async def cc_delete(self, ctx, command: str):
         """Delete a custom command.
 
         Example:
@@ -399,7 +399,7 @@ class CustomCommandsImproved(commands.Cog):
 
     @customcomimproved.command(name="edit")
     @checks.mod_or_permissions(administrator=True)
-    async def cc_edit(self, ctx, command: str.lower, *, text: str = None):
+    async def cc_edit(self, ctx, command: str, *, text: str = None):
         """Edit a custom command.
 
         Example:
