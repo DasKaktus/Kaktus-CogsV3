@@ -524,10 +524,13 @@ class CustomCommandsImproved(commands.Cog):
         await ctx.send("1")
 
         try:
+            await ctx.send("1.1")
             lowercasecc = ctx.invoked_with.lower
+            await ctx.send("1.3")
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=lowercasecc
             )
+            await ctx.send("1.4")
             if isinstance(raw_response, list):
                 await ctx.send("2")
                 raw_response = random.choice(raw_response)
@@ -537,8 +540,11 @@ class CustomCommandsImproved(commands.Cog):
             else:
                 await ctx.send("4")
                 raise NotFound()
+            await ctx.send("1.5")
             if cooldowns:
                 self.test_cooldowns(ctx, lowercasecc, cooldowns)
+                await ctx.send("1.6")
+            await ctx.send("1.7")
         except CCError:
             await ctx.send("5")
             return
