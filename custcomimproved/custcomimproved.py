@@ -522,22 +522,27 @@ class CustomCommandsImproved(commands.Cog):
             return
 
         await ctx.send("1")
-        await ctx.send(str)
+
         try:
             raw_response, cooldowns = await self.commandobjimproved.get(
                 message=message, command=ctx.invoked_with
             )
             if isinstance(raw_response, list):
+                await ctx.send("2")
                 raw_response = random.choice(raw_response)
             elif isinstance(raw_response, str):
+                await ctx.send("3")
                 pass
             else:
+                await ctx.send("4")
                 raise NotFound()
             if cooldowns:
                 self.test_cooldowns(ctx, ctx.invoked_with, cooldowns)
         except CCError:
+            await ctx.send("5")
             return
 
+        await ctx.send("6")
         # wrap the command here so it won't register with the bot
         fake_cc = commands.command(name=ctx.invoked_with)(self.cc_callback)
         fake_cc.params = self.prepare_args(raw_response)
