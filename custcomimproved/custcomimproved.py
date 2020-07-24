@@ -211,10 +211,10 @@ class CustomCommandsImproved(commands.Cog):
         """Get the raw response of a custom command, to get the proper markdown.
         
         This is helpful for copy and pasting."""
-        commands = await self.config.guild(ctx.guild).commands().lower
-        if command not in commands:
+        commands = await self.config.guild(ctx.guild).commands()
+        if command.lower not in commands:
             return await ctx.send("That command doesn't exist.")
-        command = commands[command]
+        command = commands[command].lower
         if isinstance(command["response"], str):
             raw = discord.utils.escape_markdown(command["response"])
             if len(raw) > 2000:
