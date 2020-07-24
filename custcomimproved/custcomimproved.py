@@ -523,9 +523,9 @@ class CustomCommandsImproved(commands.Cog):
         
         try:
             cclower = ctx.invoked_with.lower()
-            await ctx.send(cclower)
+            #await ctx.send(cclower)
             raw_response, cooldowns = await self.commandobjimproved.get(
-                message=message, command=ctx.invoked_with
+                message=message, command=ctx.cclower
             )
             if isinstance(raw_response, list):
                 raw_response = random.choice(raw_response)
@@ -535,12 +535,12 @@ class CustomCommandsImproved(commands.Cog):
             else:
                 raise NotFound()
             if cooldowns:
-                self.test_cooldowns(ctx, ctx.invoked_with, cooldowns)
+                self.test_cooldowns(ctx, ctx.cclower, cooldowns)
         except CCError:
             return
 
         # wrap the command here so it won't register with the bot
-        fake_cc = commands.command(name=ctx.invoked_with)(self.cc_callback)
+        fake_cc = commands.command(name=ctx.cclower)(self.cc_callback)
         fake_cc.params = self.prepare_args(raw_response)
         fake_cc.requires.ready_event.set()
         ctx.command = fake_cc
