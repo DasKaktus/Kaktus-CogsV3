@@ -1,5 +1,6 @@
 import discord
 import json
+import aiohttp
 from redbot.core import Config, commands
 
 path = 'data/kaktuscog/stattracker'
