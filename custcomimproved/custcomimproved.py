@@ -557,9 +557,9 @@ class CustomCommandsImproved(commands.Cog):
 
     async def cc_command(self, ctx, *cc_args, raw_response, **cc_kwargs) -> None:
         cc_args = (*cc_args, *cc_kwargs.values())
-        results = re.findall(r"{([^}]+)\}", raw_response)
+        results = re.findall(r"{([^}]+)\}", raw_response.lower)
         for result in results:
-            param = self.transform_parameter(result, ctx.message).lower
+            param = self.transform_parameter(result, ctx.message)
             raw_response = raw_response.replace("{" + result + "}", param)
         results = re.findall(r"{((\d+)[^.}]*(\.[^:}]+)?[^}]*)\}", raw_response)
         if results:
