@@ -94,7 +94,7 @@ class CommandObjImproved:
         else:
             return ccinfo["response"], ccinfo.get("cooldowns", {})
 
-    async def get_full(self, message: discord.Message, command: str.lower) -> Dict:
+    async def get_full(self, message: discord.Message, command: str) -> Dict:
         ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
         if ccinfo:
             return ccinfo
@@ -557,11 +557,11 @@ class CustomCommandsImproved(commands.Cog):
 
     async def cc_command(self, ctx, *cc_args, raw_response, **cc_kwargs) -> None:
         cc_args = (*cc_args, *cc_kwargs.values())
-        results = re.findall(r"{([^}]+)\}", raw_response)
+        results = re.findall(r"{([^}]+)\}/i", raw_response)
         for result in results:
             param = self.transform_parameter(result, ctx.message)
             raw_response = raw_response.replace("{" + result + "}", param)
-        results = re.findall(r"{((\d+)[^.}]*(\.[^:}]+)?[^}]*)\}", raw_response)
+        results = re.findall(r"{((\d+)[^.}]*(\.[^:}]+)?[^}]*)\}/i", raw_response)
         if results:
             low = min(int(result[1]) for result in results)
             for result in results:
