@@ -87,6 +87,7 @@ class CommandObjImproved:
 
     async def get(self, message: discord.Message, command: str) -> Tuple[str, Dict]:
         if not command:
+            await ctx.send("9")
             raise NotFound()
         ccinfo = await self.db(message.guild).commands.get_raw(command.lower, default=None)
         if not ccinfo:
