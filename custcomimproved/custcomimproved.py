@@ -524,8 +524,9 @@ class CustomCommandsImproved(commands.Cog):
         await ctx.send("1")
 
         try:
+            lowercasecc = ctx.invoked_with.lower
             raw_response, cooldowns = await self.commandobjimproved.get(
-                message=message, command=ctx.invoked_with
+                message=message, command=lowercasecc
             )
             if isinstance(raw_response, list):
                 await ctx.send("2")
@@ -537,7 +538,7 @@ class CustomCommandsImproved(commands.Cog):
                 await ctx.send("4")
                 raise NotFound()
             if cooldowns:
-                self.test_cooldowns(ctx, ctx.invoked_with, cooldowns)
+                self.test_cooldowns(ctx, lowercasecc, cooldowns)
         except CCError:
             await ctx.send("5")
             return
