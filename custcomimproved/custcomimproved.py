@@ -202,11 +202,11 @@ class CustomCommandsImproved(commands.Cog):
 
     @commands.group(aliases=["cc"])
     @commands.guild_only()
-    async def customcom(self, ctx: commands.Context):
+    async def customcomimproved(self, ctx: commands.Context):
         """Custom commands management."""
         pass
 
-    @customcom.command(name="raw")
+    @customcomimproved.command(name="raw")
     async def cc_raw(self, ctx: commands.Context, command: str.lower):
         """Get the raw response of a custom command, to get the proper markdown.
         
@@ -247,7 +247,7 @@ class CustomCommandsImproved(commands.Cog):
                     msglist.append(msg)
             await menus.menu(ctx, msglist, menus.DEFAULT_CONTROLS)
 
-    @customcom.command(name="search")
+    @customcomimproved.command(name="search")
     @commands.guild_only()
     async def cc_search(self, ctx: commands.Context, *, query):
         """Searches through custom commands, according to the query."""
@@ -274,7 +274,7 @@ class CustomCommandsImproved(commands.Cog):
             content = "\n".join(map("{0[0]:<12} : {0[1]}".format, results))
             await ctx.send(_("The following matches have been found:") + box(content))
 
-    @customcom.group(name="create", aliases=["add"], invoke_without_command=True)
+    @customcomimproved.group(name="create", aliases=["add"], invoke_without_command=True)
     @checks.mod_or_permissions(administrator=True)
     async def cc_create(self, ctx: commands.Context, command: str.lower, *, text: str):
         """Create custom commands.
@@ -340,7 +340,7 @@ class CustomCommandsImproved(commands.Cog):
         except ArgParseError as e:
             await ctx.send(e.args[0])
 
-    @customcom.command(name="cooldown")
+    @customcomimproved.command(name="cooldown")
     @checks.mod_or_permissions(administrator=True)
     async def cc_cooldown(
         self, ctx, command: str.lower, cooldown: int = None, *, per: str.lower = "member"
@@ -383,7 +383,7 @@ class CustomCommandsImproved(commands.Cog):
                 )
             )
 
-    @customcom.command(name="delete", aliases=["del", "remove"])
+    @customcomimproved.command(name="delete", aliases=["del", "remove"])
     @checks.mod_or_permissions(administrator=True)
     async def cc_delete(self, ctx, command: str.lower):
         """Delete a custom command.
@@ -397,7 +397,7 @@ class CustomCommandsImproved(commands.Cog):
         except NotFound:
             await ctx.send(_("That command doesn't exist."))
 
-    @customcom.command(name="edit")
+    @customcomimproved.command(name="edit")
     @checks.mod_or_permissions(administrator=True)
     async def cc_edit(self, ctx, command: str.lower, *, text: str = None):
         """Edit a custom command.
@@ -417,7 +417,7 @@ class CustomCommandsImproved(commands.Cog):
         except ArgParseError as e:
             await ctx.send(e.args[0])
 
-    @customcom.command(name="list")
+    @customcomimproved.command(name="list")
     @checks.bot_has_permissions(add_reactions=True)
     async def cc_list(self, ctx: commands.Context):
         """List all available custom commands.
@@ -457,7 +457,7 @@ class CustomCommandsImproved(commands.Cog):
             pages = list(map(box, pagify(content, page_length=2000, shorten_by=10)))
             await menus.menu(ctx, pages, menus.DEFAULT_CONTROLS)
 
-    @customcom.command(name="show")
+    @customcomimproved.command(name="show")
     async def cc_show(self, ctx, command_name: str):
         """Shows a custom command's responses and its settings."""
 
