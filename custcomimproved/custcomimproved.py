@@ -200,7 +200,7 @@ class CustomCommandsImproved(commands.Cog):
         self.commandobjimproved = CommandObjImproved(config=self.config, bot=self.bot)
         self.cooldowns = {}
 
-    @commands.group(aliases=["cc"])
+    @commands.group(aliases=["cci"])
     @commands.guild_only()
     async def customcomimproved(self, ctx: commands.Context):
         """Custom commands management."""
