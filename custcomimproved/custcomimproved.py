@@ -94,7 +94,7 @@ class CommandObjImproved:
         else:
             return ccinfo["response"], ccinfo.get("cooldowns", {})
 
-    async def get_full(self, message: discord.Message, command: str) -> Dict:
+    async def get_full(self, message: discord.Message, command: str.lower) -> Dict:
         ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
         if ccinfo:
             return ccinfo
@@ -523,7 +523,7 @@ class CustomCommandsImproved(commands.Cog):
 
         try:
             raw_response, cooldowns = await self.commandobjimproved.get(
-                message=message, command=ctx.invoked_with.lower
+                message=message, command=ctx.invoked_with
             )
             if isinstance(raw_response, list):
                 raw_response = random.choice(raw_response)
