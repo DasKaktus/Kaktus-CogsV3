@@ -88,7 +88,7 @@ class CommandObjImproved:
     async def get(self, message: discord.Message, command: str) -> Tuple[str, Dict]:
         if not command:
             raise NotFound()
-        ccinfo = await self.db(message.guild).commands.get_raw(command, default=None)
+        ccinfo = await self.db(message.guild).commands.get_raw(command.lower, default=None)
         if not ccinfo:
             raise NotFound()
         else:
@@ -521,35 +521,21 @@ class CustomCommandsImproved(commands.Cog):
         if ctx.prefix is None:
             return
 
-        await ctx.send("1")
-
         try:
-            await ctx.send("1.1")
-            lowercasecc = ctx.invoked_with.lower
-            await ctx.send("1.3")
             raw_response, cooldowns = await self.commandobjimproved.get(
-                message=message, command=lowercasecc
+                message=message, command=ctx.invoked_with
             )
-            await ctx.send("1.4")
             if isinstance(raw_response, list):
-                await ctx.send("2")
                 raw_response = random.choice(raw_response)
             elif isinstance(raw_response, str):
-                await ctx.send("3")
                 pass
             else:
-                await ctx.send("4")
                 raise NotFound()
-            await ctx.send("1.5")
             if cooldowns:
-                self.test_cooldowns(ctx, lowercasecc, cooldowns)
-                await ctx.send("1.6")
-            await ctx.send("1.7")
+                self.test_cooldowns(ctx, ctx.invoked_with, cooldowns)
         except CCError:
-            await ctx.send("5")
             return
 
-        await ctx.send("6")
         # wrap the command here so it won't register with the bot
         fake_cc = commands.command(name=ctx.invoked_with)(self.cc_callback)
         fake_cc.params = self.prepare_args(raw_response)
