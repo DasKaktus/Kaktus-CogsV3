@@ -31,7 +31,7 @@ class Stattracker:
             }
 
     @commands.group(name='statsset', pass_context=True, no_pm=True)
-    @checks.admin_or_permissions(manage_messages=True)
+    @commands.has_permissions(administrator=True)
     async def _group(self, ctx):
         """
         settings for stattracker	
