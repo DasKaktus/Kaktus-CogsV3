@@ -2,6 +2,7 @@ import discord
 import json
 import aiohttp
 from redbot.core import Config, commands
+from redbot.core.data_manager import bundled_data_path
 
 path = 'data/kaktuscog/stattracker'
 
