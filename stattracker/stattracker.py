@@ -23,9 +23,9 @@ class Stattracker:
     def save_json(self):
         dataIO.save_json(path + '/settings.json', self.settings)
 
-    def init_server(self, server: discord.Server, reset=False):
-        if server.id not in self.settings or reset:
-            self.settings[server.id] = {
+    def init_server(self, guild, reset=False):
+        if guild.id not in self.settings or reset:
+            self.settings[guild.id] = {
                 'whitelist': []
             }
 
@@ -42,13 +42,13 @@ class Stattracker:
             await self.send_cmd_help(ctx)
 	
     @_group.command(name='whitelist', pass_context=True, no_pm=True)
-    async def whitelist(self, ctx, channel: discord.Channel):
+    async def whitelist(self, ctx, channel: discord.TextChannel):
         """
         add a channel where stats are allowed (if you want)
         """
 
-        server = ctx.message.server
-        self.init_server(server)
+        guild = ctx.message.guild
+        self.init_server(guild)
 
         if channel.id in self.settings[server.id]['whitelist']:
             return await self.bot.say('Channel already whitelisted')
@@ -57,7 +57,7 @@ class Stattracker:
         await self.bot.say('Channel whitelisted.')
 
     @_group.command(name='unwhitelist', pass_context=True, no_pm=True)
-    async def unwhitelist(self, ctx, channel: discord.Channel):
+    async def unwhitelist(self, ctx, channel: discord.TextChannel):
         """
         unwhitelist a channel
         """
