@@ -33,10 +33,6 @@ class EnrichmentCenter(commands.Cog):
         await ctx.send('Images:', files=my_files)
         
     @commands.command()
-    async def commandname(self, ctx, *, text)
-        await ctx.send(text)
-        
-    @commands.command()
     async def sendCodeBlock(self, ctx, *, message):
         await ctx.send(box(message))
         
