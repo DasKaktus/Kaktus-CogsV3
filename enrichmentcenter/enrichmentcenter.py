@@ -47,11 +47,12 @@ class EnrichmentCenter(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
+        ctx = await self.bot.get_context(message)
         await ctx.send("Yup")
         is_private = isinstance(message.channel, discord.abc.PrivateChannel)
         if len(message.content) < 2 or is_private or not user_allowed or message.author.bot:
             return
-        ctx = await self.bot.get_context(message)
+        
         if ctx.prefix is None:
             return
         
