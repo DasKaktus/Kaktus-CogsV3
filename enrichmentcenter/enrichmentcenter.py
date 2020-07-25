@@ -28,9 +28,11 @@ class EnrichmentCenter(commands.Cog):
         embed = discord.Embed(color=0xEE2222, title='Testsubject report card')
         if curr_stage == 0:
             embed.add_field(name='Stage', value="N/A")
-            embed.add_field(name='Last stage finished', value="N/A")
         else:
             embed.add_field(name='Stage', value=curr_stage)
+        if curr_lastfinish == "0000-00-00 00:00:00":
+            embed.add_field(name='Last stage finished', value="N/A")
+        else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
         embed.set_footer(text="Enrichmentcenter")
         await ctx.send(embed=embed)
@@ -42,8 +44,9 @@ class EnrichmentCenter(commands.Cog):
         member_settings = self.config.member(user)
         await member_settings.stage.set(1)
 
-   
-        
+    @commands.command()
+    async def Aperture-Science-Help(self, ctx):
+        await ctx.send("12345")
         
         
         
