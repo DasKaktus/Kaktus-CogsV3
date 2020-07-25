@@ -97,6 +97,7 @@ class EnrichmentCenter(commands.Cog):
         settings = await self.config.guild(ctx.guild).all()
 
         if user.id in settings["UserProgress"]:
+            await ctx.send("Pass")
             pass
         else:
             timenow = datetime.now()
