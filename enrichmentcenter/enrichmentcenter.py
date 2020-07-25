@@ -6,7 +6,6 @@ from redbot.core import Config
 settings = {"UserProgress": []}
 # "873584735": {"stage": "1", "started": "2020-07-25 01:00:15", "lastfinished": "2020-07-15 11:04:39"}
 
-@cog_i18n(_)
 class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
     
