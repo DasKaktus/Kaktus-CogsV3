@@ -80,10 +80,11 @@ class EnrichmentCenter(commands.Cog):
     @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
     async def whichStage(self, ctx):
         settings = await self.config.guild(ctx.guild).all()
+        foot = "Total amount of subjects: {}".format(len(settings["UserProgress"]))
         embed = discord.Embed(color=0xEE2222, title='User Progress')
         embed.add_field(name='Stage', value=settings["UserProgress"][user.id]["stage"])
         embed.add_field(name='Last stage finished', value=settings[user.id]["lastfinished"])
-        embed.set_footer(text='Total amount of subjects: ' len(settings["UserProgress"]))   
+        embed.set_footer(text=foot)   
         await ctx.send(embed=embed)
 
     @commands.command()
