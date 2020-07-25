@@ -114,7 +114,7 @@ Good luck.
                 break
      
         
-    async def sendCodeBlock(self, ctx, language: str, msg: string):
+    async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", ctx.author.id) 
         msg = msg.replace("{author.name}", ctx.author.name) 
         await ctx.send(box(msg, lang=language))    
