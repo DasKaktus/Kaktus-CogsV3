@@ -71,7 +71,7 @@ class EnrichmentCenter(commands.Cog):
 
     @commands.command()
     async def startEnrichmnet(self, ctx, user: discord.Member):
-        if user.id in self.database.guild(ctx.guild).UserProgress()
+        if user.id in self.database.guild(ctx.guild).UserProgress():
             pass
         elif
             timenow = datetime.now()
