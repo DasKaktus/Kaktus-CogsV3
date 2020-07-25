@@ -73,7 +73,7 @@ class EnrichmentCenter(commands.Cog):
     async def startEnrichmnet(self, ctx, user: discord.Member):
         if user.id in self.database.guild(ctx.guild).UserProgress():
             pass
-        elif
+        elif:
             timenow = datetime.now()
             now = now.strftime("%Y-%m-%d %H:%M:%S")
             userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
