@@ -74,7 +74,7 @@ class EnrichmentCenter(commands.Cog):
     @commands.command()
     async def allEnrichment(self, ctx):
         data = await self.config.guild(ctx.guild).all()
-        await ctx.send(data)
+        await ctx.send(data["UserProgress"])
         
     @commands.command()
     @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
@@ -96,7 +96,7 @@ class EnrichmentCenter(commands.Cog):
         channel = ctx.channel
         settings = await self.config.guild(ctx.guild).all()
 
-        if user.id in self.config.guild(ctx.guild).UserProgress():
+        if user.id in settings["UserProgress"]:
             await ctx.send("Pass")
             pass
         else:
