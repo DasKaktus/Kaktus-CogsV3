@@ -72,8 +72,8 @@ class EnrichmentCenter(commands.Cog):
 
     @commands.command()
     async def ccv(self, ctx):
-        data = await self.config.guild(ctx.guild).all()
-        await ctx.send(data["UserProgress"].get_raw(ctx.author.id))
+        data = await self.config.guild(ctx.guild).UserProgress()
+        await ctx.send(data[ctx.author.id])
         
     @commands.command()
     async def allEnrichment(self, ctx):
