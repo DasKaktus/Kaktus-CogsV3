@@ -4,7 +4,7 @@ from redbot.core import commands
 from redbot.core.utils.chat_formatting import box
 from redbot.core import Config
 
-settings = {"UserProgress": []}
+defaults = {"UserProgress": []}
 # "873584735": {"stage": "1", "started": "2020-07-25 01:00:15", "lastfinished": "2020-07-15 11:04:39"}
 
 class EnrichmentCenter(commands.Cog):
@@ -13,7 +13,8 @@ class EnrichmentCenter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.database = Config.get_conf(self, identifier=133784274, force_registration=True)
-        self.database.register_guild(**settings)
+        self.database.register_guild(**defaults)
+        self.players = []
 
     @commands.command()
     async def sendMsgToChannel(self, ctx, *, message):
@@ -73,9 +74,9 @@ class EnrichmentCenter(commands.Cog):
     async def startEnrichment(self, ctx):
         user = ctx.author
         channel = ctx.channel
-        await channel.send(user.id)
+        settings = await self.config.guild(ctx.guild).all()
 
-        if user.id in self.database.guild(ctx.guild).UserProgress():
+        if user.id in settings["UserProgress"]:
             pass
         else:
             timenow = datetime.now()
