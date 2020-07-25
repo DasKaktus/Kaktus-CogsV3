@@ -23,9 +23,10 @@ class EnrichmentCenter(commands.Cog):
     async def whichStage(self, ctx):
         user = ctx.author
         member_settings = self.config.member(user)
+        current_stage = await member_settings.stage()
         #foot = "Total amount of subjects: {}".format(len(self.config.member()))
         embed = discord.Embed(color=0xEE2222, title='User Progress')
-        if member_settings["stage"] == 0:
+        if current_stage == 0:
             embed.add_field(name='Stage', value="N/A")
             embed.add_field(name='Last stage finished', value="N/A")
         else:
