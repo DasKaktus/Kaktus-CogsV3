@@ -33,7 +33,7 @@ class EnrichmentCenter(commands.Cog):
         await ctx.send('Images:', files=my_files)
         
     @commands.command()
-    async def commandname(self, ctx, *, text) # text can be poop. I use text cause it makes sense. You don't have to make sense.
+    async def commandname(self, ctx, *, text)
         await ctx.send(text)
         
     @commands.command()
