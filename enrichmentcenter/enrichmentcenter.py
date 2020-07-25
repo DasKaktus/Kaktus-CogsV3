@@ -70,8 +70,10 @@ class EnrichmentCenter(commands.Cog):
         await ctx.send(data)
 
     @commands.command()
-    async def startEnrichmnet(self, ctx):
+    async def startEnrichment(self, ctx):
         user = ctx.author
+        channel = ctx.channel
+        await channel.send(user.id)
 
         if user.id in self.database.guild(ctx.guild).UserProgress():
             pass
