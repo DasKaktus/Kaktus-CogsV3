@@ -52,8 +52,8 @@ class EnrichmentCenter(commands.Cog):
         ctx = await self.bot.get_context(message)
         if ctx.prefix is None:
             return
-        try:
-            cclower = ctx.invoked_with.lower()
+        
+        cclower = ctx.invoked_with.lower()
         await ctx.send(cclower)
         
         
