@@ -155,8 +155,8 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name)) 
         sendit = await ctx.send(box(msg, lang=language))
-        await asyncio.sleep(5)
-        await sendit.delete()
+        #await asyncio.sleep(5)
+        #await sendit.delete()
         
     
     
