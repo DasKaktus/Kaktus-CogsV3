@@ -65,10 +65,26 @@ class EnrichmentCenter(commands.Cog):
     async def cooldownCommand(self, ctx):
         await ctx.send("I can only be used once every 30 seconds, per user")
 
+
+
+
+
+
+
     @commands.command()
     async def allEnrichment(self, ctx):
         data = await self.config.guild(ctx.guild).all()
         await ctx.send(data)
+        
+    @commands.command()
+    @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
+    async def whichStage(self, ctx)
+        settings = await self.config.guild(ctx.guild).all()
+        embed = discord.Embed(color=0xEE2222, title='User Progress')
+        embed.add_field(name='Stage', value=settings["UserProgress"][user.id]["stage"])
+        embed.add_field(name='Last stage finished', value=settings[user.id]["lastfinished"])
+        embed.set_footer(text='Total amount of subjects: ' len(settings["UserProgress"]))   
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def startEnrichment(self, ctx):
