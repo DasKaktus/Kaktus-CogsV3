@@ -14,7 +14,7 @@ class EnrichmentCenter(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_guild(
-            UserProgress=[]
+            userprogress=[]
         )
         #self.config.register_guild(**defaults)
         #self.players = []
@@ -103,7 +103,7 @@ class EnrichmentCenter(commands.Cog):
         channel = ctx.channel
         #settings = await self.config.guild(ctx.guild).all()
         
-        if user.id in self.config.guild(ctx.guild).UserProgress():
+        if user.id in await self.config.guild(ctx.guild).userprogress():
             await ctx.send("Pass")
             pass
         else:
