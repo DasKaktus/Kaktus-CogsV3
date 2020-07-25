@@ -14,7 +14,7 @@ class EnrichmentCenter(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_guild(
-            userprogress=[]
+            userprogress: dict = {}
         )
         #self.config.register_guild(**defaults)
         #self.players = []
@@ -116,5 +116,4 @@ class EnrichmentCenter(commands.Cog):
             
     @commands.command()  
     async def clearCenter(self, ctx):  
-        await self.config.guild(ctx.guild).userprogress.clear()
-        await self.config.guild(ctx.guild).UserProgress.clear()
+        await self.config.guild(ctx.guild).clear()
