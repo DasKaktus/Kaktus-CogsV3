@@ -2,4 +2,6 @@ from .enrichmentcenter import EnrichmentCenter
 
 
 def setup(bot):
-    bot.add_cog(EnrichmentCenter())
+    cog = EnrichmentCenter(bot)
+    bot.add_cog(cog)
+    await cog.initialise()
