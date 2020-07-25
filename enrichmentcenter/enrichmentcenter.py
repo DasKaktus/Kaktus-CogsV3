@@ -23,7 +23,7 @@ class EnrichmentCenter(commands.Cog):
     async def whichStage(self, ctx):
         user = ctx.author
         member_settings = self.config.member(user)
-        foot = "Total amount of subjects: {}".format(len(self.config.member())
+        foot = "Total amount of subjects: {}".format(len(self.config.member()))
         embed = discord.Embed(color=0xEE2222, title='User Progress')
         if member_settings["stage"] == 0:
             embed.add_field(name='Stage', value="N/A")
