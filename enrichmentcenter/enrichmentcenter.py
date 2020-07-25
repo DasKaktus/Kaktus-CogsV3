@@ -4,7 +4,8 @@ from redbot.core import commands
 from redbot.core.utils.chat_formatting import box
 from redbot.core import Config
 
-
+class commandException(Exception):
+    pass
 
 class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
@@ -46,6 +47,7 @@ class EnrichmentCenter(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
+        await ctx.send("Yup")
         is_private = isinstance(message.channel, discord.abc.PrivateChannel)
         if len(message.content) < 2 or is_private or not user_allowed or message.author.bot:
             return
@@ -53,7 +55,10 @@ class EnrichmentCenter(commands.Cog):
         if ctx.prefix is None:
             return
         
-        cclower = ctx.invoked_with.lower()
+        try:
+            cclower = ctx.invoked_with.lower()
+        except commandException:
+            return
         await ctx.send(cclower)
         
         
