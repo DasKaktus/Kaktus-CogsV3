@@ -107,13 +107,10 @@ Good luck.
                 sendCodeBlock(ctx, "http", helptext)
                 break
             if case('aperture-science-initiate'):
-                print 2
                 break
             if case('aperture-science-c-uhswhbcjh-'):
-                print 10
                 break
             if case('aperture-science-c-dgwrgdfg-'):
-                print 11
                 break
      
         
