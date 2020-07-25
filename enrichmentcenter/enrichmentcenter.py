@@ -80,7 +80,7 @@ class EnrichmentCenter(commands.Cog):
             pass
         else:
             timenow = datetime.now()
-            now = now.strftime("%Y-%m-%d %H:%M:%S")
+            now = timenow.strftime("%Y-%m-%d %H:%M:%S")
             userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
             self.config.guild(ctx.guild).UserProgress().append(userinfo)
             
