@@ -98,9 +98,9 @@ class EnrichmentCenter(commands.Cog):
     async def startEnrichment(self, ctx):
         user = ctx.author
         channel = ctx.channel
-        settings = await self.config.guild(ctx.guild).all()
-
-        if user.id in settings["UserProgress"]:
+        #settings = await self.config.guild(ctx.guild).all()
+        
+        if user.id in self.config.guild(ctx.guild).UserProgress(:
             await ctx.send("Pass")
             pass
         else:
