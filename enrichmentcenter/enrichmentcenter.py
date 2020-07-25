@@ -96,7 +96,7 @@ class EnrichmentCenter(commands.Cog):
         channel = ctx.channel
         settings = await self.config.guild(ctx.guild).all()
 
-        if user.id in settings["UserProgress"]:
+        if str(user.id) in settings["UserProgress"]:
             await ctx.send("Pass")
             pass
         else:
