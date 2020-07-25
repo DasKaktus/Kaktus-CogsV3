@@ -71,11 +71,11 @@ class EnrichmentCenter(commands.Cog):
 
 
     @commands.command()
-    async def startEnrichmnet(self, ctx, user: discord.Member):
+    async def startEnrichmnet(self, ctx):
         newAuthor = ctx.author
         setUpNewUser(ctx, newAuthor)
     
-    async def setUpNewUser(self,ctx, user: discord.Member):
+    def setUpNewUser(self,ctx, user: discord.Member):
         if user.id in self.database.guild(ctx.guild).UserProgress():
             pass
         else:
