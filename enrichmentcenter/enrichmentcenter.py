@@ -96,13 +96,13 @@ class EnrichmentCenter(commands.Cog):
         channel = ctx.channel
         settings = await self.config.guild(ctx.guild).all()
 
-        if user.id in settings["UserProgress"]:
+        if user.id in self.config.guild(ctx.guild).UserProgress():
             await ctx.send("Pass")
             pass
         else:
             timenow = datetime.now()
             now = timenow.strftime("%Y-%m-%d %H:%M:%S")
-            userinfo = [user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}]
+            userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
             async with self.config.guild(ctx.guild).UserProgress() as users:
                 users.append(userinfo)
             
