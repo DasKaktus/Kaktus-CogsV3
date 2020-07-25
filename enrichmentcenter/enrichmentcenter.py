@@ -154,9 +154,9 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name)) 
-        await ctx.send(box(msg, lang=language))
+        sendit = await ctx.send(box(msg, lang=language))
         await asyncio.sleep(5)
-        await
+        await sendit.delete()
         
     
     
