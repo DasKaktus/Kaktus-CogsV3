@@ -6,11 +6,51 @@ from redbot.core import Config
 
 class commandException(Exception):
     pass
+    
+class switch(object):
+    def __init__(self, value):
+        self.value = value
+        self.fall = False
+
+    def __iter__(self):
+        """Return the match method once, then stop"""
+        yield self.match
+        raise StopIteration
+
+    def match(self, *args):
+        """Indicate whether or not to enter a case suite"""
+        if self.fall or not args:
+            return True
+        elif self.value in args:
+            self.fall = True
+            return True
+        else:
+            return False
 
 class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
     
     default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "lastfinished": "0000-00-00 00:00:00"}
+    
+    helptext = """Aperture Science Personnel File; #{author.id}
+
+Test Subject Name; {author.name}
+
+Status; Alive
+
+----------------------------------------------------
+
+Hello and welcome to the Aperture Science computer-aided enrichment center. The enrichment center consists of multiple chambers designed to challenge your puzzle solving skills, knowledge of cryptography and ability to find hidden messages. 
+
+To complete each chamber you must discover the command hidden within the puzzle to progress to the next chamber and receive the next puzzle. 
+
+All commands use the same basic format of "!Aperture-Science-" followed by a code/text string unique to that puzzle which is used to access the next puzzle.
+
+These puzzles use a variety of techniques from simple ciphers to more challenging methods of hiding messages.
+
+Good luck.
+
+— Doug-Rattmann"""
     
     def __init__(self, bot):
         self.bot = bot
@@ -60,12 +100,27 @@ class EnrichmentCenter(commands.Cog):
             cclower = ctx.invoked_with.lower()
         except commandException:
             return
-        await ctx.send(cclower)
         
+        cclower
+        for case in switch(cclower):
+            if case('aperture-science-help'):
+                sendCodeBlock(ctx, "http", helptext)
+                break
+            if case('aperture-science-initiate'):
+                print 2
+                break
+            if case('aperture-science-c-uhswhbcjh-'):
+                print 10
+                break
+            if case('aperture-science-c-dgwrgdfg-'):
+                print 11
+                break
+     
         
-        
-        
-        
+    async def sendCodeBlock(self, ctx, language: str, msg: string):
+        msg = msg.replace("{author.id}", ctx.author.id) 
+        msg = msg.replace("{author.name}", ctx.author.name) 
+        await ctx.send(box(msg, lang=language))    
         
         
 
