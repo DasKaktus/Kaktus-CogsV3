@@ -108,4 +108,4 @@ class EnrichmentCenter(commands.Cog):
             
     @commands.command()  
     async def clearCenter(self, ctx):  
-        await self.database.guild(ctx.guild).UserProgress.clear()  
+        await self.config.guild(ctx.guild).UserProgress.clear()  
