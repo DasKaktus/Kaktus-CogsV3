@@ -96,7 +96,7 @@ class EnrichmentCenter(commands.Cog):
         channel = ctx.channel
         settings = await self.config.guild(ctx.guild).all()
 
-        if str(user.id) in settings["UserProgress"]:
+        if user.id in settings["UserProgress"]:
             await ctx.send("Pass")
             pass
         else:
@@ -106,4 +106,6 @@ class EnrichmentCenter(commands.Cog):
             async with self.config.guild(ctx.guild).UserProgress() as users:
                 users.append(userinfo)
             
-    
+    @commands.command()  
+    async def clearCenter(self, ctx):  
+        await self.database.guild(ctx.guild).UserProgress.clear()  
