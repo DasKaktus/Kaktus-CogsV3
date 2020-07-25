@@ -44,10 +44,17 @@ class EnrichmentCenter(commands.Cog):
         member_settings = self.config.member(user)
         await member_settings.stage.set(1)
 
-    @commands.command()
-    async def Aperture-Science-Help(self, ctx):
-        await ctx.send("12345")
-        
+    @commands.Cog.listener()
+    async def on_message_without_command(self, message):
+        is_private = isinstance(message.channel, discord.abc.PrivateChannel)
+        if len(message.content) < 2 or is_private or not user_allowed or message.author.bot:
+            return
+        ctx = await self.bot.get_context(message)
+        if ctx.prefix is None:
+            return
+        try:
+            cclower = ctx.invoked_with.lower()
+        await ctx.send(cclower)
         
         
         
