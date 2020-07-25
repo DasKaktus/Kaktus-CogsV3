@@ -12,8 +12,8 @@ class EnrichmentCenter(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-        self.database = Config.get_conf(self, identifier=133784274, force_registration=True)
-        self.database.register_guild(**defaults)
+        self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
+        self.config.register_guild(**defaults)
         self.players = []
 
     @commands.command()
@@ -67,7 +67,7 @@ class EnrichmentCenter(commands.Cog):
 
     @commands.command()
     async def allEnrichment(self, ctx):
-        data = await self.database.guild(ctx.guild).all()
+        data = await self.config.guild(ctx.guild).all()
         await ctx.send(data)
 
     @commands.command()
@@ -82,6 +82,6 @@ class EnrichmentCenter(commands.Cog):
             timenow = datetime.now()
             now = now.strftime("%Y-%m-%d %H:%M:%S")
             userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
-            self.database.guild(ctx.guild).UserProgress().append(userinfo)
+            self.config.guild(ctx.guild).UserProgress().append(userinfo)
             
     
