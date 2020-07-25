@@ -81,6 +81,7 @@ class EnrichmentCenter(commands.Cog):
     async def whichStage(self, ctx):
         user = ctx.author
         settings = await self.config.guild(ctx.guild).all()
+        await ctx.send(user.id)
         usr = settings["UserProgress"][user.id]
         foot = "Total amount of subjects: {}".format(len(settings["UserProgress"]))
         embed = discord.Embed(color=0xEE2222, title='User Progress')
