@@ -14,7 +14,7 @@ class EnrichmentCenter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
-        self.config.register_member(**default_member)
+        self.config.register_member(**self.default_member)
         #self.players = []
         
         
