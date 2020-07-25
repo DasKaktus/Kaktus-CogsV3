@@ -13,8 +13,11 @@ class EnrichmentCenter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
-        self.config.register_guild(**defaults)
-        self.players = []
+        self.config.register_guild(
+            UserProgress=[]
+        )
+        #self.config.register_guild(**defaults)
+        #self.players = []
 
     @commands.command()
     async def sendMsgToChannel(self, ctx, *, message):
