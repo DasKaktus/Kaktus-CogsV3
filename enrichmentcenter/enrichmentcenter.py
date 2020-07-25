@@ -104,7 +104,7 @@ Good luck.
         cclower
         for case in switch(cclower):
             if case('aperture-science-help'):
-                await self.sendCodeBlock(ctx, "http", self.helptext)
+                await self.sendCodeBlock("http", self.helptext)
                 break
             if case('aperture-science-initiate'):
                 break
