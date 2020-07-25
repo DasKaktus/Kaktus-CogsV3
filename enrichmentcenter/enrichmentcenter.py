@@ -28,7 +28,7 @@ class EnrichmentCenter(commands.Cog):
     async def sendFileImage(self, ctx):
         my_files = [
             discord.File('file_path.png', 'filename.png'),
-            discord.File('other_file_path.png, 'other_filename.png')
+            discord.File('other_file_path.png', 'other_filename.png')
         ]
         await ctx.send('Images:', files=my_files)
         
