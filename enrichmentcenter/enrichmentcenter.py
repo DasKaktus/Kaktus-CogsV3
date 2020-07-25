@@ -4,20 +4,53 @@ from redbot.core import commands
 from redbot.core.utils.chat_formatting import box
 from redbot.core import Config
 
-defaults = {"UserProgress": []}
-# "873584735": {"stage": "1", "started": "2020-07-25 01:00:15", "lastfinished": "2020-07-15 11:04:39"}
+
 
 class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
     
+    default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "lastfinished": "0000-00-00 00:00:00"}
+    
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
-        self.config.register_guild(
-            userprogress: dict = {}
-        )
-        #self.config.register_guild(**defaults)
+        self.config.register_member(**default_member)
         #self.players = []
+        
+        
+    @commands.command()
+    @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
+    async def whichStage(self, ctx):
+        user = ctx.author
+        member_settings = self.config.member(user)
+        foot = "Total amount of subjects: {}".format(len(self.config.member())
+        embed = discord.Embed(color=0xEE2222, title='User Progress')
+        if member_settings["stage"] == 0:
+            embed.add_field(name='Stage', value="N/A")
+            embed.add_field(name='Last stage finished', value="N/A")
+        else:
+            embed.add_field(name='Stage', value=member_settings["stage"])
+            embed.add_field(name='Last stage finished', value=member_settings["lastfinished"])
+        embed.set_footer(text=foot)   
+        await ctx.send(embed=embed)
+        
+    @commands.command()
+    async def startEnrichment(self, ctx):
+        user = ctx.author
+        channel = ctx.channel
+        member_settings = self.config.member(user)
+        member_settings.stage.set(1)
+
+   
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     @commands.command()
     async def sendMsgToChannel(self, ctx, *, message):
@@ -69,7 +102,7 @@ class EnrichmentCenter(commands.Cog):
         await ctx.send("I can only be used once every 30 seconds, per user")
 
 
-
+    
 
 
 
@@ -83,36 +116,8 @@ class EnrichmentCenter(commands.Cog):
         data = await self.config.guild(ctx.guild).all()
         await ctx.send(data)
         
-    @commands.command()
-    @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
-    async def whichStage(self, ctx):
-        user = ctx.author
-        settings = await self.config.guild(ctx.guild).all()
-        await ctx.send(user.id)
-        usr = settings["UserProgress"][user.id]
-        foot = "Total amount of subjects: {}".format(len(settings["UserProgress"]))
-        embed = discord.Embed(color=0xEE2222, title='User Progress')
-        embed.add_field(name='Stage', value=settings["UserProgress"][user.id].get("stage"))
-        embed.add_field(name='Last stage finished', value=settings["UserProgress"][user.id].lastfinished)
-        embed.set_footer(text=foot)   
-        await ctx.send(embed=embed)
 
-    @commands.command()
-    async def startEnrichment(self, ctx):
-        user = ctx.author
-        channel = ctx.channel
-        #settings = await self.config.guild(ctx.guild).all()
-        
-        if user.id in await self.config.guild(ctx.guild).userprogress():
-            await ctx.send("Is in")
-            pass
-        else:
-            await ctx.send("Is not in")
-            timenow = datetime.now()
-            now = timenow.strftime("%Y-%m-%d %H:%M:%S")
-            userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
-            async with self.config.guild(ctx.guild).userprogress() as users:
-                users.append(userinfo)
+    
             
     @commands.command()  
     async def clearCenter(self, ctx):  
