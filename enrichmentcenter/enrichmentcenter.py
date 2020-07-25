@@ -33,8 +33,10 @@ class EnrichmentCenter(commands.Cog):
         ##    embed.add_field(name='Stage', value=member_settings["stage"])
         ##    embed.add_field(name='Last stage finished', value=member_settings["lastfinished"])
         #embed.set_footer(text=foot)
-        embed.add_field(name='Stage', value=member_settings.stage())
-        embed.add_field(name='Last stage finished', value=member_settings.lastfinished())
+        curr_stage = await member_settings.stage()
+        curr_lastfinish = await member_settings.lastfinished()
+        embed.add_field(name='Stage', value=curr_stage)
+        embed.add_field(name='Last stage finished', value=curr_lastfinish)
         embed.set_footer(text="Enrichmentcenter")
         await ctx.send(embed=embed)
         
