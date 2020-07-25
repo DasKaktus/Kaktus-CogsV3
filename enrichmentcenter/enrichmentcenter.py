@@ -78,7 +78,7 @@ class EnrichmentCenter(commands.Cog):
         
     @commands.command()
     @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
-    async def whichStage(self, ctx)
+    async def whichStage(self, ctx):
         settings = await self.config.guild(ctx.guild).all()
         embed = discord.Embed(color=0xEE2222, title='User Progress')
         embed.add_field(name='Stage', value=settings["UserProgress"][user.id]["stage"])
