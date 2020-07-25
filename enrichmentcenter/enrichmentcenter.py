@@ -64,18 +64,15 @@ class EnrichmentCenter(commands.Cog):
     async def cooldownCommand(self, ctx):
         await ctx.send("I can only be used once every 30 seconds, per user")
 
-
-
-
-
-
+    @commands.command()
+    async def allEnrichment(self, ctx):
+        data = await self.database.guild(ctx.guild).all()
+        await ctx.send(data)
 
     @commands.command()
     async def startEnrichmnet(self, ctx):
-        newAuthor = ctx.author
-        setUpNewUser(ctx, newAuthor)
-    
-    def setUpNewUser(self,ctx, user: discord.Member):
+        user = ctx.author
+
         if user.id in self.database.guild(ctx.guild).UserProgress():
             pass
         else:
@@ -84,7 +81,4 @@ class EnrichmentCenter(commands.Cog):
             userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
             self.database.guild(ctx.guild).UserProgress().append(userinfo)
             
-    @commands.command()
-    async def allEnrichment(self, ctx):
-        data = await self.database.guild(ctx.guild).all()
-        await ctx.send(data)
+    
