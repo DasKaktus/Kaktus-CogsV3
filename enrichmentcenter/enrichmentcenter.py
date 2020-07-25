@@ -45,7 +45,7 @@ class EnrichmentCenter(commands.Cog):
         user = ctx.author
         channel = ctx.channel
         member_settings = self.config.member(user)
-        member_settings.stage.set(1)
+        await member_settings.stage.set(1)
 
    
         
