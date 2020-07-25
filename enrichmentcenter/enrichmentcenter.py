@@ -75,13 +75,13 @@ class EnrichmentCenter(commands.Cog):
 
     @commands.command()
     async def ccv(self, ctx):
-        data = await self.config.guild(ctx.guild).UserProgress()
+        data = await self.config.guild(ctx.guild).userprogress()
         await ctx.send(data[ctx.author.id])
         
     @commands.command()
     async def allEnrichment(self, ctx):
         data = await self.config.guild(ctx.guild).all()
-        await ctx.send(data["UserProgress"])
+        await ctx.send(data)
         
     @commands.command()
     @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
@@ -104,15 +104,16 @@ class EnrichmentCenter(commands.Cog):
         #settings = await self.config.guild(ctx.guild).all()
         
         if user.id in await self.config.guild(ctx.guild).userprogress():
-            await ctx.send("Pass")
+            await ctx.send("Is in")
             pass
         else:
+            await ctx.send("Is not in")
             timenow = datetime.now()
             now = timenow.strftime("%Y-%m-%d %H:%M:%S")
             userinfo = {user.id: {"stage": 1, "started": now, "lastfinished": "0000-00-00 00:00:00"}}
-            async with self.config.guild(ctx.guild).UserProgress() as users:
+            async with self.config.guild(ctx.guild).userprogress() as users:
                 users.append(userinfo)
             
     @commands.command()  
     async def clearCenter(self, ctx):  
-        await self.config.guild(ctx.guild).UserProgress.clear()  
+        await self.config.guild(ctx.guild).userprogress.clear()  
