@@ -139,9 +139,9 @@ Good luck.
         ]
         await ctx.send('Images:', files=my_files)
         
-    @commands.command()
-    async def sendCodeBlock(self, ctx, *, message):
-        await ctx.send(box(message))
+    #@commands.command()
+    #async def sendCodeBlock(self, ctx, *, message):
+    #    await ctx.send(box(message))
         
     @commands.command()
     async def sendCodeBlockWithColor(self, ctx):
