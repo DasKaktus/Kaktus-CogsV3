@@ -19,21 +19,23 @@ class EnrichmentCenter(commands.Cog):
         
         
     @commands.command()
-    @commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
+    #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
     async def whichStage(self, ctx):
         user = ctx.author
         member_settings = self.config.member(user)
         current_stage = await member_settings.stage()
         #foot = "Total amount of subjects: {}".format(len(self.config.member()))
-        embed = discord.Embed(color=0xEE2222, title='User Progress')
-        if current_stage == 0:
-            embed.add_field(name='Stage', value="N/A")
-            embed.add_field(name='Last stage finished', value="N/A")
-        else:
-            embed.add_field(name='Stage', value=member_settings["stage"])
-            embed.add_field(name='Last stage finished', value=member_settings["lastfinished"])
+        embed = discord.Embed(color=0xEE2222, title='Testsubject report card')
+        ##if current_stage == 0:
+        ##    embed.add_field(name='Stage', value="N/A")
+        ##    embed.add_field(name='Last stage finished', value="N/A")
+        ##else:
+        ##    embed.add_field(name='Stage', value=member_settings["stage"])
+        ##    embed.add_field(name='Last stage finished', value=member_settings["lastfinished"])
         #embed.set_footer(text=foot)
-        embed.set_footer(text="Enrichmentcenter Test subject card")
+        embed.add_field(name='Stage', value=member_settings["stage"])
+        embed.add_field(name='Last stage finished', value=member_settings["lastfinished"])
+        embed.set_footer(text="Enrichmentcenter")
         await ctx.send(embed=embed)
         
     @commands.command()
