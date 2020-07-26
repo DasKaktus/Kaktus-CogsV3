@@ -90,7 +90,6 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     
     def __init__(self, bot):
         self.bot = bot
-        self.ctx = ctx
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_member(**self.default_member)
         self.messageids = []
@@ -179,6 +178,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         # Add sendit.id to an list with an endtime.
         # A timer that checks if message should be deleted?
         self.messageids.append(sendit.id)
+        self.ctx = ctx
         #await self.selfDestructMessage(ctx)
         
     #async def selfDestructMessage(self, ctx):
