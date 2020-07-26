@@ -200,6 +200,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     #        newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
     #        await message.edit(embed=newembed)
 
+
     @tasks.loop(seconds=1.0)
     async def selfDestructMessage(self):
         #await asyncio.sleep(1)
