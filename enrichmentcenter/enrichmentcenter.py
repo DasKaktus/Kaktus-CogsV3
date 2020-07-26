@@ -149,61 +149,26 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
                 await self.sendCodeBlock(ctx, "http", self.stage1)
                 break
             if case('aperture-science-c-uhswhbcjh-'):
-                await self.sendCodeBlock2(ctx, "http", self.stage2)
+                await self.sendCodeBlock(ctx, "http", self.stage2)
                 break
             if case('aperture-science-c-dgwrgdfg-'):
                 await self.sendCodeBlock(ctx, "http", self.stage3_1)
                 await self.sendCodeBlock(ctx, "diff", self.stage3_2)
                 break
-     
-        
-    async def sendCodeBlock(self, ctx, language: str, msg: str):
-        msg = msg.replace("{author.id}", str(ctx.author.id)) 
-        msg = msg.replace("{author.name}", str(ctx.author.name)) 
-        sendit = await ctx.send(box(msg, lang=language))
-        
-        # Add sendit.id to an list with an endtime.
-        # A timer that checks if message should be deleted?
-        self.messageids.append(sendit.id)
     
-    async def sendCodeBlock2(self, ctx, language: str, msg: str):
+    async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name))
         embed = discord.Embed(color=0xEE2222, title='Test')
         embed.add_field(name='Computer output', value=box(msg, lang=language))
         embed.set_footer(text="This message will selfdestruct in: 30 seconds")
         sendit = await ctx.send(embed=embed)
-        #sendit = await ctx.send(box(msg, lang=language))
-        
-        # Add sendit.id to an list with an endtime.
-        # A timer that checks if message should be deleted?
         self.messageids.append(sendit.id)
         self.ctx = ctx
-        #await self.selfDestructMessage(ctx)
-        
-    #async def selfDestructMessage(self, ctx):
-    #    await asyncio.sleep(1)
-    #    for msgid in self.messageids:
-    #        try:
-    #            message = await ctx.channel.get_message(msgid)
-    #        except AttributeError:
-    #            message = await ctx.channel.fetch_message(msgid)
-    #        
-    #        org_msg = message.embeds[0].fields[0].value
-    #        
-    #        
-    #        tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-    #        tid = tid - 1
-    #        
-    #        newembed = discord.Embed(color=0xEE2222, title='Test')
-    #        newembed.add_field(name='Computer output', value=org_msg)
-    #        newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
-    #        await message.edit(embed=newembed)
 
 
     @tasks.loop(seconds=1.0)
     async def selfDestructMessage(self):
-        #await asyncio.sleep(1)
         if hasattr(self, 'ctx'):
             for msgid in self.messageids:
                 try:
@@ -232,6 +197,29 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         await self.bot.wait_until_ready()
                 
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 
                 
                 
