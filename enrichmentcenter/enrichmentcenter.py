@@ -195,7 +195,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
             await message.edit(embed=newembed)
 
-    async def selfDestructMessage(self):
+    async def selfDestructMessage2(self):
         try:
             await self.bot.wait_until_ready()
         except Exception as e:
