@@ -188,9 +188,9 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
             tid = tid - 1
             
-            embed = discord.Embed(color=0xEE2222, title='Test')
-            embed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
-            message.edit(embed)
+            newembed = discord.Embed(color=0xEE2222, title='Test')
+            newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+            message.edit(embed=newembed)
             #message.content
             #amt = int(msg.embeds[0].footer.text.split("Winners: ")[1][0])
             #dos, roles = msg.embeds[0].fields
