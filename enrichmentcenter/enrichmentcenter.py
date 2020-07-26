@@ -218,7 +218,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
                 tid = tid - 1
                 
                 if tid == 0:
-                    message.delete()
+                    await message.delete()
                     self.messageids.remove(msgid)
                 else:
                     newembed = discord.Embed(color=0xEE2222, title='Test')
