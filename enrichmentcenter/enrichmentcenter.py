@@ -198,6 +198,9 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     async def selfDestructMessage(self):
         try:
             await self.bot.wait_until_ready()
+        except Exception as e:
+            print(e)
+            
         await asyncio.sleep(1)
         for msgid in self.messageids:
             try:
