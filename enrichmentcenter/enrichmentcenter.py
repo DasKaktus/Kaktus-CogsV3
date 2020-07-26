@@ -90,6 +90,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     
     def __init__(self, bot):
         self.bot = bot
+        self.ctx = ctx
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_member(**self.default_member)
         self.messageids = []
@@ -202,12 +203,12 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     @tasks.loop(seconds=1.0)
     async def selfDestructMessage(self):
         #await asyncio.sleep(1)
-        await ctx.send("loop")
+        await self.ctx.send("loop")
         for msgid in self.messageids:
             try:
-                message = await ctx.channel.get_message(msgid)
+                message = await self.ctx.channel.get_message(msgid)
             except AttributeError:
-                message = await ctx.channel.fetch_message(msgid)
+                message = await self.ctx.channel.fetch_message(msgid)
             
             org_msg = message.embeds[0].fields[0].value
             
