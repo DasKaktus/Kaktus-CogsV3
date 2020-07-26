@@ -165,7 +165,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name))
         embed = discord.Embed(color=0xEE2222, title='Test')
-        embed.add_field(name='Computer output', value=msg)
+        embed.add_field(name='Computer output', value=box(msg, lang=language))
         embed.set_footer(text="This message will selfdestruct in: 30 seconds")
         sendit = await ctx.send(embed=embed)
         #sendit = await ctx.send(box(msg, lang=language))
@@ -183,24 +183,17 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             except AttributeError:
                 message = await ctx.channel.fetch_message(msgid)
             
-            #await ctx.send(message.embeds[0].footer.text)
-            
             org_msg = message.embeds[0].fields[0].value
             
             
             tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
             tid = tid - 1
             
-            #newembed = discord.Embed(embedmsg)
-            
             newembed = discord.Embed(color=0xEE2222, title='Test')
             newembed.add_field(name='Computer output', value=org_msg)
             newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
             await message.edit(embed=newembed)
-            #message.content
-            #amt = int(msg.embeds[0].footer.text.split("Winners: ")[1][0])
-            #dos, roles = msg.embeds[0].fields
-            #await msg.edit(embed=embed)
+
     
     
     
