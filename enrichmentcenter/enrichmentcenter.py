@@ -173,15 +173,15 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         # Add sendit.id to an list with an endtime.
         # A timer that checks if message should be deleted?
         self.messageids.append(sendit.id)
-        await self.selfDestructMessage(ctx.channel)
+        await self.selfDestructMessage(ctx)
         
-    async def selfDestructMessage(self, channel: discord.TextChannel):
+    async def selfDestructMessage(self, ctx):
         await asyncio.sleep(1)
         for msgid in self.messageids:
             try:
-                message = await channel.get_message(msgid)
+                message = await ctx.channel.get_message(msgid)
             except AttributeError:
-                message = await channel.fetch_message(msgid)
+                message = await ctx.channel.fetch_message(msgid)
             
             await ctx.send(message.embeds[0].footer.text)
             
