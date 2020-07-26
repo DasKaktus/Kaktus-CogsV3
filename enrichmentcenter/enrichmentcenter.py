@@ -200,24 +200,24 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             await self.bot.wait_until_ready()
         except Exception as e:
             print(e)
-            
-        await asyncio.sleep(1)
-        for msgid in self.messageids:
-            try:
-                message = await ctx.channel.get_message(msgid)
-            except AttributeError:
-                message = await ctx.channel.fetch_message(msgid)
-            
-            org_msg = message.embeds[0].fields[0].value
-            
-            
-            tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-            tid = tid - 1
-            
-            newembed = discord.Embed(color=0xEE2222, title='Test')
-            newembed.add_field(name='Computer output', value=org_msg)
-            newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
-            await message.edit(embed=newembed)
+        while not bot.is_closed:
+            await asyncio.sleep(1)
+            for msgid in self.messageids:
+                try:
+                    message = await ctx.channel.get_message(msgid)
+                except AttributeError:
+                    message = await ctx.channel.fetch_message(msgid)
+                
+                org_msg = message.embeds[0].fields[0].value
+                
+                
+                tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
+                tid = tid - 1
+                
+                newembed = discord.Embed(color=0xEE2222, title='Test')
+                newembed.add_field(name='Computer output', value=org_msg)
+                newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+                await message.edit(embed=newembed)
                 
                 
                 
