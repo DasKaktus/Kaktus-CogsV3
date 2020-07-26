@@ -183,6 +183,8 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             except AttributeError:
                 message = await channel.fetch_message(msgid)
             
+            await ctx.send(message.embeds[0].footer.text)
+            
             tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
             tid = tid - 1
             
