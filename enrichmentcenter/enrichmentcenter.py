@@ -225,6 +225,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
                     newembed.add_field(name='Computer output', value=org_msg)
                     newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
                     await message.edit(embed=newembed)
+                    
                 
     @selfDestructMessage.before_loop
     async def before_selfdestruct(self):            
