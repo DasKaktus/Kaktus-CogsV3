@@ -166,7 +166,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         msg = msg.replace("{author.name}", str(ctx.author.name))
         embed = discord.Embed(color=0xEE2222, title='Test')
         embed.add_field(name='Computer output', value=msg)
-        embed.set_footer(text="This message will selfdestruct in 30 seconds")
+        embed.set_footer(text="This message will selfdestruct in: 30 seconds")
         sendit = await ctx.send(embed=embed)
         #sendit = await ctx.send(box(msg, lang=language))
         
@@ -183,7 +183,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             except AttributeError:
                 message = await ctx.channel.fetch_message(msgid)
             
-            await ctx.send(message.embeds[0].footer.text)
+            #await ctx.send(message.embeds[0].footer.text)
             
             tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
             tid = tid - 1
