@@ -219,6 +219,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
                 
                 if tid == 0:
                     message.remove()
+                    self.messageids.remove(msgid)
                 else:
                     newembed = discord.Embed(color=0xEE2222, title='Test')
                     newembed.add_field(name='Computer output', value=org_msg)
