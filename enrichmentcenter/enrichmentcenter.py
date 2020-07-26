@@ -94,10 +94,10 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         self.config.register_member(**self.default_member)
         self.messageids = []
         #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
-        self.selfDestructMessage2.start()
+        self.selfDestructMessage.start()
     
     def cog_unload(self):
-        self.selfDestructMessage2.cancel()
+        self.selfDestructMessage.cancel()
         
     @commands.command()
     #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
@@ -180,8 +180,29 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         self.messageids.append(sendit.id)
         #await self.selfDestructMessage(ctx)
         
-    async def selfDestructMessage(self, ctx):
-        await asyncio.sleep(1)
+    #async def selfDestructMessage(self, ctx):
+    #    await asyncio.sleep(1)
+    #    for msgid in self.messageids:
+    #        try:
+    #            message = await ctx.channel.get_message(msgid)
+    #        except AttributeError:
+    #            message = await ctx.channel.fetch_message(msgid)
+    #        
+    #        org_msg = message.embeds[0].fields[0].value
+    #        
+    #        
+    #        tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
+    #        tid = tid - 1
+    #        
+    #        newembed = discord.Embed(color=0xEE2222, title='Test')
+    #        newembed.add_field(name='Computer output', value=org_msg)
+    #        newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+    #        await message.edit(embed=newembed)
+
+    @tasks.loop(seconds=1.0)
+    async def selfDestructMessage(self):
+        #await asyncio.sleep(1)
+        await ctx.send("loop")
         for msgid in self.messageids:
             try:
                 message = await ctx.channel.get_message(msgid)
@@ -198,34 +219,10 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             newembed.add_field(name='Computer output', value=org_msg)
             newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
             await message.edit(embed=newembed)
-
-    @tasks.loop(seconds=1.0)
-    async def selfDestructMessage2(self):
-        try:
-            await self.bot.wait_until_ready()
-        except Exception as e:
-            print(e)
-        while not self.bot.is_closed:
-            #await asyncio.sleep(1)
-            for msgid in self.messageids:
-                try:
-                    message = await ctx.channel.get_message(msgid)
-                except AttributeError:
-                    message = await ctx.channel.fetch_message(msgid)
                 
-                org_msg = message.embeds[0].fields[0].value
-                
-                
-                tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                tid = tid - 1
-                
-                newembed = discord.Embed(color=0xEE2222, title='Test')
-                newembed.add_field(name='Computer output', value=org_msg)
-                newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
-                await message.edit(embed=newembed)
-                
-                
-                
+    @selfDestructMessage.before_loop
+    async def before_selfdestruct(self):            
+        await self.bot.wait_until_ready()
                 
                 
                 
