@@ -188,7 +188,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
             tid = tid - 1
             
-            org_msg = message.embeds[0].field[0].text
+            org_msg = message.embeds[0].fields[0].text
             
             newembed = discord.Embed(color=0xEE2222, title='Test')
             newembed.add_field(name='Computer output', value=org_msg)
