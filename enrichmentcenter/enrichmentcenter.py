@@ -93,8 +93,11 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_member(**self.default_member)
         self.messageids = []
-        self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
-        
+        #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
+        self.selfDestructMessage2.start()
+    
+    def cog_unload(self):
+        self.selfDestructMessage2.cancel()
         
     @commands.command()
     #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
@@ -196,13 +199,14 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
             await message.edit(embed=newembed)
 
+    @tasks.loop(seconds=1.0)
     async def selfDestructMessage2(self):
         try:
             await self.bot.wait_until_ready()
         except Exception as e:
             print(e)
         while not self.bot.is_closed:
-            await asyncio.sleep(1)
+            #await asyncio.sleep(1)
             for msgid in self.messageids:
                 try:
                     message = await ctx.channel.get_message(msgid)
