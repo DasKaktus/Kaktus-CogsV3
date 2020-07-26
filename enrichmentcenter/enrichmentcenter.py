@@ -203,6 +203,8 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
     @tasks.loop(seconds=1.0)
     async def selfDestructMessage(self):
         #await asyncio.sleep(1)
+        if len(self.messageids) == 0:
+            pass
         await self.ctx.send("loop")
         for msgid in self.messageids:
             try:
