@@ -141,6 +141,8 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         except commandException:
             return
         
+        await message.delete()
+        
         for case in switch(cclower):
             if case('aperture-science-help'):
                 await self.sendCodeBlock(ctx, "http", self.helptext)
