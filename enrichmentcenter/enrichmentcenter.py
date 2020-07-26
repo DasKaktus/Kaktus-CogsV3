@@ -173,7 +173,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         # Add sendit.id to an list with an endtime.
         # A timer that checks if message should be deleted?
         self.messageids.append(sendit.id)
-        await selfDestructMessage(ctx.channel)
+        await self.selfDestructMessage(ctx.channel)
         
     async def selfDestructMessage(self, channel: discord.TextChannel):
         await asyncio.sleep(1)
