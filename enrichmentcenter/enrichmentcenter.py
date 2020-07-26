@@ -190,7 +190,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             
             newembed = discord.Embed(color=0xEE2222, title='Test')
             newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
-            message.edit(embed=newembed)
+            await message.edit(embed=newembed)
             #message.content
             #amt = int(msg.embeds[0].footer.text.split("Winners: ")[1][0])
             #dos, roles = msg.embeds[0].fields
