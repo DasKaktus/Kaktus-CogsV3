@@ -185,16 +185,16 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             
             #await ctx.send(message.embeds[0].footer.text)
             
-            embedmsg = message.embeds[0]
+            org_msg = message.embeds[0].fields[0].value
             
             
             tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
             tid = tid - 1
             
-            newembed = discord.Embed(embedmsg)
+            #newembed = discord.Embed(embedmsg)
             
-            #newembed = discord.Embed(color=0xEE2222, title='Test')
-           # newembed.add_field(name='Computer output', value=org_msg)
+            newembed = discord.Embed(color=0xEE2222, title='Test')
+            newembed.add_field(name='Computer output', value=org_msg)
             newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
             await message.edit(embed=newembed)
             #message.content
