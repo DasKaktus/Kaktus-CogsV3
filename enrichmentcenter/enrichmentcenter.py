@@ -1,4 +1,5 @@
 from datetime import datetime
+import asyncio
 import discord
 from redbot.core import commands
 from redbot.core.utils.chat_formatting import box
@@ -90,7 +91,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_member(**self.default_member)
-        #self.players = []
+        self.messageids = []
         
         
     @commands.command()
@@ -109,7 +110,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             embed.add_field(name='Last stage finished', value="N/A")
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
-        embed.set_footer(text="Enrichmentcenter")
+        embed.set_footer(text="This message will selfdestruct in 30 seconds")
         await ctx.send(embed=embed)
         
     @commands.command()
@@ -143,7 +144,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
                 await self.sendCodeBlock(ctx, "http", self.stage1)
                 break
             if case('aperture-science-c-uhswhbcjh-'):
-                await self.sendCodeBlock(ctx, "http", self.stage1)
+                await self.sendCodeBlock2(ctx, "http", self.stage2)
                 break
             if case('aperture-science-c-dgwrgdfg-'):
                 await self.sendCodeBlock(ctx, "http", self.stage3_1)
@@ -155,9 +156,43 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name)) 
         sendit = await ctx.send(box(msg, lang=language))
-        #await asyncio.sleep(5)
-        #await sendit.delete()
         
+        # Add sendit.id to an list with an endtime.
+        # A timer that checks if message should be deleted?
+        self.messageids.append(sendit.id)
+    
+    async def sendCodeBlock2(self, ctx, language: str, msg: str):
+        msg = msg.replace("{author.id}", str(ctx.author.id)) 
+        msg = msg.replace("{author.name}", str(ctx.author.name))
+        embed = discord.Embed(color=0xEE2222, title='Test')
+        embed.add_field(name='Computer output', value=msg)
+        embed.set_footer(text="This message will selfdestruct in 30 seconds")
+        sendit = await ctx.send(embed=embed)
+        #sendit = await ctx.send(box(msg, lang=language))
+        
+        # Add sendit.id to an list with an endtime.
+        # A timer that checks if message should be deleted?
+        self.messageids.append(sendit.id)
+        await selfDestructMessage(ctx.channel)
+        
+    async def selfDestructMessage(self, channel: discord.TextChannel):
+        await asyncio.sleep(1)
+        for msgid in self.messageids:
+            try:
+                message = await channel.get_message(msgid)
+            except AttributeError:
+                message = await channel.fetch_message(msgid)
+            
+            tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
+            tid = tid - 1
+            
+            embed = discord.Embed(color=0xEE2222, title='Test')
+            embed.set_footer(text="This message will selfdestruct in: {} seconds").format(tid)
+            msg.edit(embed)
+            #message.content
+            #amt = int(msg.embeds[0].footer.text.split("Winners: ")[1][0])
+            #dos, roles = msg.embeds[0].fields
+            #await msg.edit(embed=embed)
     
     
     
