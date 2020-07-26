@@ -201,7 +201,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             await self.bot.wait_until_ready()
         except Exception as e:
             print(e)
-        while not bot.is_closed:
+        while not self.bot.is_closed:
             await asyncio.sleep(1)
             for msgid in self.messageids:
                 try:
