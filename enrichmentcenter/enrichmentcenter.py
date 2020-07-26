@@ -140,9 +140,10 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             cclower = ctx.invoked_with.lower()
         except commandException:
             return
-        
-        await message.delete()
-        
+        try:
+            await message.delete()
+        except Exception:
+            pass
         for case in switch(cclower):
             if case('aperture-science-help'):
                 await self.sendCodeBlock(ctx, "http", self.helptext)
@@ -185,7 +186,10 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
                 tid = tid - 1
                 
                 if tid == 0:
-                    await message.delete()
+                    try:
+                        await message.delete()
+                    except Exception:
+                        pass
                     self.messageids.remove(msgid)
                 else:
                     newembed = discord.Embed(color=0xEE2222, title='Test')
