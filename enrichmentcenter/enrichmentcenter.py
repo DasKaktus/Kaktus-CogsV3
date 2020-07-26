@@ -92,7 +92,7 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_member(**self.default_member)
         self.messageids = []
-        self.msgupdater = self.bot.loop.create_task(selfDestructMessage2())
+        self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
         
         
     @commands.command()
