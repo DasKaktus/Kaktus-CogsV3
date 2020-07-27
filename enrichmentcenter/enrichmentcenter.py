@@ -65,7 +65,7 @@ class switch(object):
 class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
     
-    default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "lastfinished": "0000-00-00 00:00:00"}
+    default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "stagefinished": {1: "0000-00-00 00:00:00", 2: "0000-00-00 00:00:00", 3: "0000-00-00 00:00:00", 4: "0000-00-00 00:00:00", 5: "0000-00-00 00:00:00", 6: "0000-00-00 00:00:00", 7: "0000-00-00 00:00:00", 8: "0000-00-00 00:00:00", 9: "0000-00-00 00:00:00", 10: "0000-00-00 00:00:00", 11: "0000-00-00 00:00:00", 12: "0000-00-00 00:00:00", 13: "0000-00-00 00:00:00", 14: "0000-00-00 00:00:00", 15: "0000-00-00 00:00:00", 16: "0000-00-00 00:00:00", 17: "0000-00-00 00:00:00", 18: "0000-00-00 00:00:00", 19: "0000-00-00 00:00:00", 20: "0000-00-00 00:00:00", 21: "0000-00-00 00:00:00", 22: "0000-00-00 00:00:00", 23: "0000-00-00 00:00:00", 24: "0000-00-00 00:00:00", 25: "0000-00-00 00:00:00", 26: "0000-00-00 00:00:00", 27: "0000-00-00 00:00:00", 28: "0000-00-00 00:00:00", 29: "0000-00-00 00:00:00", 30: "0000-00-00 00:00:00"}}
     
     default_guild = {"wlchannels": [], "whitelist": True }
     
@@ -138,6 +138,7 @@ class EnrichmentCenter(commands.Cog):
                 await self.sendCodeBlock(ctx, "http", Helptext.text1)
                 break
             if case('aperture-science-initiate'):
+                
                 await self.sendCodeBlock(ctx, "http", Stage1.text1)
                 await self.sendCodeBlock(ctx, "diff", Stage1.text2)
                 break
@@ -260,6 +261,16 @@ class EnrichmentCenter(commands.Cog):
             if case('aperture-science-hoopy-the-hoop-glados_gib_10-'):
                 await self.sendCodeBlock(ctx, "diff", Stage30.text1)
                 break;
+    
+    async def userProgress(self, onstage, user):
+        member_settings = self.config.member(user)
+        curr_stage = await member_settings.stage()
+        if curr_stage > onstage:
+            pass
+        else:
+            await member_settings.stage.set(onstage)           
+            if onstage > 1:
+                await member_settings.stagefinished[onstage - 1].set("2020-01-01 04:40:45")
     
     async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
