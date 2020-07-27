@@ -209,9 +209,9 @@ class EnrichmentCenter(commands.Cog):
             channel = ctx.channel
         if channel.id not in await self._get_guild_channels(ctx.guild):
             await self._add_guild_channel(ctx.guild, channel.id)
-            await ctx.send(_("Channel added"))
+            await ctx.send("Channel added")
         else:
-            await ctx.send(_("Channel already whitelisted"))
+            await ctx.send("Channel already whitelisted")
             
     @whitelist.command(name="toggle")
     @checks.mod_or_permissions(manage_messages=True)
@@ -219,8 +219,8 @@ class EnrichmentCenter(commands.Cog):
     async def toggle(self, ctx):
         """Toggle whitelist on/off."""
         new = await self._toggle_whitelist(ctx.guild)
-        verb = _("activated.") if new else _("deactivated.")
-        await ctx.send(_("Whitelist is {verb}").format(verb=verb))
+        verb = "activated." if new else _("deactivated.")
+        await ctx.send("Whitelist is {verb}".format(verb=verb))
 
     @whitelist.command(name="remove")
     @checks.mod_or_permissions(manage_messages=True)
@@ -230,10 +230,10 @@ class EnrichmentCenter(commands.Cog):
         if channel is None:
             channel = ctx.channel
         if channel.id not in await self._get_guild_channels(ctx.guild):
-            await ctx.send(_("This channel isn't whitelisted."))
+            await ctx.send("This channel isn't whitelisted.")
         else:
             await self._remove_guild_channel(ctx.guild, channel.id)
-            await ctx.send(_("Channel deleted"))
+            await ctx.send("Channel deleted")
 
     @whitelist.command(name="show")
     @checks.mod_or_permissions(manage_messages=True)
@@ -241,11 +241,11 @@ class EnrichmentCenter(commands.Cog):
     async def _show(self, ctx):
         """Show the list of channels configured to allow earning experience."""
         emb = discord.Embed()
-        emb.title = _("List of channels configured to allow enrichment commands.")
-        emb.description = _("All things in the world aren't round therre is red objects too")
+        emb.title = "List of channels configured to allow enrichment commands."
+        emb.description = "All things in the world aren't round therre is red objects too"
         channels = await self._get_guild_channels(ctx.guild)
         if not len(channels):
-            return await ctx.send(_("No channels configured"))
+            return await ctx.send("No channels configured")
         emb.add_field(
             name="Channels:", value="\n".join([ctx.guild.get_channel(x).mention for x in channels])
         )
