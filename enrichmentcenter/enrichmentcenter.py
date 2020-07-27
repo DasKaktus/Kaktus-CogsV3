@@ -143,7 +143,7 @@ class EnrichmentCenter(commands.Cog):
                 await self.sendCodeBlock(ctx, "diff", Stage1.text2)
                 break
             if case('aperture-science-c-uhswhbcjh-'):
-                self.userProgress(2, message.author)
+                await self.userProgress(2, message.author)
                 await self.sendCodeBlock(ctx, "http", Stage2.text1)
                 await self.sendCodeBlock(ctx, "diff", Stage2.text2)
                 break
