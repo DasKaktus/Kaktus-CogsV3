@@ -89,7 +89,13 @@ class EnrichmentCenter(commands.Cog):
         user = ctx.author
         member_settings = self.config.member(user)
         curr_stage = await member_settings.stage()
-        curr_lastfinish = await member_settings.lastfinished()
+        #curr_lastfinish = await member_settings.lastfinished()
+        
+        if curr_stage > 1:
+            curr_lastfinish = await getattr(member_settings.stagefinished, str(curr_stage - 1))()
+        else:
+            curr_lastfinish = "0000-00-00 00:00:00"
+        
         embed = discord.Embed(color=0xEE2222, title='Testsubject report card')
         if curr_stage == 0:
             embed.add_field(name='Stage', value="N/A")
