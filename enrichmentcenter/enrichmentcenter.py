@@ -44,10 +44,10 @@ class EnrichmentCenter(commands.Cog):
     selfdestructtimer = 30
     
     def __init__(self, bot):
-        self.bot = bot
-        self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
+        self.bot = bot)
+        self.config = Config.get_conf(self, identifier=133784274133784274, force_registration=True)
         self.config.register_member(**self.default_member)
-        self.data.register_guild(**default_guild)
+        self.config.register_guild(**default_guild)
         self.messageids = []
         #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
         self.selfDestructMessage.start()
@@ -160,23 +160,23 @@ class EnrichmentCenter(commands.Cog):
                 
                 
     async def _get_guild_channels(self, guild):
-        return await self.data.guild(guild).wlchannels()
+        return await self.config.guild(guild).wlchannels()
         
     async def _add_guild_channel(self, guild, channel):
-        async with self.data.guild(guild).wlchannels() as chanlist:
+        async with self.config.guild(guild).wlchannels() as chanlist:
             chanlist.append(channel)
             
     async def _toggle_whitelist(self, guild):
-        wl = await self.data.guild(guild).whitelist()
+        wl = await self.config.guild(guild).whitelist()
         if wl:
-            await self.data.guild(guild).whitelist.set(False)
+            await self.config.guild(guild).whitelist.set(False)
             return False
         else:
-            await self.data.guild(guild).whitelist.set(True)
+            await self.config.guild(guild).whitelist.set(True)
             return True
             
     async def _remove_guild_channel(self, guild, channel):
-        async with self.data.guild(guild).wlchannels() as chanlist:
+        async with self.config.guild(guild).wlchannels() as chanlist:
             chanlist.remove(channel)
 
     @commands.group()
