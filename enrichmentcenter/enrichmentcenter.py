@@ -119,6 +119,60 @@ class EnrichmentCenter(commands.Cog):
                 await self.sendCodeBlock(ctx, "http", Stage3.text1)
                 await self.sendCodeBlock(ctx, "diff", Stage3.text2)
                 break
+            if case('aperture-science-c-fsdfswefs-'):
+                break;
+            if case('aperture-science-c-xdergwerg-'):
+                break;
+            if case('aperture-science-c-gsresdfgd-'):
+                break;
+            if case('aperture-science-c-pfiejchen-'):
+                break;
+            if case('aperture-science-c-fayhsdbfg-'):
+                break;
+            if case('aperture-science-c-hiauhdiua-'):
+                break;
+            if case('aperture-science-c-safhsiuhf-'):
+                break;
+            if case('aperture-science-c-oudfhaiuh-'):
+                break;
+            if case('aperture-science-c-sujdbisud-'):
+                break;
+            if case('aperture-science-c-asijsihug-'):
+                break;
+            if case('aperture-science-c-udjfhbaiu-'):
+                break;
+            if case('aperture-science-incinerate_faithful_companion_cube'):
+                break;
+            if case('aperture-science-c-oeisoijfh-'):
+                break;
+            if case('aperture-science-cake-whoah-yeah-cccccccake-'):
+                break;
+            if case('aperture-science-c-jhfbishjg-goodbye-'):
+                break;
+            if case('aperture-science-escape_glados_c-oiufhiuhi-'):
+                break;
+            if case('aaperture-science-escape_glados_c-dahdgbuyh-'):
+                break;
+            if case('aperture-science-confront-glados-central-ai-chamber-'):
+                break;
+            if case('aperture-science-glados-morality_core-jhfgbiuyd-'):
+                break;
+            if case('aperture-science-destroy_morality_core_c-caijhiujd-'):
+                break;
+            if case('aperture-science-glados-curiosity-core-wockdjehc-'):
+                break;
+            if case('aperture-science-destroy-curiosity_core_c-qjhiuhbna-'):
+                break;
+            if case('aperture-science-glados-intelligence_core-pqlaidjeu-'):
+                break;
+            if case('aperture-science-destroy_intelligence_core_c-ufyhgiuy-'):
+                break;
+            if case('aperture-science-glados-anger_core-kwispelsj-'):
+                break;
+            if case('aperture-science-destroy_anger_core_c-nowescape-'):
+                break;
+            if case('aperture-science-hoopy-the-hoop-glados_gib_10-'):
+                break;
     
     async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
