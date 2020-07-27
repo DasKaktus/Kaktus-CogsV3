@@ -271,7 +271,8 @@ class EnrichmentCenter(commands.Cog):
         else:
             await member_settings.stage.set(onstage)           
             if onstage > 1:
-                await member_settings.stagefinished[onstage - 1].set("2020-01-01 04:40:45")
+                await getattr(member_settings.stagefinished, onstage - 1).set("2020-01-01 04:40:45")
+                #await member_settings.stagefinished[onstage - 1].set("2020-01-01 04:40:45")
     
     async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
