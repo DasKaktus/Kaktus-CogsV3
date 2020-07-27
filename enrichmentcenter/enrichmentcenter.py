@@ -89,7 +89,6 @@ class EnrichmentCenter(commands.Cog):
         user = ctx.author
         member_settings = self.config.member(user)
         curr_stage = await member_settings.stage()
-        #curr_lastfinish = await member_settings.lastfinished()
         
         if curr_stage > 1:
             curr_lastfinish = await getattr(member_settings.stagefinished, str(curr_stage - 1))()
@@ -108,13 +107,6 @@ class EnrichmentCenter(commands.Cog):
         embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
         await ctx.send(embed=embed)
         
-    #@commands.command()
-    #async def startEnrichment(self, ctx):
-    #    user = ctx.author
-    #    channel = ctx.channel
-    #    member_settings = self.config.member(user)
-    #    await member_settings.stage.set(1)
-
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
         ctx = await self.bot.get_context(message)
@@ -198,7 +190,7 @@ class EnrichmentCenter(commands.Cog):
                 break;
             if case('aperture-science-c-sujdbisud-'):
                 await self.userProgress(12, message.author)
-                await self.sendCodeBlock(ctx, "http", Stage12.text1) #### TEST this, weird characters
+                await self.sendCodeBlock(ctx, "http", Stage12.text1)
                 await self.sendCodeBlock(ctx, "diff", Stage12.text2)
                 break;
             if case('aperture-science-c-asijsihug-'):
@@ -208,7 +200,7 @@ class EnrichmentCenter(commands.Cog):
                 break;
             if case('aperture-science-c-udjfhbaiu-'):
                 await self.userProgress(14, message.author)
-                await self.sendCodeBlock(ctx, "http", Stage14.text1) #### Kolla alla innan efter flera texter
+                await self.sendCodeBlock(ctx, "http", Stage14.text1)
                 break;
             if case('aperture-science-incinerate_faithful_companion_cube'):
                 await self.userProgress(15, message.author)
