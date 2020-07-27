@@ -40,10 +40,15 @@ class EnrichmentCenter(commands.Cog):
     
     default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "lastfinished": "0000-00-00 00:00:00"}
     
+    default_guild = {"wlchannels": [], "whitelist": True }
+    
+    selfdestructtimer = 30
+    
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=133784274, force_registration=True)
         self.config.register_member(**self.default_member)
+        self.data.register_guild(**default_guild)
         self.messageids = []
         #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
         self.selfDestructMessage.start()
@@ -67,7 +72,7 @@ class EnrichmentCenter(commands.Cog):
             embed.add_field(name='Last stage finished', value="N/A")
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
-        embed.set_footer(text="This message will selfdestruct in 30 seconds")
+        embed.set_footer(text="This message will selfdestruct in {} seconds".format(selfdestructtimer))
         await ctx.send(embed=embed)
         
     @commands.command()
@@ -116,7 +121,7 @@ class EnrichmentCenter(commands.Cog):
         msg = msg.replace("{author.name}", str(ctx.author.name))
         embed = discord.Embed(color=0xEE2222, title='Test')
         embed.add_field(name='Computer output', value=box(msg, lang=language))
-        embed.set_footer(text="This message will selfdestruct in: 30 seconds")
+        embed.set_footer(text="This message will selfdestruct in: {} seconds".format(selfdestructtimer))
         sendit = await ctx.send(embed=embed)
         self.messageids.append(sendit.id)
         self.ctx = ctx
@@ -155,8 +160,97 @@ class EnrichmentCenter(commands.Cog):
         await self.bot.wait_until_ready()
                 
                 
+    async def _get_guild_channels(self, guild):
+        return await self.data.guild(guild).wlchannels()
+        
+    async def _add_guild_channel(self, guild, channel):
+        async with self.data.guild(guild).wlchannels() as chanlist:
+            chanlist.append(channel)
+            
+    async def _toggle_whitelist(self, guild):
+        wl = await self.data.guild(guild).whitelist()
+        if wl:
+            await self.data.guild(guild).whitelist.set(False)
+            return False
+        else:
+            await self.data.guild(guild).whitelist.set(True)
+            return True
+            
+    async def _remove_guild_channel(self, guild, channel):
+        async with self.data.guild(guild).wlchannels() as chanlist:
+            chanlist.remove(channel)
 
+    @commands.group()
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def enrichmentcenter(self, ctx):
+        """Configuration commands."""
+        pass
+    
+    @enrichmentcenter.group()
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def channel(self, ctx):
+        """Configure channels whitelist."""
+        pass
+        
+    @channel.group()
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def whitelist(self, ctx):
+        """Whitelist configuration."""
+        pass
+        
+    @whitelist.command(name="add")
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def _add(self, ctx, channel: discord.TextChannel = None):
+        """Add a channel to the whitelist."""
+        if channel is None:
+            channel = ctx.channel
+        if channel.id not in await self._get_guild_channels(ctx.guild):
+            await self._add_guild_channel(ctx.guild, channel.id)
+            await ctx.send(_("Channel added"))
+        else:
+            await ctx.send(_("Channel already whitelisted"))
+            
+    @whitelist.command(name="toggle")
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def toggle(self, ctx):
+        """Toggle whitelist on/off."""
+        new = await self._toggle_whitelist(ctx.guild)
+        verb = _("activated.") if new else _("deactivated.")
+        await ctx.send(_("Whitelist is {verb}").format(verb=verb))
 
+    @whitelist.command(name="remove")
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def _remove(self, ctx, channel: discord.TextChannel = None):
+        """Delete a channel from the whitelist."""
+        if channel is None:
+            channel = ctx.channel
+        if channel.id not in await self._get_guild_channels(ctx.guild):
+            await ctx.send(_("This channel isn't whitelisted."))
+        else:
+            await self._remove_guild_channel(ctx.guild, channel.id)
+            await ctx.send(_("Channel deleted"))
+
+    @whitelist.command(name="show")
+    @checks.mod_or_permissions(manage_messages=True)
+    @commands.guild_only()
+    async def _show(self, ctx):
+        """Show the list of channels configured to allow earning experience."""
+        emb = discord.Embed()
+        emb.title = _("List of channels configured to allow enrichment commands.")
+        emb.description = _("All things in the world aren't round therre is red objects too")
+        channels = await self._get_guild_channels(ctx.guild)
+        if not len(channels):
+            return await ctx.send(_("No channels configured"))
+        emb.add_field(
+            name="Channels:", value="\n".join([ctx.guild.get_channel(x).mention for x in channels])
+        )
+        await ctx.send(embed=emb)
 
 
 
