@@ -108,12 +108,12 @@ class EnrichmentCenter(commands.Cog):
         embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
         await ctx.send(embed=embed)
         
-    @commands.command()
-    async def startEnrichment(self, ctx):
-        user = ctx.author
-        channel = ctx.channel
-        member_settings = self.config.member(user)
-        await member_settings.stage.set(1)
+    #@commands.command()
+    #async def startEnrichment(self, ctx):
+    #    user = ctx.author
+    #    channel = ctx.channel
+    #    member_settings = self.config.member(user)
+    #    await member_settings.stage.set(1)
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
