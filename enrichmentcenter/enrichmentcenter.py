@@ -6,6 +6,12 @@ from redbot.core.utils.chat_formatting import box
 from redbot.core import Config
 from discord.ext import tasks
 
+# Puzzles
+from puzzles import helptext
+from puzzles import stage1
+from puzzles import stage2
+from puzzles import stage3
+
 class commandException(Exception):
     pass
     
@@ -33,60 +39,6 @@ class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
     
     default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "lastfinished": "0000-00-00 00:00:00"}
-    
-    helptext = """Aperture Science Personnel File; #{author.id}
-
-Test Subject Name; {author.name}
-
-Status; Alive
-
-----------------------------------------------------
-
-Hello and welcome to the Aperture Science computer-aided enrichment center. The enrichment center consists of multiple chambers designed to challenge your puzzle solving skills, knowledge of cryptography and ability to find hidden messages. 
-
-To complete each chamber you must discover the command hidden within the puzzle to progress to the next chamber and receive the next puzzle. 
-
-All commands use the same basic format of "!Aperture-Science-" followed by a code/text string unique to that puzzle which is used to access the next puzzle.
-
-These puzzles use a variety of techniques from simple ciphers to more challenging methods of hiding messages.
-
-Good luck.
-
-— Doug-Rattmann"""
-
-    stage1 = """Aperture Science Personnel File; #{author.id}
-
-Test Subject Name; {author.name}
-
-Status; Alive
-
-----------------------------------------------------
-
-Hello and, again, welcome to the Aperture Science computer-aided enrichment center. We hope your brief detention in the relaxation vault has been a pleasant one. Your specimen has been processed and we are now ready to begin the test proper. Before we start, however, keep in mind that, although fun and learning are the primary goals of all enrichment center activities, serious injuries may occur. For your own safety, and the safety of others, please refrain from — *static* Por favor bordón de fallar Muchos gracias de fallar gracias *static* Stand back. The portal will open in 3, 2, 1...``` ```diff
--HJCBHWSHU-C-ecneicS-erutrepA! .ebuC egarotS dethgieW ecneicS erutrepA eht ,ecnatsni rof - ti hguorht sessap taht tnempiuqe dezirohtuanu yna eziropav lliw llirG noitapicnamE lairetaM ecneicS erutrepA sihT .tixe eht ssorca dleif elcitrap tnecsednacni eht eton ,revewoh ,tsriF .tset hcae gnitelpmoc retfa kcolrebmahc eht otni deecorp esaelP .tnellecxE-"""
-    
-    stage2 = """Aperture Science Personnel File; #{author.id}
-
-Test Subject Name; {author.name}
-
-Status; Alive
-
-----------------------------------------------------
-
-You're doing very well. Please be advised that a noticeable taste of blood is not part of any test protocol but is an unintended side effect of the Aperture Science Material Emancipation Grill, which may, in semi-rare cases, emancipate dental fillings, crowns, tooth enamel, and teeth.``` ```diff
--https://discordapp.com/channels/239788202745921536/239788202745921536/436554881252196354-"""
-
-    stage3_1 = """Aperture Science Personnel File; #{author.id}
-
-Test Subject Name; {author.name}
-
-Status; Alive
-
-----------------------------------------------------
-
-Please proceed to the chamberlock. >_________________> . Mind the gap."""
-
-    stage3_2 = """-Fnuu mxwn. Anvnvkna, cqn Jynacdan Blrnwln Karwp Hxda Mjdpqcna cx Fxat Mjh rb cqn ynaonlc crvn cx qjen qna cnbcnm. !Jynacdan-Blrnwln-L-OBMOBFNOB-"""
     
     def __init__(self, bot):
         self.bot = bot
@@ -146,17 +98,17 @@ Please proceed to the chamberlock. >_________________> . Mind the gap."""
             pass
         for case in switch(cclower):
             if case('aperture-science-help'):
-                await self.sendCodeBlock(ctx, "http", self.helptext)
+                await self.sendCodeBlock(ctx, "http", helptext.text1)
                 break
             if case('aperture-science-initiate'):
-                await self.sendCodeBlock(ctx, "http", self.stage1)
+                await self.sendCodeBlock(ctx, "http", stage1.text1)
                 break
             if case('aperture-science-c-uhswhbcjh-'):
-                await self.sendCodeBlock(ctx, "http", self.stage2)
+                await self.sendCodeBlock(ctx, "http", stage2.text1)
                 break
             if case('aperture-science-c-dgwrgdfg-'):
-                await self.sendCodeBlock(ctx, "http", self.stage3_1)
-                await self.sendCodeBlock(ctx, "diff", self.stage3_2)
+                await self.sendCodeBlock(ctx, "http", stage3.text1)
+                await self.sendCodeBlock(ctx, "diff", stage3.text2)
                 break
     
     async def sendCodeBlock(self, ctx, language: str, msg: str):
