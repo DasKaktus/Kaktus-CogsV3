@@ -71,7 +71,7 @@ class EnrichmentCenter(commands.Cog):
             embed.add_field(name='Last stage finished', value="N/A")
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
-        embed.set_footer(text="This message will selfdestruct in {} seconds".format(selfdestructtimer))
+        embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
         await ctx.send(embed=embed)
         
     @commands.command()
@@ -125,7 +125,7 @@ class EnrichmentCenter(commands.Cog):
         msg = msg.replace("{author.name}", str(ctx.author.name))
         embed = discord.Embed(color=0xEE2222, title='Test')
         embed.add_field(name='Computer output', value=box(msg, lang=language))
-        embed.set_footer(text="This message will selfdestruct in: {} seconds".format(selfdestructtimer))
+        embed.set_footer(text="This message will selfdestruct in: {} seconds".format(self.selfdestructtimer))
         sendit = await ctx.send(embed=embed)
         self.messageids.append(sendit.id)
         self.ctx = ctx
