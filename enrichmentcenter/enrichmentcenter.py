@@ -86,6 +86,11 @@ class EnrichmentCenter(commands.Cog):
         ctx = await self.bot.get_context(message)
         user_allowed = True
         is_private = isinstance(message.channel, discord.abc.PrivateChannel)
+        
+        if await self.config.guild(message.guild).whitelist():
+            if message.channel.id not in await self._get_guild_channels(message.author.guild):
+                return
+        
         if len(message.content) < 2 or is_private or not user_allowed or message.author.bot:
             return
         
@@ -242,7 +247,7 @@ class EnrichmentCenter(commands.Cog):
         """Show the list of channels configured to allow earning experience."""
         emb = discord.Embed()
         emb.title = "List of channels configured to allow enrichment commands."
-        emb.description = "All things in the world aren't round therre is red objects too"
+        emb.description = "All things in the world aren't round there are red things too"
         channels = await self._get_guild_channels(ctx.guild)
         if not len(channels):
             return await ctx.send("No channels configured")
