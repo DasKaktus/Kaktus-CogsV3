@@ -7,10 +7,10 @@ from redbot.core import Config
 from discord.ext import tasks
 
 # Puzzles
-import .helptext
-import .stage1
-import .stage2
-import .stage3
+from .helptext import Helptext
+from .stage1 import Stage1
+from .stage2 import Stage2
+from .stage3 import Stage3
 
 class commandException(Exception):
     pass
