@@ -107,17 +107,17 @@ class EnrichmentCenter(commands.Cog):
             pass
         for case in switch(cclower):
             if case('aperture-science-help'):
-                await self.sendCodeBlock(ctx, "http", helptext.text1)
+                await self.sendCodeBlock(ctx, "http", Helptext.text1)
                 break
             if case('aperture-science-initiate'):
-                await self.sendCodeBlock(ctx, "http", stage1.text1)
+                await self.sendCodeBlock(ctx, "http", Stage1.text1)
                 break
             if case('aperture-science-c-uhswhbcjh-'):
-                await self.sendCodeBlock(ctx, "http", stage2.text1)
+                await self.sendCodeBlock(ctx, "http", Stage2.text1)
                 break
             if case('aperture-science-c-dgwrgdfg-'):
-                await self.sendCodeBlock(ctx, "http", stage3.text1)
-                await self.sendCodeBlock(ctx, "diff", stage3.text2)
+                await self.sendCodeBlock(ctx, "http", Stage3.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage3.text2)
                 break
     
     async def sendCodeBlock(self, ctx, language: str, msg: str):
