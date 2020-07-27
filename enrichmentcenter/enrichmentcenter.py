@@ -1,9 +1,8 @@
 from datetime import datetime
 import asyncio
 import discord
-from redbot.core import commands
+from redbot.core import commands, check, Config
 from redbot.core.utils.chat_formatting import box
-from redbot.core import Config
 from discord.ext import tasks
 
 # Puzzles
