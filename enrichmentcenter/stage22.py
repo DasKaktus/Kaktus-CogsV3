@@ -1,2 +1,2 @@
-class Stage7:
+class Stage22:
     text1 = """ """

@@ -10,6 +10,34 @@ from .helptext import Helptext
 from .stage1 import Stage1
 from .stage2 import Stage2
 from .stage3 import Stage3
+from .stage4 import Stage4
+from .stage5 import Stage5
+from .stage6 import Stage6
+from .stage7 import Stage7
+from .stage8 import Stage8
+from .stage9 import Stage9
+from .stage10 import Stage10
+from .stage11 import Stage11
+from .stage12 import Stage12
+from .stage13 import Stage13
+from .stage14 import Stage14
+from .stage15 import Stage15
+from .stage16 import Stage16
+from .stage17 import Stage17
+from .stage18 import Stage18
+from .stage19 import Stage19
+from .stage20 import Stage20
+from .stage21 import Stage21
+from .stage22 import Stage22
+from .stage23 import Stage23
+from .stage24 import Stage24
+from .stage25 import Stage25
+from .stage26 import Stage26
+from .stage27 import Stage27
+from .stage28 import Stage28
+from .stage29 import Stage29
+from .stage30 import Stage30
+
 
 class commandException(Exception):
     pass
