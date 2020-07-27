@@ -1,7 +1,7 @@
 from datetime import datetime
 import asyncio
 import discord
-from redbot.core import commands, check, Config
+from redbot.core import commands, checks, Config
 from redbot.core.utils.chat_formatting import box
 from discord.ext import tasks
 
