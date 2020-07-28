@@ -135,18 +135,18 @@ class EnrichmentCenter(commands.Cog):
         # Check if embed
         print("{} - {}".format(str(message.id), str(timeleft)))
         #try:
-            if message.embeds[0].fields[0].name == "Stage":
-                #Progress card
-                newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
-                newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
-                newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
-                newembed.set_footer(text=footertext.format(str(timeleft)))
-            else:
-                #Output
-                newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                newembed.set_footer(text=footertext.format(str(timeleft)))
-            await message.edit(embed=newembed)
+        if message.embeds[0].fields[0].name == "Stage":
+            #Progress card
+            newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
+            newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
+            newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
+            newembed.set_footer(text=footertext.format(str(timeleft)))
+        else:
+            #Output
+            newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+            newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+            newembed.set_footer(text=footertext.format(str(timeleft)))
+        await message.edit(embed=newembed)
         #except:
         #    # Not embed
         #    # Do nothing for now.
