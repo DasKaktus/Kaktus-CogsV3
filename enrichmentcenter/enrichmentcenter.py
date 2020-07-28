@@ -142,13 +142,13 @@ class EnrichmentCenter(commands.Cog):
                 newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
                 newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
                 newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
-                newembed.set_footer(text=org_footer.replace(" {}".format(oldtime), " {}".format(str(timeleft))))
+                newembed.set_footer(text=org_footer.replace(" {}".format(oldtime), " {}".format(str(timeleft + 1))))
             else:
                 #Output
                 
                 newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                 newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                newembed.set_footer(text=self.footertext.format(str(timeleft)))
+                newembed.set_footer(text=self.footertext.format(str(timeleft + 1)))
             await message.edit(embed=newembed)
         except:
             # Not embed
