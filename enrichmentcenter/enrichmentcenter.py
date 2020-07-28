@@ -99,6 +99,60 @@ class EnrichmentCenter(commands.Cog):
         self.messageTimer.cancel()
         self.messageLastTimer.cancel()
         
+    # Functions
+    
+    async def setTimer(self, msgid: int, seconds: int):
+        self.msgtimer[sendit.id] = seconds
+        
+    async def setUserProgress(self, onstage, user):
+        member_settings = self.config.member(user)
+        curr_stage = await member_settings.stage()
+        if curr_stage > onstage:
+            pass
+        else:
+            await member_settings.stage.set(onstage)           
+            if onstage > 1:
+                now = datetime.now()
+                dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+                await getattr(member_settings.stagefinished, str(onstage - 1)).set(dt_string)
+                
+    async def fixPlaceholderText(self, ctx, msg):
+        msg = msg.replace("{author.id}", str(ctx.author.id)) 
+        msg = msg.replace("{author.name}", str(ctx.author.name))
+        return msg
+        
+    async def sendCodeBlock(self, ctx, language: str, msg: str, embed = True):
+        self.ctx = ctx
+        msg = self.fixPlaceholderText(ctx, msg)
+        if embed:
+            embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+            embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
+            embed.set_footer(text="This message will selfdestruct in: {}".format(self.selfdestructtimer))
+            sendit = await ctx.send(embed=embed)
+        else:
+            sendit = await ctx.send(box(msg, lang=language)) 
+        self.setTimer(sendit.id, self.selfdestructtimer)
+        
+    async def editMessageTimer(self, message, timeleft):
+        # Check if embed    
+        try:
+            if message.embeds[0].fields[0].name == "Stage":
+                #Progress card
+                newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
+                newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
+                newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
+                newembed.set_footer(text=footertext.format(str(timeleft)))
+            else:
+                #Output
+                newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                newembed.set_footer(text=footertext.format(str(timeleft)))
+            await message.edit(embed=newembed)
+        except:
+            # Not embed
+            # Do nothing for now.
+            pass
+        
     # Mod commands
     
     @commands.command()
@@ -221,7 +275,7 @@ class EnrichmentCenter(commands.Cog):
         #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
         embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
         sendit = await ctx.send(embed=embed)
-        setTimer(sendit.id, self.selfdestructtimerreport)
+        self.setTimer(sendit.id, self.selfdestructtimerreport)
         self.ctx = ctx
         
     # Puzzle commands
@@ -430,60 +484,6 @@ class EnrichmentCenter(commands.Cog):
             if case('aperture-science-cake-core-recipe-'):
                 await self.sendCodeBlock(ctx, "diff", EndcreditsCakeRecipe.text1, False)
                 break;
-    
-    # Functions
-    
-    async def setTimer(self, msgid: int, seconds: int):
-        self.msgtimer[sendit.id] = seconds
-        
-    async def setUserProgress(self, onstage, user):
-        member_settings = self.config.member(user)
-        curr_stage = await member_settings.stage()
-        if curr_stage > onstage:
-            pass
-        else:
-            await member_settings.stage.set(onstage)           
-            if onstage > 1:
-                now = datetime.now()
-                dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
-                await getattr(member_settings.stagefinished, str(onstage - 1)).set(dt_string)
-                
-    async def fixPlaceholderText(self, ctx, msg):
-        msg = msg.replace("{author.id}", str(ctx.author.id)) 
-        msg = msg.replace("{author.name}", str(ctx.author.name))
-        return msg
-        
-    async def sendCodeBlock(self, ctx, language: str, msg: str, embed = True):
-        self.ctx = ctx
-        msg = fixPlaceholderText(ctx, msg)
-        if embed:
-            embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-            embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
-            embed.set_footer(text="This message will selfdestruct in: {}".format(self.selfdestructtimer))
-            sendit = await ctx.send(embed=embed)
-        else:
-            sendit = await ctx.send(box(msg, lang=language)) 
-        setTimer(sendit.id, self.selfdestructtimer)
-        
-    async def editMessageTimer(self, message, timeleft):
-        # Check if embed    
-        try:
-            if message.embeds[0].fields[0].name == "Stage":
-                #Progress card
-                newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
-                newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
-                newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
-                newembed.set_footer(text=footertext.format(str(timeleft)))
-            else:
-                #Output
-                newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                newembed.set_footer(text=footertext.format(str(timeleft)))
-            await message.edit(embed=newembed)
-        except:
-            # Not embed
-            # Do nothing for now.
-            pass
 
     # Task Loops
     @tasks.loop(seconds=10.0)
@@ -499,7 +499,7 @@ class EnrichmentCenter(commands.Cog):
                     continue
                 
                 print("{} - {}".format(str(msgid), str(timeleft)))
-                editMessageTimer(message, timeleft - 10)
+                self.editMessageTimer(message, timeleft - 10)
                     
                 # Reduce the time or move to the last timer
                 if timeleft - 10 == 10:
@@ -522,7 +522,7 @@ class EnrichmentCenter(commands.Cog):
                     continue
                 
                 print("{} - {}".format(str(msgid), str(timeleft)))
-                editMessageTimer(message, timeleft - 1)    
+                self.editMessageTimer(message, timeleft - 1)    
                 
                 # Reduce the time or delete message
                 if timeleft - 1 == 0:
