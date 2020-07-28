@@ -1,6 +1,8 @@
 {
-	"NAME": "Kaktus Cogs",
-	"AUTHOR" : "OGKaktus",
-	"SHORT": "Kaktus cogs",
-	"DESCRIPTION" : "Kaktus cogs"
+	"name": "Kaktus Cogs",
+	"author" : ["OGKaktus (OGKaktus#5299)"],
+	"short": "Kaktus cogs",
+	"description" : "OGKaktus homemade cogs",
+	"install_msg" : "Thank you for installing my repo.\nFor issues, bugs, or suggestions hit me up on discord",
+	"tags" : ["kaktus"]
 }
