@@ -121,7 +121,7 @@ class EnrichmentCenter(commands.Cog):
         
     async def sendCodeBlock(self, ctx, language: str, msg: str, embed = True):
         self.ctx = ctx
-        msg = self.fixPlaceholderText(ctx, msg)
+        msg = await self.fixPlaceholderText(ctx, msg)
         if embed:
             embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
             embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
@@ -145,9 +145,8 @@ class EnrichmentCenter(commands.Cog):
                 newembed.set_footer(text=org_footer.replace(" {}".format(oldtime), " {}".format(str(timeleft + 1))))
             else:
                 #Output
-                
                 newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                newembed.add_field(name='Computer-Aided Enrichment Center', value=message.embeds[0].fields[0].value)
                 newembed.set_footer(text=self.footertext.format(str(timeleft + 1)))
             await message.edit(embed=newembed)
         except:
