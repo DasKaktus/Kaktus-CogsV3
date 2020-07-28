@@ -93,11 +93,9 @@ class EnrichmentCenter(commands.Cog):
         self.msgtimerdelete = []
         self.msglasttimer = {}
         self.messageTimer.start()
-        self.messageLastTimer.start()
     
     def cog_unload(self):
         self.messageTimer.cancel()
-        self.messageLastTimer.cancel()
         
     # Functions
     
