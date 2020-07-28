@@ -372,7 +372,7 @@ class EnrichmentCenter(commands.Cog):
             for msgid in self.messageids:
                 try:
                     message = await self.ctx.channel.fetch_message(msgid)
-                except discord.NotFound:
+                except:
                     self.msgtimerdelete.append(msgid)
                     continue
                 #except AttributeError:
@@ -423,7 +423,7 @@ class EnrichmentCenter(commands.Cog):
             for msgid in self.msgtimerdelete:
                 try:
                     message = await self.ctx.channel.fetch_message(msgid)
-                except NotFound:
+                except:
                     self.msgtimerdelete.append(msgid)
                     del self.msgtimer[msgid]
                     continue
