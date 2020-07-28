@@ -418,7 +418,7 @@ class EnrichmentCenter(commands.Cog):
             for msgid in self.msgtimerdelete:
                 del self.msgtimer[msgid]
 
-            msgtimerdelete = []
+            self.msgtimerdelete = []
         
             for msgid in self.messageidslast:
                 try:
