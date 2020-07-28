@@ -71,12 +71,16 @@ class switch(object):
 class EnrichmentCenter(commands.Cog):
     """EnrichmentCenter Cog"""
     
+    # Settings variables
     default_member = {"stage": 0, "started": "0000-00-00 00:00:00", "stagefinished": {"1": "0000-00-00 00:00:00", "2": "0000-00-00 00:00:00", "3": "0000-00-00 00:00:00", "4": "0000-00-00 00:00:00", "5": "0000-00-00 00:00:00", "6": "0000-00-00 00:00:00", "7": "0000-00-00 00:00:00", "8": "0000-00-00 00:00:00", "9": "0000-00-00 00:00:00", "10": "0000-00-00 00:00:00", "11": "0000-00-00 00:00:00", "12": "0000-00-00 00:00:00", "13": "0000-00-00 00:00:00", "14": "0000-00-00 00:00:00", "15": "0000-00-00 00:00:00", "16": "0000-00-00 00:00:00", "17": "0000-00-00 00:00:00", "18": "0000-00-00 00:00:00", "19": "0000-00-00 00:00:00", "20": "0000-00-00 00:00:00", "21": "0000-00-00 00:00:00", "22": "0000-00-00 00:00:00", "23": "0000-00-00 00:00:00", "24": "0000-00-00 00:00:00", "25": "0000-00-00 00:00:00", "26": "0000-00-00 00:00:00", "27": "0000-00-00 00:00:00", "28": "0000-00-00 00:00:00", "29": "0000-00-00 00:00:00", "30": "0000-00-00 00:00:00"}}
-    
     default_guild = {"wlchannels": [], "whitelist": True }
     
+    # Variables
     selfdestructtimer = 60
     selfdestructtimerreport = 30
+    footertext = "This message will selfdestruct in: {}"
+    
+    # COG Stuff
     
     def __init__(self, bot):
         self.bot = bot
@@ -87,6 +91,7 @@ class EnrichmentCenter(commands.Cog):
         self.messageidslast = []
         self.msgtimer = {}
         self.msgtimerdelete = []
+        self.msglasttimer = {}
         self.selfDestructMessage.start()
         self.selfDestructLast.start()
     
@@ -94,6 +99,8 @@ class EnrichmentCenter(commands.Cog):
         self.selfDestructMessage.cancel()
         self.selfDestructLast.cancel()
         
+    # Mod commands
+    
     @commands.command()
     @checks.mod_or_permissions(manage_messages=True)
     async def clearprogress(self, ctx, user: discord.Member):
@@ -110,409 +117,7 @@ class EnrichmentCenter(commands.Cog):
         await member_settings.started.set("0000-00-00 00:00:00")
         for x in range(1, 31):
             await getattr(member_settings.stagefinished, str(x)).set("0000-00-00 00:00:00")
-        
-        
-    @commands.command()
-    #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
-    async def whichstage(self, ctx):
-        """Shows progress report."""
-        user = ctx.author
-        member_settings = self.config.member(user)
-        curr_stage = await member_settings.stage()
-        
-        try:
-            await ctx.message.delete()
-        except Exception:
-            pass
-        
-        if curr_stage > 1:
-            curr_lastfinish = await getattr(member_settings.stagefinished, str(curr_stage - 1))()
-        else:
-            curr_lastfinish = "0000-00-00 00:00:00"
-        
-        embed = discord.Embed(color=0xEE2222, title='Test Progress Report')
-        if curr_stage == 0:
-            embed.add_field(name='Stage', value="N/A")
-        else:
-            embed.add_field(name='Stage', value=curr_stage)
-        if curr_lastfinish == "0000-00-00 00:00:00":
-            embed.add_field(name='Last stage finished', value="N/A")
-        else:
-            embed.add_field(name='Last stage finished', value=curr_lastfinish)
-        #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
-        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
-        sendit = await ctx.send(embed=embed)
-        self.messageids.append(sendit.id)
-        self.ctx = ctx
-        
-    @commands.Cog.listener()
-    async def on_message_without_command(self, message):
-        ctx = await self.bot.get_context(message)
-        user_allowed = True
-        is_private = isinstance(message.channel, discord.abc.PrivateChannel)
-        
-        if await self.config.guild(message.guild).whitelist():
-            if message.channel.id not in await self._get_guild_channels(message.author.guild):
-                return
-        
-        if len(message.content) < 2 or is_private or not user_allowed or message.author.bot:
-            return
-        
-        if ctx.prefix is None:
-            return
-        
-        try:
-            cclower = ctx.invoked_with.lower()
-        except commandException:
-            return
-        
-        try:
-            await message.delete()
-        except Exception:
-            print("Enrichmentcenter (Error: 1): No permission to delete message")
-            pass
             
-        for case in switch(cclower):
-            if case('aperture-science-help'):
-                await self.sendCodeBlockEmbed(ctx, "http", Helptext.text1)
-                break
-            if case('aperture-science-initiate'):
-                await self.userProgress(1, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage1.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage1.text2)
-                break
-            if case('aperture-science-c-uhswhbcjh-'):
-                await self.userProgress(2, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage2.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage2.text2)
-                break
-            if case('aperture-science-c-dgwrgdfg-'):
-                await self.userProgress(3, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage3.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage3.text2)
-                break
-            if case('aperture-science-c-fsdfswefs-'):
-                await self.userProgress(4, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage4.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage4.text2)
-                break;
-            if case('aperture-science-c-xdergwerg-'):
-                await self.userProgress(5, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage5.text1)
-                break;
-            if case('aperture-science-c-gsresdfgd-'):
-                await self.userProgress(6, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage6.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage6.text2)
-                break;
-            if case('aperture-science-c-pfiejchen-'):
-                await self.userProgress(7, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage7.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage7.text2)
-                break;
-            if case('aperture-science-c-fayhsdbfg-'):
-                await self.userProgress(8, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage8.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage8.text2)
-                break;
-            if case('aperture-science-c-hiauhdiua-'):
-                await self.userProgress(9, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage9.text1)
-                break;
-            if case('aperture-science-c-safhsiuhf-'):
-                await self.userProgress(10, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage10.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage10.text2)
-                break;
-            if case('aperture-science-c-oudfhaiuh-'):
-                await self.userProgress(11, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage11.text1)
-                await self.sendCodeBlockEmbed(ctx, "fix", Stage11.text2)
-                break;
-            if case('aperture-science-c-sujdbisud-'):
-                await self.userProgress(12, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage12.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage12.text2)
-                break;
-            if case('aperture-science-c-asijsihug-'):
-                await self.userProgress(13, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage13.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage13.text2)
-                break;
-            if case('aperture-science-c-udjfhbaiu-'):
-                await self.userProgress(14, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage14.text1)
-                break;
-            if case('aperture-science-incinerate_faithful_companion_cube'):
-                await self.userProgress(15, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage15.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage15.text2)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage15.text3)
-                break;
-            if case('aperture-science-c-oeisoijfh-'):
-                await self.userProgress(16, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage16.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage16.text2)
-                break;
-            if case('aperture-science-cake-whoah-yeah-cccccccake-'):
-                await self.userProgress(17, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage17.text1)
-                break;
-            if case('aperture-science-c-jhfbishjg-goodbye-'):
-                await self.userProgress(18, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage18.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage18.text2)
-                break;
-            if case('aperture-science-escape_glados_c-oiufhiuhi-'):
-                await self.userProgress(19, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage19.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text2)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text3)
-                break;
-            if case('aperture-science-escape_glados_c-dahdgbuyh-'):
-                await self.userProgress(20, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage20.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage20.text2)
-                break;
-            if case('aperture-science-confront-glados-central-ai-chamber-'):
-                await self.userProgress(21, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage21.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage21.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage21.text3)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage21.text4)
-                break;
-            if case('aperture-science-glados-morality_core-jhfgbiuyd-'):
-                await self.userProgress(22, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage22.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage22.text2)
-                break;
-            if case('aperture-science-destroy_morality_core_c-caijhiujd-'):
-                await self.userProgress(23, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage23.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage23.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage23.text3)
-                break;
-            if case('aperture-science-glados-curiosity-core-wockdjehc-'):
-                await self.userProgress(24, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage24.text1)
-                await self.sendCodeBlockEmbed(ctx, "fix", Stage24.text2)
-                break;
-            if case('aperture-science-destroy-curiosity_core_c-qjhiuhbna-'):
-                await self.userProgress(25, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage25.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage25.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage25.text3)
-                break;
-            if case('aperture-science-glados-intelligence_core-pqlaidjeu-'):
-                await self.userProgress(26, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage26.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage26.text2)
-                break;
-            if case('aperture-science-destroy_intelligence_core_c-ufyhgiuy-'):
-                await self.userProgress(27, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage27.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage27.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage27.text3)
-                break;
-            if case('aperture-science-glados-anger_core-kwispelsj-'):
-                await self.userProgress(28, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage28.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage28.text2)
-                break;
-            if case('aperture-science-destroy_anger_core_c-nowescape-'):
-                await self.userProgress(29, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage29.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage29.text2)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage29.text3)
-                break;
-            if case('aperture-science-hoopy-the-hoop-glados_gib_10-'):
-                await self.userProgress(30, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage30.text1)
-                break;
-            if case('aperture-science-endcredits-glados-sa-1'):
-                await self.sendCodeBlock(ctx, "http", Endcredits1.text1)
-                break;
-            if case('aperture-science-endcredits-glados-sa-2'):
-                await self.sendCodeBlock(ctx, "http", Endcredits2.text1)
-                break;
-            if case('aperture-science-endcredits-glados-sa-3'):
-                await self.sendCodeBlock(ctx, "http", Endcredits3.text1)
-                break;
-            if case('aperture-science-endcredits-glados-sa-4'):
-                await self.sendCodeBlock(ctx, "http", Endcredits4.text1)
-                await self.sendCodeBlock(ctx, "diff", Endcredits4.text2)
-                break;
-            if case('aperture-science-endcredits-thanks-for-playing'):
-                await self.sendCodeBlock(ctx, "fix", Endcredits5.text1)
-                await self.sendCodeBlock(ctx, "diff", Endcredits5.text2)
-                break;
-            if case('aperture-science-cake-core-recipe-'):
-                await self.sendCodeBlock(ctx, "diff", EndcreditsCakeRecipe.text1)
-                break;
-    
-    async def userProgress(self, onstage, user):
-        member_settings = self.config.member(user)
-        curr_stage = await member_settings.stage()
-        if curr_stage > onstage:
-            pass
-        else:
-            await member_settings.stage.set(onstage)           
-            if onstage > 1:
-                now = datetime.now()
-                dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
-                await getattr(member_settings.stagefinished, str(onstage - 1)).set(dt_string)
-    
-    async def sendCodeBlockEmbed(self, ctx, language: str, msg: str):
-        msg = msg.replace("{author.id}", str(ctx.author.id)) 
-        msg = msg.replace("{author.name}", str(ctx.author.name))
-        embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-        embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
-        embed.set_footer(text="This message will selfdestruct in: {}".format(self.selfdestructtimer))
-        sendit = await ctx.send(embed=embed)
-        self.messageids.append(sendit.id)
-        self.ctx = ctx
-        
-    async def sendCodeBlock(self, ctx, language: str, msg: str):
-        msg = msg.replace("{author.id}", str(ctx.author.id)) 
-        msg = msg.replace("{author.name}", str(ctx.author.name))
-        sendit = await ctx.send(box(msg, lang=language))
-        #self.messageids.append(sendit.id)
-        self.msgtimer[sendit.id] = self.selfdestructtimer
-        self.ctx = ctx
-
-    @tasks.loop(seconds=5.0)
-    async def selfDestructMessage(self):
-        if hasattr(self, 'ctx'):        
-            for msgid, timeleft in self.msgtimer.items():
-                if self.msgtimer[msgid] > 5:
-                    self.msgtimer[msgid] = timeleft - 5
-                
-            for msgid in self.messageids:
-                try:
-                    message = await self.ctx.channel.fetch_message(msgid)
-                except:
-                    # Message not found.
-                    self.messageids.remove(msgid)
-                    continue
-                
-                org_msg = message.embeds[0].fields[0].value
-                org_footer = message.embeds[0].footer.text
-                
-                
-                oldtid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                tid = oldtid - 5
-                
-                if tid == 5:
-                    try:
-                        self.messageidslast.append(msgid)
-                        #await message.delete()
-                    except Exception:
-                        print("Enrichmentcenter (Error: 2)")
-                        pass
-                    self.messageids.remove(msgid)
-                
-                if message.embeds[0].fields[0].name == "Stage":
-                    #Progress card
-                    newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
-                    newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
-                    newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
-                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
-                else:
-                    #Output
-                    newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                    newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
-                
-                await message.edit(embed=newembed)
-                    
-    @tasks.loop(seconds=1.0)
-    async def selfDestructLast(self):
-        if hasattr(self, 'ctx'):
-        
-            for msgid, timeleft in self.msgtimer.items():
-                if self.msgtimer[msgid] <= 5:
-                    self.msgtimer[msgid] = timeleft - 1
-                    if timeleft - 1 == 0:
-                        self.msgtimerdelete.append(msgid)
-                        
-            for msgid in self.msgtimerdelete:
-                try:
-                    try:
-                        message = await self.ctx.channel.fetch_message(msgid)
-                    except:
-                        # Message not found
-                        del self.msgtimer[msgid]
-                        continue
-                    await message.delete()
-                except Exception:
-                    pass
-                del self.msgtimer[msgid]
-
-            self.msgtimerdelete = []
-        
-            for msgid in self.messageidslast:
-                try:
-                    message = await self.ctx.channel.get_message(msgid)
-                except AttributeError:
-                    message = await self.ctx.channel.fetch_message(msgid)
-                
-                org_msg = message.embeds[0].fields[0].value
-                org_footer = message.embeds[0].footer.text
-                
-                oldtid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                tid = oldtid - 1
-                
-                if tid == 0:
-                    try:
-                        await message.delete()
-                    except Exception:
-                        print("Enrichmentcenter (Error: 3)")
-                        pass
-                    self.messageidslast.remove(msgid)
-                else:
-                    if message.embeds[0].fields[0].name == "Stage":
-                        #Progress card
-                        newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
-                        newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
-                        newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
-                        newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
-                    else:
-                        #Output
-                        newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                        newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                        newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
-                    await message.edit(embed=newembed)
-                    
-                
-    @selfDestructMessage.before_loop
-    async def before_selfdestruct(self):            
-        await self.bot.wait_until_ready()
-        
-    @selfDestructLast.before_loop
-    async def before_selfdestruct(self):            
-        await self.bot.wait_until_ready()
-                
-                
-    async def _get_guild_channels(self, guild):
-        return await self.config.guild(guild).wlchannels()
-        
-    async def _add_guild_channel(self, guild, channel):
-        async with self.config.guild(guild).wlchannels() as chanlist:
-            chanlist.append(channel)
-            
-    async def _toggle_whitelist(self, guild):
-        wl = await self.config.guild(guild).whitelist()
-        if wl:
-            await self.config.guild(guild).whitelist.set(False)
-            return False
-        else:
-            await self.config.guild(guild).whitelist.set(True)
-            return True
-            
-    async def _remove_guild_channel(self, guild, channel):
-        async with self.config.guild(guild).wlchannels() as chanlist:
-            chanlist.remove(channel)
-
     @commands.group()
     @checks.mod_or_permissions(manage_messages=True)
     @commands.guild_only()
@@ -584,3 +189,379 @@ class EnrichmentCenter(commands.Cog):
             name="Channels:", value="\n".join([ctx.guild.get_channel(x).mention for x in channels])
         )
         await ctx.send(embed=emb)
+    
+    # User commands
+    
+    @commands.command()
+    async def whichstage(self, ctx):
+        """Shows progress report."""
+        user = ctx.author
+        member_settings = self.config.member(user)
+        curr_stage = await member_settings.stage()
+        
+        try:
+            await ctx.message.delete()
+        except Exception:
+            pass
+        
+        if curr_stage > 1:
+            curr_lastfinish = await getattr(member_settings.stagefinished, str(curr_stage - 1))()
+        else:
+            curr_lastfinish = "0000-00-00 00:00:00"
+        
+        embed = discord.Embed(color=0xEE2222, title='Test Progress Report')
+        if curr_stage == 0:
+            embed.add_field(name='Stage', value="N/A")
+        else:
+            embed.add_field(name='Stage', value=curr_stage)
+        if curr_lastfinish == "0000-00-00 00:00:00":
+            embed.add_field(name='Last stage finished', value="N/A")
+        else:
+            embed.add_field(name='Last stage finished', value=curr_lastfinish)
+        #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
+        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
+        sendit = await ctx.send(embed=embed)
+        self.messageids.append(sendit.id)
+        self.ctx = ctx
+        
+    # Puzzle commands
+    
+    @commands.Cog.listener()
+    async def on_message_without_command(self, message):
+        ctx = await self.bot.get_context(message)
+        user_allowed = True
+        is_private = isinstance(message.channel, discord.abc.PrivateChannel)
+        
+        if await self.config.guild(message.guild).whitelist():
+            if message.channel.id not in await self._get_guild_channels(message.author.guild):
+                return
+        
+        if len(message.content) < 2 or is_private or not user_allowed or message.author.bot:
+            return
+        
+        if ctx.prefix is None:
+            return
+        
+        try:
+            cclower = ctx.invoked_with.lower()
+        except commandException:
+            return
+        
+        try:
+            await message.delete()
+        except Exception:
+            print("Enrichmentcenter (Error: 1): No permission to delete message")
+            pass
+            
+        for case in switch(cclower):
+            if case('aperture-science-help'):
+                await self.sendCodeBlockEmbed(ctx, "http", Helptext.text1)
+                break
+            if case('aperture-science-initiate'):
+                await self.setUserProgress(1, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage1.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage1.text2)
+                break
+            if case('aperture-science-c-uhswhbcjh-'):
+                await self.setUserProgress(2, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage2.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage2.text2)
+                break
+            if case('aperture-science-c-dgwrgdfg-'):
+                await self.setUserProgress(3, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage3.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage3.text2)
+                break
+            if case('aperture-science-c-fsdfswefs-'):
+                await self.setUserProgress(4, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage4.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage4.text2)
+                break;
+            if case('aperture-science-c-xdergwerg-'):
+                await self.setUserProgress(5, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage5.text1)
+                break;
+            if case('aperture-science-c-gsresdfgd-'):
+                await self.setUserProgress(6, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage6.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage6.text2)
+                break;
+            if case('aperture-science-c-pfiejchen-'):
+                await self.setUserProgress(7, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage7.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage7.text2)
+                break;
+            if case('aperture-science-c-fayhsdbfg-'):
+                await self.setUserProgress(8, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage8.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage8.text2)
+                break;
+            if case('aperture-science-c-hiauhdiua-'):
+                await self.setUserProgress(9, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage9.text1)
+                break;
+            if case('aperture-science-c-safhsiuhf-'):
+                await self.setUserProgress(10, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage10.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage10.text2)
+                break;
+            if case('aperture-science-c-oudfhaiuh-'):
+                await self.setUserProgress(11, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage11.text1)
+                await self.sendCodeBlockEmbed(ctx, "fix", Stage11.text2)
+                break;
+            if case('aperture-science-c-sujdbisud-'):
+                await self.setUserProgress(12, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage12.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage12.text2)
+                break;
+            if case('aperture-science-c-asijsihug-'):
+                await self.setUserProgress(13, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage13.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage13.text2)
+                break;
+            if case('aperture-science-c-udjfhbaiu-'):
+                await self.setUserProgress(14, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage14.text1)
+                break;
+            if case('aperture-science-incinerate_faithful_companion_cube'):
+                await self.setUserProgress(15, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage15.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage15.text2)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage15.text3)
+                break;
+            if case('aperture-science-c-oeisoijfh-'):
+                await self.setUserProgress(16, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage16.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage16.text2)
+                break;
+            if case('aperture-science-cake-whoah-yeah-cccccccake-'):
+                await self.setUserProgress(17, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage17.text1)
+                break;
+            if case('aperture-science-c-jhfbishjg-goodbye-'):
+                await self.setUserProgress(18, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage18.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage18.text2)
+                break;
+            if case('aperture-science-escape_glados_c-oiufhiuhi-'):
+                await self.setUserProgress(19, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage19.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text2)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text3)
+                break;
+            if case('aperture-science-escape_glados_c-dahdgbuyh-'):
+                await self.setUserProgress(20, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage20.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage20.text2)
+                break;
+            if case('aperture-science-confront-glados-central-ai-chamber-'):
+                await self.setUserProgress(21, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage21.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage21.text2)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage21.text3)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage21.text4)
+                break;
+            if case('aperture-science-glados-morality_core-jhfgbiuyd-'):
+                await self.setUserProgress(22, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage22.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage22.text2)
+                break;
+            if case('aperture-science-destroy_morality_core_c-caijhiujd-'):
+                await self.setUserProgress(23, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage23.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage23.text2)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage23.text3)
+                break;
+            if case('aperture-science-glados-curiosity-core-wockdjehc-'):
+                await self.setUserProgress(24, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage24.text1)
+                await self.sendCodeBlockEmbed(ctx, "fix", Stage24.text2)
+                break;
+            if case('aperture-science-destroy-curiosity_core_c-qjhiuhbna-'):
+                await self.setUserProgress(25, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage25.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage25.text2)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage25.text3)
+                break;
+            if case('aperture-science-glados-intelligence_core-pqlaidjeu-'):
+                await self.setUserProgress(26, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage26.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage26.text2)
+                break;
+            if case('aperture-science-destroy_intelligence_core_c-ufyhgiuy-'):
+                await self.setUserProgress(27, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage27.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage27.text2)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage27.text3)
+                break;
+            if case('aperture-science-glados-anger_core-kwispelsj-'):
+                await self.setUserProgress(28, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage28.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage28.text2)
+                break;
+            if case('aperture-science-destroy_anger_core_c-nowescape-'):
+                await self.setUserProgress(29, message.author)
+                await self.sendCodeBlockEmbed(ctx, "http", Stage29.text1)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage29.text2)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage29.text3)
+                break;
+            if case('aperture-science-hoopy-the-hoop-glados_gib_10-'):
+                await self.setUserProgress(30, message.author)
+                await self.sendCodeBlockEmbed(ctx, "diff", Stage30.text1)
+                break;
+            if case('aperture-science-endcredits-glados-sa-1'):
+                await self.sendCodeBlock(ctx, "http", Endcredits1.text1, False)
+                break;
+            if case('aperture-science-endcredits-glados-sa-2'):
+                await self.sendCodeBlock(ctx, "http", Endcredits2.text1, False)
+                break;
+            if case('aperture-science-endcredits-glados-sa-3'):
+                await self.sendCodeBlock(ctx, "http", Endcredits3.text1, False)
+                break;
+            if case('aperture-science-endcredits-glados-sa-4'):
+                await self.sendCodeBlock(ctx, "http", Endcredits4.text1, False)
+                await self.sendCodeBlock(ctx, "diff", Endcredits4.text2, False)
+                break;
+            if case('aperture-science-endcredits-thanks-for-playing'):
+                await self.sendCodeBlock(ctx, "fix", Endcredits5.text1, False)
+                await self.sendCodeBlock(ctx, "diff", Endcredits5.text2, False)
+                break;
+            if case('aperture-science-cake-core-recipe-'):
+                await self.sendCodeBlock(ctx, "diff", EndcreditsCakeRecipe.text1, False)
+                break;
+    
+    # Functions
+    
+    async def setTimer(self, msgid: int):
+        self.msgtimer[sendit.id] = self.selfdestructtimer
+        
+    async def setUserProgress(self, onstage, user):
+        member_settings = self.config.member(user)
+        curr_stage = await member_settings.stage()
+        if curr_stage > onstage:
+            pass
+        else:
+            await member_settings.stage.set(onstage)           
+            if onstage > 1:
+                now = datetime.now()
+                dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+                await getattr(member_settings.stagefinished, str(onstage - 1)).set(dt_string)
+                
+    async def fixPlaceholderText(self, ctx, msg);
+        msg = msg.replace("{author.id}", str(ctx.author.id)) 
+        msg = msg.replace("{author.name}", str(ctx.author.name))
+        return msg
+        
+    async def sendCodeBlock(self, ctx, language: str, msg: str, embed = True):
+        msg = fixPlaceholderText(ctx, msg)
+        if embed:
+            embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+            embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
+            embed.set_footer(text="This message will selfdestruct in: {}".format(self.selfdestructtimer))
+            sendit = await ctx.send(embed=embed)
+        else:
+            sendit = await ctx.send(box(msg, lang=language))
+        self.msgtimer[sendit.id] = self.selfdestructtimer    
+        #self.messageids.append(sendit.id)
+        self.ctx = ctx
+        
+    async def editMessageTimer(self, message, timeleft):
+        # Check if embed    
+        try:
+            if message.embeds[0].fields[0].name == "Stage":
+                #Progress card
+                newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
+                newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
+                newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
+                newembed.set_footer(text=footertext.format(str(timeleft)))
+            else:
+                #Output
+                newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                newembed.set_footer(text=footertext.format(str(timeleft))))
+            await message.edit(embed=newembed)
+        except:
+            # Not embed
+            # Do nothing for now.
+        
+    if self.msgtimer[msgid] > 10:
+                    self.msgtimer[msgid] = timeleft - 10
+                else:
+                    self.msglasttimer[msgid] = 10
+                    del self.msgtimer[msgid]    
+        
+    # Task Loops
+    @tasks.loop(seconds=10.0)
+    async def messageTimer(self):
+        if hasattr(self, 'ctx'):
+            for msgid, timeleft in self.msgtimer.items():
+                # Try to get message
+                try:
+                    message = await self.ctx.channel.fetch_message(msgid)
+                except:
+                    # Message is deleted
+                    del self.msgtimer[msgid]
+                    continue
+                
+                editMessageTimer(message, timeleft - 10)
+                    
+                # Reduce the time or move to the last timer
+                if timeleft - 10 == 10:
+                    del self.msgtimer[msgid]
+                    self.msglasttimer[msgid] = 10
+                else:
+                    self.msgtimer[msgid] = timeleft - 10
+                    
+                    
+    @tasks.loop(seconds=1.0)
+    async def messageLastTimer(self):
+        if hasattr(self, 'ctx'):
+            for msgid, timeleft in self.msglasttimer.items():
+                # Try to get message
+                try:
+                    message = await self.ctx.channel.fetch_message(msgid)
+                except:
+                    # Message is deleted
+                    del self.msglasttimer[msgid]
+                    continue
+                editMessageTimer(message, timeleft - 1)    
+                
+                # Reduce the time or delete message
+                if timeleft - 1 == 0:
+                    del self.msglasttimer[msgid]
+                    try:
+                        await message.delete()
+                    except:
+                        pass
+                else:
+                    self.msgtimer[msgid] = timeleft - 1
+                
+    @selfDestructMessage.before_loop
+    async def messageTimer(self):            
+        await self.bot.wait_until_ready()
+        
+    @selfDestructLast.before_loop
+    async def messageLastTimer(self):            
+        await self.bot.wait_until_ready()
+                
+                
+    async def _get_guild_channels(self, guild):
+        return await self.config.guild(guild).wlchannels()
+        
+    async def _add_guild_channel(self, guild, channel):
+        async with self.config.guild(guild).wlchannels() as chanlist:
+            chanlist.append(channel)
+            
+    async def _toggle_whitelist(self, guild):
+        wl = await self.config.guild(guild).whitelist()
+        if wl:
+            await self.config.guild(guild).whitelist.set(False)
+            return False
+        else:
+            await self.config.guild(guild).whitelist.set(True)
+            return True
+            
+    async def _remove_guild_channel(self, guild, channel):
+        async with self.config.guild(guild).wlchannels() as chanlist:
+            chanlist.remove(channel)
