@@ -98,6 +98,11 @@ class EnrichmentCenter(commands.Cog):
     @checks.mod_or_permissions(manage_messages=True)
     async def clearprogress(self, ctx, user: discord.Member):
         """Clears a users progress."""
+        try:
+            await ctx.message.delete()
+        except Exception:
+            pass
+            
         if user is None:
             pass
         member_settings = self.config.member(user)
