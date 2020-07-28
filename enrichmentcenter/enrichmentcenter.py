@@ -79,7 +79,6 @@ class EnrichmentCenter(commands.Cog):
         self.config.register_guild(**self.default_guild)
         self.messageids = []
         self.messageidslast = []
-        #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
         self.selfDestructMessage.start()
         self.selfDestructLast.start()
     
