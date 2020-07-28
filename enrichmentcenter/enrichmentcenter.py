@@ -136,7 +136,7 @@ class EnrichmentCenter(commands.Cog):
         try:
             await message.delete()
         except Exception:
-            print("No permission to delete other peoples messages")
+            print("Enrichmentcenter (Error: 1): No permission to delete message")
             pass
         for case in switch(cclower):
             if case('aperture-science-help'):
@@ -340,9 +340,9 @@ class EnrichmentCenter(commands.Cog):
                         self.messageidslast.append(msgid)
                         #await message.delete()
                     except Exception:
+                        print("Enrichmentcenter (Error: 2): No permission to delete message")
                         pass
                     self.messageids.remove(msgid)
-                #else:
                 
                 if message.embeds[0].fields[0].name == "Stage":
                     #Progress card
@@ -354,7 +354,6 @@ class EnrichmentCenter(commands.Cog):
                     #Output
                     newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                     newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                    #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
                     newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                 
                 await message.edit(embed=newembed)
@@ -378,6 +377,7 @@ class EnrichmentCenter(commands.Cog):
                     try:
                         await message.delete()
                     except Exception:
+                        print("Enrichmentcenter (Error: 3): No permission to delete message")
                         pass
                     self.messageidslast.remove(msgid)
                 else:
@@ -392,7 +392,6 @@ class EnrichmentCenter(commands.Cog):
                         #Output
                         newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                         newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                        #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
                         newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                     
                 
