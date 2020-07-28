@@ -105,7 +105,7 @@ class EnrichmentCenter(commands.Cog):
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
         #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
-        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}".format(author.id,author.name))
+        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}".format(user.id,user.name))
         await ctx.send(embed=embed)
         
     @commands.Cog.listener()
