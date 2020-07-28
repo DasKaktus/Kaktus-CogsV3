@@ -362,7 +362,6 @@ class EnrichmentCenter(commands.Cog):
     async def selfDestructLast(self):
         if hasattr(self, 'ctx'):
             for msgid in self.messageidslast:
-                print("Enrichmentcenter: Selfdestruct2 - {}".format(str(msgid)))
                 try:
                     message = await self.ctx.channel.get_message(msgid)
                 except AttributeError:
@@ -388,12 +387,12 @@ class EnrichmentCenter(commands.Cog):
                         newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
                         newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
                         newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
-                        
                     else:
                         #Output
                         newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                         newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                         newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
+                    await message.edit(embed=newembed)
                     
                 
     @selfDestructMessage.before_loop
