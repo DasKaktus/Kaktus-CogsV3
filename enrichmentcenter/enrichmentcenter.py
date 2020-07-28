@@ -344,10 +344,20 @@ class EnrichmentCenter(commands.Cog):
                         pass
                     self.messageids.remove(msgid)
                 #else:
-                newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
-                newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
+                
+                if message.embeds[0].fields[0].name == "Stage":
+                    #Progress card
+                    newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
+                    newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
+                    newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
+                    
+                else:
+                    #Output
+                    newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                    newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                    #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
+                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
+                
                 await message.edit(embed=newembed)
                     
     @tasks.loop(seconds=1.0)
@@ -372,11 +382,18 @@ class EnrichmentCenter(commands.Cog):
                         pass
                     self.messageidslast.remove(msgid)
                 else:
-                    newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                    newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                    #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
-                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
-                    await message.edit(embed=newembed)
+                    if message.embeds[0].fields[0].name == "Stage":
+                        #Progress card
+                        newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
+                        newembed.add_field(name=message.embeds[0].fields[0].name, value=message.embeds[0].fields[0].value)
+                        newembed.add_field(name=message.embeds[0].fields[1].name, value=message.embeds[0].fields[1].value)
+                        
+                    else:
+                        #Output
+                        newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                        newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                        #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
+                        newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                     
                 
     @selfDestructMessage.before_loop
