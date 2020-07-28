@@ -312,160 +312,160 @@ class EnrichmentCenter(commands.Cog):
             
         for case in switch(cclower):
             if case('aperture-science-help'):
-                await self.sendCodeBlockEmbed(ctx, "http", Helptext.text1)
+                await self.sendCodeBlock(ctx, "http", Helptext.text1)
                 break
             if case('aperture-science-initiate'):
                 await self.setUserProgress(1, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage1.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage1.text2)
+                await self.sendCodeBlock(ctx, "http", Stage1.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage1.text2)
                 break
             if case('aperture-science-c-uhswhbcjh-'):
                 await self.setUserProgress(2, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage2.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage2.text2)
+                await self.sendCodeBlock(ctx, "http", Stage2.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage2.text2)
                 break
             if case('aperture-science-c-dgwrgdfg-'):
                 await self.setUserProgress(3, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage3.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage3.text2)
+                await self.sendCodeBlock(ctx, "http", Stage3.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage3.text2)
                 break
             if case('aperture-science-c-fsdfswefs-'):
                 await self.setUserProgress(4, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage4.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage4.text2)
+                await self.sendCodeBlock(ctx, "http", Stage4.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage4.text2)
                 break;
             if case('aperture-science-c-xdergwerg-'):
                 await self.setUserProgress(5, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage5.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage5.text1)
                 break;
             if case('aperture-science-c-gsresdfgd-'):
                 await self.setUserProgress(6, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage6.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage6.text2)
+                await self.sendCodeBlock(ctx, "http", Stage6.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage6.text2)
                 break;
             if case('aperture-science-c-pfiejchen-'):
                 await self.setUserProgress(7, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage7.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage7.text2)
+                await self.sendCodeBlock(ctx, "http", Stage7.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage7.text2)
                 break;
             if case('aperture-science-c-fayhsdbfg-'):
                 await self.setUserProgress(8, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage8.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage8.text2)
+                await self.sendCodeBlock(ctx, "http", Stage8.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage8.text2)
                 break;
             if case('aperture-science-c-hiauhdiua-'):
                 await self.setUserProgress(9, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage9.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage9.text1)
                 break;
             if case('aperture-science-c-safhsiuhf-'):
                 await self.setUserProgress(10, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage10.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage10.text2)
+                await self.sendCodeBlock(ctx, "http", Stage10.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage10.text2)
                 break;
             if case('aperture-science-c-oudfhaiuh-'):
                 await self.setUserProgress(11, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage11.text1)
-                await self.sendCodeBlockEmbed(ctx, "fix", Stage11.text2)
+                await self.sendCodeBlock(ctx, "http", Stage11.text1)
+                await self.sendCodeBlock(ctx, "fix", Stage11.text2)
                 break;
             if case('aperture-science-c-sujdbisud-'):
                 await self.setUserProgress(12, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage12.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage12.text2)
+                await self.sendCodeBlock(ctx, "http", Stage12.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage12.text2)
                 break;
             if case('aperture-science-c-asijsihug-'):
                 await self.setUserProgress(13, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage13.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage13.text2)
+                await self.sendCodeBlock(ctx, "http", Stage13.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage13.text2)
                 break;
             if case('aperture-science-c-udjfhbaiu-'):
                 await self.setUserProgress(14, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage14.text1)
+                await self.sendCodeBlock(ctx, "http", Stage14.text1)
                 break;
             if case('aperture-science-incinerate_faithful_companion_cube'):
                 await self.setUserProgress(15, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage15.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage15.text2)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage15.text3)
+                await self.sendCodeBlock(ctx, "http", Stage15.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage15.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage15.text3)
                 break;
             if case('aperture-science-c-oeisoijfh-'):
                 await self.setUserProgress(16, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage16.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage16.text2)
+                await self.sendCodeBlock(ctx, "http", Stage16.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage16.text2)
                 break;
             if case('aperture-science-cake-whoah-yeah-cccccccake-'):
                 await self.setUserProgress(17, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage17.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage17.text1)
                 break;
             if case('aperture-science-c-jhfbishjg-goodbye-'):
                 await self.setUserProgress(18, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage18.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage18.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage18.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage18.text2)
                 break;
             if case('aperture-science-escape_glados_c-oiufhiuhi-'):
                 await self.setUserProgress(19, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage19.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text2)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text3)
+                await self.sendCodeBlock(ctx, "http", Stage19.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage19.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage19.text3)
                 break;
             if case('aperture-science-escape_glados_c-dahdgbuyh-'):
                 await self.setUserProgress(20, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage20.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage20.text2)
+                await self.sendCodeBlock(ctx, "http", Stage20.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage20.text2)
                 break;
             if case('aperture-science-confront-glados-central-ai-chamber-'):
                 await self.setUserProgress(21, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage21.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage21.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage21.text3)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage21.text4)
+                await self.sendCodeBlock(ctx, "http", Stage21.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage21.text2)
+                await self.sendCodeBlock(ctx, "http", Stage21.text3)
+                await self.sendCodeBlock(ctx, "diff", Stage21.text4)
                 break;
             if case('aperture-science-glados-morality_core-jhfgbiuyd-'):
                 await self.setUserProgress(22, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage22.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage22.text2)
+                await self.sendCodeBlock(ctx, "http", Stage22.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage22.text2)
                 break;
             if case('aperture-science-destroy_morality_core_c-caijhiujd-'):
                 await self.setUserProgress(23, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage23.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage23.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage23.text3)
+                await self.sendCodeBlock(ctx, "http", Stage23.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage23.text2)
+                await self.sendCodeBlock(ctx, "http", Stage23.text3)
                 break;
             if case('aperture-science-glados-curiosity-core-wockdjehc-'):
                 await self.setUserProgress(24, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage24.text1)
-                await self.sendCodeBlockEmbed(ctx, "fix", Stage24.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage24.text1)
+                await self.sendCodeBlock(ctx, "fix", Stage24.text2)
                 break;
             if case('aperture-science-destroy-curiosity_core_c-qjhiuhbna-'):
                 await self.setUserProgress(25, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage25.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage25.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage25.text3)
+                await self.sendCodeBlock(ctx, "http", Stage25.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage25.text2)
+                await self.sendCodeBlock(ctx, "http", Stage25.text3)
                 break;
             if case('aperture-science-glados-intelligence_core-pqlaidjeu-'):
                 await self.setUserProgress(26, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage26.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage26.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage26.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage26.text2)
                 break;
             if case('aperture-science-destroy_intelligence_core_c-ufyhgiuy-'):
                 await self.setUserProgress(27, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage27.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage27.text2)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage27.text3)
+                await self.sendCodeBlock(ctx, "http", Stage27.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage27.text2)
+                await self.sendCodeBlock(ctx, "http", Stage27.text3)
                 break;
             if case('aperture-science-glados-anger_core-kwispelsj-'):
                 await self.setUserProgress(28, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage28.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage28.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage28.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage28.text2)
                 break;
             if case('aperture-science-destroy_anger_core_c-nowescape-'):
                 await self.setUserProgress(29, message.author)
-                await self.sendCodeBlockEmbed(ctx, "http", Stage29.text1)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage29.text2)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage29.text3)
+                await self.sendCodeBlock(ctx, "http", Stage29.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage29.text2)
+                await self.sendCodeBlock(ctx, "diff", Stage29.text3)
                 break;
             if case('aperture-science-hoopy-the-hoop-glados_gib_10-'):
                 await self.setUserProgress(30, message.author)
-                await self.sendCodeBlockEmbed(ctx, "diff", Stage30.text1)
+                await self.sendCodeBlock(ctx, "diff", Stage30.text1)
                 break;
             if case('aperture-science-endcredits-glados-sa-1'):
                 await self.sendCodeBlock(ctx, "http", Endcredits1.text1, False)
