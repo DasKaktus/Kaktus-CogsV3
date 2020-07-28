@@ -269,7 +269,7 @@ class EnrichmentCenter(commands.Cog):
                 await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text2)
                 await self.sendCodeBlockEmbed(ctx, "diff", Stage19.text3)
                 break;
-            if case('aaperture-science-escape_glados_c-dahdgbuyh-'):
+            if case('aperture-science-escape_glados_c-dahdgbuyh-'):
                 await self.userProgress(20, message.author)
                 await self.sendCodeBlockEmbed(ctx, "http", Stage20.text1)
                 await self.sendCodeBlockEmbed(ctx, "diff", Stage20.text2)
