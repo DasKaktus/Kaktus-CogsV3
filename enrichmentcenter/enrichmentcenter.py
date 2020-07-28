@@ -340,7 +340,7 @@ class EnrichmentCenter(commands.Cog):
                         self.messageidslast.append(msgid)
                         #await message.delete()
                     except Exception:
-                        print("Enrichmentcenter (Error: 2): No permission to delete message")
+                        print("Enrichmentcenter (Error: 2)")
                         pass
                     self.messageids.remove(msgid)
                 
@@ -362,6 +362,7 @@ class EnrichmentCenter(commands.Cog):
     async def selfDestructLast(self):
         if hasattr(self, 'ctx'):
             for msgid in self.messageidslast:
+                print("Enrichmentcenter: Selfdestruct2 - {}".format(str(msgid)))
                 try:
                     message = await self.ctx.channel.get_message(msgid)
                 except AttributeError:
@@ -377,7 +378,7 @@ class EnrichmentCenter(commands.Cog):
                     try:
                         await message.delete()
                     except Exception:
-                        print("Enrichmentcenter (Error: 3): No permission to delete message")
+                        print("Enrichmentcenter (Error: 3)")
                         pass
                     self.messageidslast.remove(msgid)
                 else:
