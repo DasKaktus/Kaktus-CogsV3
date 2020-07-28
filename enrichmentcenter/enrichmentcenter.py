@@ -484,13 +484,7 @@ class EnrichmentCenter(commands.Cog):
         except:
             # Not embed
             # Do nothing for now.
-        
-    #if self.msgtimer[msgid] > 10:
-    #                self.msgtimer[msgid] = timeleft - 10
-    #            else:
-    #                self.msglasttimer[msgid] = 10
-    #                del self.msgtimer[msgid]    
-        
+
     # Task Loops
     @tasks.loop(seconds=10.0)
     async def messageTimer(self):
