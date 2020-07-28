@@ -347,7 +347,7 @@ class EnrichmentCenter(commands.Cog):
                 newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                 newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                 #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
-                newembed.set_footer(text=org_footer.replace(" {}".format(oldtid),str(tid)))
+                newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                 await message.edit(embed=newembed)
                     
     @tasks.loop(seconds=1.0)
@@ -375,7 +375,7 @@ class EnrichmentCenter(commands.Cog):
                     newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                     newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                     #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
-                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid),str(tid)))
+                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                     await message.edit(embed=newembed)
                     
                 
