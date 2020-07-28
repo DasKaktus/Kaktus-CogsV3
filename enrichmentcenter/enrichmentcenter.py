@@ -221,7 +221,7 @@ class EnrichmentCenter(commands.Cog):
         #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
         embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
         sendit = await ctx.send(embed=embed)
-        self.messageids.append(sendit.id)
+        setTimer(sendit.id, self.selfdestructtimerreport)
         self.ctx = ctx
         
     # Puzzle commands
@@ -433,8 +433,8 @@ class EnrichmentCenter(commands.Cog):
     
     # Functions
     
-    async def setTimer(self, msgid: int):
-        self.msgtimer[sendit.id] = self.selfdestructtimer
+    async def setTimer(self, msgid: int, seconds: int):
+        self.msgtimer[sendit.id] = seconds
         
     async def setUserProgress(self, onstage, user):
         member_settings = self.config.member(user)
@@ -463,7 +463,7 @@ class EnrichmentCenter(commands.Cog):
             sendit = await ctx.send(embed=embed)
         else:
             sendit = await ctx.send(box(msg, lang=language)) 
-        setTimer(sendit.id)
+        setTimer(sendit.id, self.selfdestructtimer)
         
     async def editMessageTimer(self, message, timeleft):
         # Check if embed    
@@ -540,8 +540,7 @@ class EnrichmentCenter(commands.Cog):
         
     @messageLastTimer.before_loop
     async def before_messageLastTimer(self):            
-        await self.bot.wait_until_ready()
-                
+        await self.bot.wait_until_ready()                
                 
     async def _get_guild_channels(self, guild):
         return await self.config.guild(guild).wlchannels()
