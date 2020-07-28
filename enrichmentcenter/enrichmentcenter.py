@@ -95,8 +95,22 @@ class EnrichmentCenter(commands.Cog):
         self.selfDestructLast.cancel()
         
     @commands.command()
+    @checks.mod_or_permissions(manage_messages=True)
+    async def clearprogress(self, ctx, user: discord.Member):
+        """Clears a users progress."""
+        if user is None:
+            pass
+        member_settings = self.config.member(user)
+        await member_settings.stage.set(0)
+        await member_settings.started.set("0000-00-00 00:00:00")
+        for x in range(1, 31):
+            await getattr(member_settings.stagefinished, str(x)).set("0000-00-00 00:00:00")
+        
+        
+    @commands.command()
     #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
     async def whichstage(self, ctx):
+        """Shows progress report."""
         user = ctx.author
         member_settings = self.config.member(user)
         curr_stage = await member_settings.stage()
