@@ -416,10 +416,14 @@ class EnrichmentCenter(commands.Cog):
                         self.msgtimerdelete.append(msgid)
                         
             for msgid in self.msgtimerdelete:
+                try:
+                    message = await self.ctx.channel.get_message(msgid)
+                    await message.delete()
+                except: Exception:
+                    pass
                 del self.msgtimer[msgid]
 
             self.msgtimerdelete = []
-            
         
             for msgid in self.messageidslast:
                 try:
