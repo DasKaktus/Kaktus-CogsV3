@@ -484,6 +484,7 @@ class EnrichmentCenter(commands.Cog):
         except:
             # Not embed
             # Do nothing for now.
+            pass
 
     # Task Loops
     @tasks.loop(seconds=10.0)
