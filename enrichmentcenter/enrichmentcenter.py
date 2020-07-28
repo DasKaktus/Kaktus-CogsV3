@@ -92,12 +92,12 @@ class EnrichmentCenter(commands.Cog):
         self.msgtimer = {}
         self.msgtimerdelete = []
         self.msglasttimer = {}
-        self.selfDestructMessage.start()
-        self.selfDestructLast.start()
+        self.messageTimer.start()
+        self.messageLastTimer.start()
     
     def cog_unload(self):
-        self.selfDestructMessage.cancel()
-        self.selfDestructLast.cancel()
+        self.messageTimer.cancel()
+        self.messageLastTimer.cancel()
         
     # Mod commands
     
@@ -532,12 +532,12 @@ class EnrichmentCenter(commands.Cog):
                 else:
                     self.msgtimer[msgid] = timeleft - 1
                 
-    @selfDestructMessage.before_loop
-    async def messageTimer(self):            
+    @messageTimer.before_loop
+    async def before_messageTimer(self):            
         await self.bot.wait_until_ready()
         
-    @selfDestructLast.before_loop
-    async def messageLastTimer(self):            
+    @messageLastTimer.before_loop
+    async def before_messageLastTimer(self):            
         await self.bot.wait_until_ready()
                 
                 
