@@ -85,7 +85,7 @@ class EnrichmentCenter(commands.Cog):
         
     @commands.command()
     #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
-    async def whichStage(self, ctx):
+    async def whichstage(self, ctx):
         user = ctx.author
         member_settings = self.config.member(user)
         curr_stage = await member_settings.stage()
@@ -95,7 +95,7 @@ class EnrichmentCenter(commands.Cog):
         else:
             curr_lastfinish = "0000-00-00 00:00:00"
         
-        embed = discord.Embed(color=0xEE2222, title='Testsubject report card')
+        embed = discord.Embed(color=0xEE2222, title='Test Progress Report')
         if curr_stage == 0:
             embed.add_field(name='Stage', value="N/A")
         else:
@@ -104,7 +104,8 @@ class EnrichmentCenter(commands.Cog):
             embed.add_field(name='Last stage finished', value="N/A")
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
-        embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
+        #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
+        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}".format(author.id,author.name))
         await ctx.send(embed=embed)
         
     @commands.Cog.listener()
@@ -304,8 +305,8 @@ class EnrichmentCenter(commands.Cog):
     async def sendCodeBlock(self, ctx, language: str, msg: str):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name))
-        embed = discord.Embed(color=0xEE2222, title='Test')
-        embed.add_field(name='Computer output', value=box(msg, lang=language))
+        embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+        embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
         embed.set_footer(text="This message will selfdestruct in: {} seconds".format(self.selfdestructtimer))
         sendit = await ctx.send(embed=embed)
         self.messageids.append(sendit.id)
@@ -334,8 +335,8 @@ class EnrichmentCenter(commands.Cog):
                         pass
                     self.messageids.remove(msgid)
                 else:
-                    newembed = discord.Embed(color=0xEE2222, title='Test')
-                    newembed.add_field(name='Computer output', value=org_msg)
+                    newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                    newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                     newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
                     await message.edit(embed=newembed)
                     
