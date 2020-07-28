@@ -112,6 +112,7 @@ class EnrichmentCenter(commands.Cog):
         embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
         sendit = await ctx.send(embed=embed)
         self.messageids.append(sendit.id)
+        self.ctx = ctx
         
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
