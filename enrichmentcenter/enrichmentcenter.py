@@ -37,6 +37,12 @@ from .stage27 import Stage27
 from .stage28 import Stage28
 from .stage29 import Stage29
 from .stage30 import Stage30
+from .endcredits1 import Endcredits1
+from .endcredits2 import Endcredits2
+from .endcredits3 import Endcredits3
+from .endcredits4 import Endcredits4
+from .endcredits5 import Endcredits5
+from .endcreditscakerecipe import EndcreditsCakeRecipe
 
 
 class commandException(Exception):
@@ -299,6 +305,26 @@ class EnrichmentCenter(commands.Cog):
             if case('aperture-science-hoopy-the-hoop-glados_gib_10-'):
                 await self.userProgress(30, message.author)
                 await self.sendCodeBlock(ctx, "diff", Stage30.text1)
+                break;
+            if case('aperture-science-endcredits-glados-sa-1'):
+                await self.sendcodeblock(ctx, "http", endcredits1.text1)
+                break;
+            if case('aperture-science-endcredits-glados-sa-2'):
+                await self.sendcodeblock(ctx, "http", endcredits2.text1)
+                break;
+            if case('aperture-science-endcredits-glados-sa-3'):
+                await self.sendcodeblock(ctx, "http", endcredits3.text1)
+                break;
+            if case('aperture-science-endcredits-glados-sa-4'):
+                await self.sendcodeblock(ctx, "http", endcredits4.text1)
+                await self.sendcodeblock(ctx, "diff", endcredits4.text2)
+                break;
+            if case('aperture-science-endcredits-thanks-for-playing'):
+                await self.sendcodeblock(ctx, "fix", endcredits5.text1)
+                await self.sendcodeblock(ctx, "diff", endcredits5.text2)
+                break;
+            if case('aperture-science-cake-core-recipe-'):
+                await self.sendcodeblock(ctx, "diff", endcreditscakerecipe.text1)
                 break;
     
     async def userProgress(self, onstage, user):
