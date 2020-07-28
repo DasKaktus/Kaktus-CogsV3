@@ -93,6 +93,11 @@ class EnrichmentCenter(commands.Cog):
         member_settings = self.config.member(user)
         curr_stage = await member_settings.stage()
         
+        try:
+            ctx.message.delete()
+        except Exception:
+            pass
+        
         if curr_stage > 1:
             curr_lastfinish = await getattr(member_settings.stagefinished, str(curr_stage - 1))()
         else:
