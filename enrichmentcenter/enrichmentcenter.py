@@ -461,9 +461,8 @@ class EnrichmentCenter(commands.Cog):
             embed.set_footer(text="This message will selfdestruct in: {}".format(self.selfdestructtimer))
             sendit = await ctx.send(embed=embed)
         else:
-            sendit = await ctx.send(box(msg, lang=language))
-        self.msgtimer[sendit.id] = self.selfdestructtimer    
-        #self.messageids.append(sendit.id)
+            sendit = await ctx.send(box(msg, lang=language)) 
+        setTimer(sendit.id)
         self.ctx = ctx
         
     async def editMessageTimer(self, message, timeleft):
@@ -499,6 +498,7 @@ class EnrichmentCenter(commands.Cog):
                     del self.msgtimer[msgid]
                     continue
                 
+                print("{} - {}".format(str(msgid), str(timeleft))
                 editMessageTimer(message, timeleft - 10)
                     
                 # Reduce the time or move to the last timer
