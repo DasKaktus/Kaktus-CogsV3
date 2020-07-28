@@ -330,6 +330,7 @@ class EnrichmentCenter(commands.Cog):
                     message = await self.ctx.channel.fetch_message(msgid)
                 
                 org_msg = message.embeds[0].fields[0].value
+                org_footer = message.embeds[0].footer.text
                 
                 
                 tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
