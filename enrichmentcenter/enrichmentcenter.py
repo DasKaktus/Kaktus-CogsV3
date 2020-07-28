@@ -334,7 +334,7 @@ class EnrichmentCenter(commands.Cog):
                 
                 
                 oldtid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                oldtid = tid - 5
+                tid = oldtid - 5
                 
                 if tid == 5:
                     try:
@@ -363,7 +363,7 @@ class EnrichmentCenter(commands.Cog):
                 org_footer = message.embeds[0].footer.text
                 
                 oldtid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                oldtid = tid - 1
+                tid = oldtid - 1
                 
                 if tid == 0:
                     try:
