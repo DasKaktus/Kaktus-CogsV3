@@ -131,7 +131,7 @@ class EnrichmentCenter(commands.Cog):
             sendit = await ctx.send(embed=embed)
         else:
             sendit = await ctx.send(box(msg, lang=language)) 
-        self.setTimer(sendit.id, self.selfdestructtimer)
+        await self.setTimer(sendit.id, self.selfdestructtimer)
         
     async def editMessageTimer(self, message, timeleft):
         # Check if embed    
@@ -275,7 +275,7 @@ class EnrichmentCenter(commands.Cog):
         #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
         embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
         sendit = await ctx.send(embed=embed)
-        self.setTimer(sendit.id, self.selfdestructtimerreport)
+        await self.setTimer(sendit.id, self.selfdestructtimerreport)
         self.ctx = ctx
         
     # Puzzle commands
@@ -499,7 +499,7 @@ class EnrichmentCenter(commands.Cog):
                     continue
                 
                 print("{} - {}".format(str(msgid), str(timeleft)))
-                self.editMessageTimer(message, timeleft - 10)
+                await self.editMessageTimer(message, timeleft - 10)
                     
                 # Reduce the time or move to the last timer
                 if timeleft - 10 == 10:
@@ -522,7 +522,7 @@ class EnrichmentCenter(commands.Cog):
                     continue
                 
                 print("{} - {}".format(str(msgid), str(timeleft)))
-                self.editMessageTimer(message, timeleft - 1)    
+                await self.editMessageTimer(message, timeleft - 1)    
                 
                 # Reduce the time or delete message
                 if timeleft - 1 == 0:
