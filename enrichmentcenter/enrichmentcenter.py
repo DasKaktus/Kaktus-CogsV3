@@ -69,7 +69,7 @@ class EnrichmentCenter(commands.Cog):
     
     default_guild = {"wlchannels": [], "whitelist": True }
     
-    selfdestructtimer = 30
+    selfdestructtimer = 60
     
     def __init__(self, bot):
         self.bot = bot
@@ -313,10 +313,38 @@ class EnrichmentCenter(commands.Cog):
         self.ctx = ctx
 
 
-    @tasks.loop(seconds=1.0)
+    @tasks.loop(seconds=5.0)
     async def selfDestructMessage(self):
         if hasattr(self, 'ctx'):
             for msgid in self.messageids:
+                try:
+                    message = await self.ctx.channel.get_message(msgid)
+                except AttributeError:
+                    message = await self.ctx.channel.fetch_message(msgid)
+                
+                org_msg = message.embeds[0].fields[0].value
+                
+                
+                tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
+                tid = tid - 5
+                
+                if tid == 5:
+                    try:
+                        self.messageidslast.append(msgid)
+                        #await message.delete()
+                    except Exception:
+                        pass
+                    self.messageids.remove(msgid)
+                else:
+                    newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                    newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                    newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+                    await message.edit(embed=newembed)
+                    
+    @tasks.loop(seconds=1.0)
+    async def selfDestructLast(self):
+        if hasattr(self, 'ctx'):
+            for msgid in self.messageidslast:
                 try:
                     message = await self.ctx.channel.get_message(msgid)
                 except AttributeError:
@@ -333,7 +361,7 @@ class EnrichmentCenter(commands.Cog):
                         await message.delete()
                     except Exception:
                         pass
-                    self.messageids.remove(msgid)
+                    self.messageidslast.remove(msgid)
                 else:
                     newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                     newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
@@ -342,6 +370,10 @@ class EnrichmentCenter(commands.Cog):
                     
                 
     @selfDestructMessage.before_loop
+    async def before_selfdestruct(self):            
+        await self.bot.wait_until_ready()
+        
+    @selfDestructLast.before_loop
     async def before_selfdestruct(self):            
         await self.bot.wait_until_ready()
                 
