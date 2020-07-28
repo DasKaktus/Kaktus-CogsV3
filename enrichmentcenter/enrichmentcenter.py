@@ -136,6 +136,7 @@ class EnrichmentCenter(commands.Cog):
         try:
             if message.embeds[0].fields[0].name == "Stage":
                 #Progress card
+                
                 org_footer = message.embeds[0].footer.text
                 oldtime = int(org_footer.split(":")[1].split()[0])
                 newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
@@ -144,6 +145,7 @@ class EnrichmentCenter(commands.Cog):
                 newembed.set_footer(text=org_footer.replace(" {}".format(oldtime), " {}".format(str(timeleft))))
             else:
                 #Output
+                
                 newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                 newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                 newembed.set_footer(text=self.footertext.format(str(timeleft)))
