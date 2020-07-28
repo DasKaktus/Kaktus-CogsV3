@@ -358,7 +358,7 @@ class EnrichmentCenter(commands.Cog):
         msg = msg.replace("{author.name}", str(ctx.author.name))
         sendit = await ctx.send(box(msg, lang=language))
         #self.messageids.append(sendit.id)
-        self.msgtimer[sendit.id] = 10
+        self.msgtimer[sendit.id] = selfdestructtimer
         self.ctx = ctx
 
     @tasks.loop(seconds=5.0)
