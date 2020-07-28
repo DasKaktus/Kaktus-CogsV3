@@ -333,7 +333,6 @@ class EnrichmentCenter(commands.Cog):
                 
                 
                 tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                print(tid)
                 tid = tid - 5
                 
                 if tid == 5:
@@ -346,7 +345,8 @@ class EnrichmentCenter(commands.Cog):
                 #else:
                 newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                 newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
+                #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
+                newembed.set_footer(text=org_footer.replace(" {}".format(oldtid),tid)
                 await message.edit(embed=newembed)
                     
     @tasks.loop(seconds=1.0)
@@ -359,10 +359,10 @@ class EnrichmentCenter(commands.Cog):
                     message = await self.ctx.channel.fetch_message(msgid)
                 
                 org_msg = message.embeds[0].fields[0].value
+                org_footer = message.embeds[0].footer.text
                 
-                
-                tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
-                tid = tid - 1
+                oldtid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
+                oldtid = tid - 1
                 
                 if tid == 0:
                     try:
@@ -373,7 +373,8 @@ class EnrichmentCenter(commands.Cog):
                 else:
                     newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                     newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                    newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
+                    #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
+                    newembed.set_footer(text=org_footer.replace(" {}".format(oldtid),tid)
                     await message.edit(embed=newembed)
                     
                 
