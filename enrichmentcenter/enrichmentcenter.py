@@ -363,8 +363,7 @@ class EnrichmentCenter(commands.Cog):
 
     @tasks.loop(seconds=5.0)
     async def selfDestructMessage(self):
-        if hasattr(self, 'ctx'):
-        
+        if hasattr(self, 'ctx'):        
             for msgid, timeleft in self.msgtimer.items():
                 if self.msgtimer[msgid] > 5:
                     self.msgtimer[msgid] = timeleft - 5
@@ -373,10 +372,9 @@ class EnrichmentCenter(commands.Cog):
                 try:
                     message = await self.ctx.channel.fetch_message(msgid)
                 except:
-                    self.msgtimerdelete.append(msgid)
+                    # Message not found.
+                    self.messageids.remove(msgid)
                     continue
-                #except AttributeError:
-                #    message = await self.ctx.channel.fetch_message(msgid)
                 
                 org_msg = message.embeds[0].fields[0].value
                 org_footer = message.embeds[0].footer.text
@@ -407,8 +405,6 @@ class EnrichmentCenter(commands.Cog):
                     newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                 
                 await message.edit(embed=newembed)
-            for msgid in self.msgtimerdelete:
-                self.messageids.remove(msgid)
                     
     @tasks.loop(seconds=1.0)
     async def selfDestructLast(self):
@@ -422,13 +418,15 @@ class EnrichmentCenter(commands.Cog):
                         
             for msgid in self.msgtimerdelete:
                 try:
-                    message = await self.ctx.channel.fetch_message(msgid)
-                except:
-                    self.msgtimerdelete.append(msgid)
-                    del self.msgtimer[msgid]
-                    continue
-                await message.delete()
-
+                    try:
+                        message = await self.ctx.channel.fetch_message(msgid)
+                    except:
+                        # Message not found
+                        del self.msgtimer[msgid]
+                        continue
+                    await message.delete()
+                except Exception:
+                    pass
                 del self.msgtimer[msgid]
 
             self.msgtimerdelete = []
