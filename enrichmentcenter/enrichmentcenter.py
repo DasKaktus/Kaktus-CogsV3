@@ -102,7 +102,7 @@ class EnrichmentCenter(commands.Cog):
     # Functions
     
     async def setTimer(self, msgid: int, seconds: int):
-        self.msgtimer[sendit.id] = seconds
+        self.msgtimer[msgid] = seconds
         
     async def setUserProgress(self, onstage, user):
         member_settings = self.config.member(user)
