@@ -69,7 +69,8 @@ class EnrichmentCenter(commands.Cog):
     
     default_guild = {"wlchannels": [], "whitelist": True }
     
-    selfdestructtimer = 20
+    selfdestructtimer = 60
+    selfdestructtimerreport = 30
     
     def __init__(self, bot):
         self.bot = bot
@@ -108,8 +109,9 @@ class EnrichmentCenter(commands.Cog):
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
         #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
-        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}".format(user.id,user.name))
-        await ctx.send(embed=embed)
+        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: ".format(user.id,user.name,self.selfdestructtimerreport))
+        sendit = await ctx.send(embed=embed)
+        self.messageids.append(sendit.id)
         
     @commands.Cog.listener()
     async def on_message_without_command(self, message):
@@ -311,7 +313,7 @@ class EnrichmentCenter(commands.Cog):
         msg = msg.replace("{author.name}", str(ctx.author.name))
         embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
         embed.add_field(name='Computer-Aided Enrichment Center', value=box(msg, lang=language))
-        embed.set_footer(text="This message will selfdestruct in: {} seconds".format(self.selfdestructtimer))
+        embed.set_footer(text="This message will selfdestruct in: {}".format(self.selfdestructtimer))
         sendit = await ctx.send(embed=embed)
         self.messageids.append(sendit.id)
         self.ctx = ctx
@@ -342,7 +344,7 @@ class EnrichmentCenter(commands.Cog):
                 #else:
                 newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                 newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+                newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
                 await message.edit(embed=newembed)
                     
     @tasks.loop(seconds=1.0)
@@ -369,7 +371,7 @@ class EnrichmentCenter(commands.Cog):
                 else:
                     newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
                     newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                    newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+                    newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
                     await message.edit(embed=newembed)
                     
                 
