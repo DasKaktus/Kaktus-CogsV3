@@ -448,7 +448,7 @@ class EnrichmentCenter(commands.Cog):
                 dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
                 await getattr(member_settings.stagefinished, str(onstage - 1)).set(dt_string)
                 
-    async def fixPlaceholderText(self, ctx, msg);
+    async def fixPlaceholderText(self, ctx, msg):
         msg = msg.replace("{author.id}", str(ctx.author.id)) 
         msg = msg.replace("{author.name}", str(ctx.author.name))
         return msg
