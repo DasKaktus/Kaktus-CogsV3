@@ -339,11 +339,11 @@ class EnrichmentCenter(commands.Cog):
                     except Exception:
                         pass
                     self.messageids.remove(msgid)
-                else:
-                    newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
-                    newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
-                    newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
-                    await message.edit(embed=newembed)
+                #else:
+                newembed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
+                newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
+                newembed.set_footer(text="This message will selfdestruct in: {} seconds".format(tid))
+                await message.edit(embed=newembed)
                     
     @tasks.loop(seconds=1.0)
     async def selfDestructLast(self):
