@@ -146,11 +146,13 @@ class EnrichmentCenter(commands.Cog):
             cclower = ctx.invoked_with.lower()
         except commandException:
             return
+        
         try:
             await message.delete()
         except Exception:
             print("Enrichmentcenter (Error: 1): No permission to delete message")
             pass
+            
         for case in switch(cclower):
             if case('aperture-science-help'):
                 await self.sendCodeBlockEmbed(ctx, "http", Helptext.text1)
