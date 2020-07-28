@@ -498,7 +498,7 @@ class EnrichmentCenter(commands.Cog):
                     del self.msgtimer[msgid]
                     continue
                 
-                print("{} - {}".format(str(msgid), str(timeleft))
+                print("{} - {}".format(str(msgid), str(timeleft)))
                 editMessageTimer(message, timeleft - 10)
                     
                 # Reduce the time or move to the last timer
