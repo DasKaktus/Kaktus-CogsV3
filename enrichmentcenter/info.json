@@ -1,9 +1,9 @@
 {
-    "name" : "EnrichmentCenter",
-    "author" : ["OGKaktus"],
-    "short" : "EnrichmentCenter",
-    "description" : "EnrichmentCenter",
-    "install_msg" : "Thanks for installing EnrichmentCenter.",
+    "name" : "Enrichmentcenter",
+    "author" : ["OGKaktus (OGKaktus#5299)"],
+    "short" : "Enrichmentcenter",
+    "description" : "Enrichmentcenter",
+    "install_msg" : "Thanks for installing Enrichmentcenter.",
     "requirements" : [],
     "tags" : ["enrichmentcenter"],
     "disabled" : false
