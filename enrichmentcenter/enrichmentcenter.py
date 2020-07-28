@@ -134,7 +134,7 @@ class EnrichmentCenter(commands.Cog):
     async def editMessageTimer(self, message, timeleft):
         # Check if embed
         print("{} - {}".format(str(message.id), str(timeleft)))
-        try:
+        #try:
             if message.embeds[0].fields[0].name == "Stage":
                 #Progress card
                 newembed = discord.Embed(color=0xEE2222, title=message.embeds[0].title)
@@ -147,11 +147,11 @@ class EnrichmentCenter(commands.Cog):
                 newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                 newembed.set_footer(text=footertext.format(str(timeleft)))
             await message.edit(embed=newembed)
-        except:
-            # Not embed
-            # Do nothing for now.
-            print("Edit pass")
-            pass
+        #except:
+        #    # Not embed
+        #    # Do nothing for now.
+        #    print("Edit pass")
+        #    pass
         
     # Mod commands
     
