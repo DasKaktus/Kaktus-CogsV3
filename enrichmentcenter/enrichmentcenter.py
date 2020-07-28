@@ -77,6 +77,7 @@ class EnrichmentCenter(commands.Cog):
         self.config.register_member(**self.default_member)
         self.config.register_guild(**self.default_guild)
         self.messageids = []
+        self.messageidslast = []
         #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
         self.selfDestructMessage.start()
         self.selfDestructLast.start()
@@ -133,6 +134,7 @@ class EnrichmentCenter(commands.Cog):
         try:
             await message.delete()
         except Exception:
+            print("No permission to delete other peoples messages")
             pass
         for case in switch(cclower):
             if case('aperture-science-help'):
