@@ -132,7 +132,8 @@ class EnrichmentCenter(commands.Cog):
         await self.setTimer(sendit.id, self.selfdestructtimer)
         
     async def editMessageTimer(self, message, timeleft):
-        # Check if embed    
+        # Check if embed
+        print("{} - {}".format(str(message.id), str(timeleft)))
         try:
             if message.embeds[0].fields[0].name == "Stage":
                 #Progress card
@@ -149,6 +150,7 @@ class EnrichmentCenter(commands.Cog):
         except:
             # Not embed
             # Do nothing for now.
+            print("Edit pass")
             pass
         
     # Mod commands
