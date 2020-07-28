@@ -364,8 +364,8 @@ class EnrichmentCenter(commands.Cog):
         if hasattr(self, 'ctx'):
         
             for msgid, timeleft in self.msgtimer.items():
-                if msgtimer[msgid] > 5:
-                    msgtimer[msgid] = timeleft - 5
+                if self.msgtimer[msgid] > 5:
+                    self.msgtimer[msgid] = timeleft - 5
                 
             for msgid in self.messageids:
                 try:
@@ -408,13 +408,13 @@ class EnrichmentCenter(commands.Cog):
         if hasattr(self, 'ctx'):
         
             for msgid, timeleft in self.msgtimer.items():
-                if msgtimer[msgid] <= 5:
-                    msgtimer[msgid] = timeleft - 1
+                if self.msgtimer[msgid] <= 5:
+                    self.msgtimer[msgid] = timeleft - 1
                     if timeleft - 1 == 0:
-                        msgtimerdelete.append(msgid)
+                        self.msgtimerdelete.append(msgid)
                         
-            for msgid in msgtimerdelete:
-                del msgtimer[msgid]
+            for msgid in self.msgtimerdelete:
+                del self.msgtimer[msgid]
 
             msgtimerdelete = []
         
