@@ -489,7 +489,7 @@ class EnrichmentCenter(commands.Cog):
     @tasks.loop(seconds=10.0)
     async def messageTimer(self):
         if hasattr(self, 'ctx'):
-            for msgid, timeleft in self.msgtimer.items().copy():
+            for msgid, timeleft in list(self.msgtimer.items()):
                 # Try to get message
                 try:
                     message = await self.ctx.channel.fetch_message(msgid)
@@ -512,7 +512,7 @@ class EnrichmentCenter(commands.Cog):
     @tasks.loop(seconds=1.0)
     async def messageLastTimer(self):
         if hasattr(self, 'ctx'):
-            for msgid, timeleft in self.msglasttimer.items().copy():
+            for msgid, timeleft in list(self.msglasttimer.items()):
                 # Try to get message
                 try:
                     message = await self.ctx.channel.fetch_message(msgid)
