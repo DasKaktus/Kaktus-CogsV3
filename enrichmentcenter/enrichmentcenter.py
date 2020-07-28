@@ -255,6 +255,10 @@ class EnrichmentCenter(commands.Cog):
         member_settings = self.config.member(user)
         curr_stage = await member_settings.stage()
         
+        if await self.config.guild(ctx.message.guild).whitelist():
+            if ctx.message.channel.id not in await self._get_guild_channels(ctx.message.author.guild):
+                return
+        
         try:
             await ctx.message.delete()
         except Exception:
