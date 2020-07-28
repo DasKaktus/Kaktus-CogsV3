@@ -85,6 +85,8 @@ class EnrichmentCenter(commands.Cog):
         self.config.register_guild(**self.default_guild)
         self.messageids = []
         self.messageidslast = []
+        self.msgtimer = {}
+        self.msgtimerdelete = []
         self.selfDestructMessage.start()
         self.selfDestructLast.start()
     
@@ -354,11 +356,17 @@ class EnrichmentCenter(commands.Cog):
         msg = msg.replace("{author.name}", str(ctx.author.name))
         sendit = await ctx.send(box(msg, lang=language))
         self.messageids.append(sendit.id)
+        self.msgtimer[sendit.id] = 60
         self.ctx = ctx
 
     @tasks.loop(seconds=5.0)
     async def selfDestructMessage(self):
         if hasattr(self, 'ctx'):
+        
+            for msgid, timeleft in self.msgtimer.items():
+                if msgtimer[msgid] > 5:
+                    msgtimer[msgid] = timeleft - 5
+                
             for msgid in self.messageids:
                 try:
                     message = await self.ctx.channel.get_message(msgid)
@@ -398,6 +406,18 @@ class EnrichmentCenter(commands.Cog):
     @tasks.loop(seconds=1.0)
     async def selfDestructLast(self):
         if hasattr(self, 'ctx'):
+        
+            for msgid, timeleft in self.msgtimer.items():
+                if msgtimer[msgid] <= 5:
+                    msgtimer[msgid] = timeleft - 1
+                    if timeleft - 1 == 0:
+                        msgtimerdelete.append(msgid)
+                        
+            for msgid in msgtimerdelete:
+                del msgtimer[msgid]
+
+            msgtimerdelete = []
+        
             for msgid in self.messageidslast:
                 try:
                     message = await self.ctx.channel.get_message(msgid)
