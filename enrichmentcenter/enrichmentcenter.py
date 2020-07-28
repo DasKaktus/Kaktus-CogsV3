@@ -395,6 +395,7 @@ class EnrichmentCenter(commands.Cog):
                         newembed.add_field(name='Computer-Aided Enrichment Center', value=org_msg)
                         #newembed.set_footer(text="This message will selfdestruct in: {}".format(tid))
                         newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
+                        
                     
                 
     @selfDestructMessage.before_loop
