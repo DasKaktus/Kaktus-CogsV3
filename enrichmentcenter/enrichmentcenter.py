@@ -332,6 +332,7 @@ class EnrichmentCenter(commands.Cog):
                 
                 
                 tid = int(message.embeds[0].footer.text.split(":")[1].split()[0])
+                print(tid)
                 tid = tid - 5
                 
                 if tid == 5:
