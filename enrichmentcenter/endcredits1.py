@@ -4,9 +4,6 @@ class Endcredits1:
 Test Assessment Report
 
 
-
-
-
 This was a triumph. 
 
 I'm making a note here; 
