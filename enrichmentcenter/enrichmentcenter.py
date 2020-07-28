@@ -214,7 +214,7 @@ class EnrichmentCenter(commands.Cog):
     async def toggle(self, ctx):
         """Toggle whitelist on/off."""
         new = await self._toggle_whitelist(ctx.guild)
-        verb = "activated." if new else _("deactivated.")
+        verb = "activated." if new else "deactivated."
         await ctx.send("Whitelist is {verb}".format(verb=verb))
 
     @whitelist.command(name="remove")
