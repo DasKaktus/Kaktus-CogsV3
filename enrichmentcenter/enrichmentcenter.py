@@ -69,7 +69,7 @@ class EnrichmentCenter(commands.Cog):
     
     default_guild = {"wlchannels": [], "whitelist": True }
     
-    selfdestructtimer = 60
+    selfdestructtimer = 20
     
     def __init__(self, bot):
         self.bot = bot
@@ -79,9 +79,11 @@ class EnrichmentCenter(commands.Cog):
         self.messageids = []
         #self.msgupdater = self.bot.loop.create_task(self.selfDestructMessage2())
         self.selfDestructMessage.start()
+        self.selfDestructLast.start()
     
     def cog_unload(self):
         self.selfDestructMessage.cancel()
+        self.selfDestructLast.cancel()
         
     @commands.command()
     #@commands.cooldown(rate=1, per=30, type=commands.BucketType.user)
