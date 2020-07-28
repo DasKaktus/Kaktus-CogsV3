@@ -371,9 +371,12 @@ class EnrichmentCenter(commands.Cog):
                 
             for msgid in self.messageids:
                 try:
-                    message = await self.ctx.channel.get_message(msgid)
-                except AttributeError:
                     message = await self.ctx.channel.fetch_message(msgid)
+                except NotFound:
+                    self.msgtimerdelete.append(msgid)
+                    continue
+                #except AttributeError:
+                #    message = await self.ctx.channel.fetch_message(msgid)
                 
                 org_msg = message.embeds[0].fields[0].value
                 org_footer = message.embeds[0].footer.text
@@ -404,6 +407,8 @@ class EnrichmentCenter(commands.Cog):
                     newembed.set_footer(text=org_footer.replace(" {}".format(oldtid), " {}".format(str(tid))))
                 
                 await message.edit(embed=newembed)
+            for msgid in self.msgtimerdelete:
+                self.messageids.remove(msgid)
                     
     @tasks.loop(seconds=1.0)
     async def selfDestructLast(self):
@@ -417,13 +422,13 @@ class EnrichmentCenter(commands.Cog):
                         
             for msgid in self.msgtimerdelete:
                 try:
-                    try:
-                        message = await self.ctx.channel.get_message(msgid)
-                    except AttributeError:
-                        message = await self.ctx.channel.fetch_message(msgid)
-                    await message.delete()
-                except Exception:
-                    pass
+                    message = await self.ctx.channel.fetch_message(msgid)
+                except NotFound:
+                    self.msgtimerdelete.append(msgid)
+                    del self.msgtimer[msgid]
+                    continue
+                await message.delete()
+
                 del self.msgtimer[msgid]
 
             self.msgtimerdelete = []
