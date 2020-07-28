@@ -109,7 +109,7 @@ class EnrichmentCenter(commands.Cog):
         else:
             embed.add_field(name='Last stage finished', value=curr_lastfinish)
         #embed.set_footer(text="This message will selfdestruct in {} seconds".format(self.selfdestructtimer))
-        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: ".format(user.id,user.name,self.selfdestructtimerreport))
+        embed.set_footer(text="Aperture Science Personnel File; #{}\nTest Subject Name; {}\n\nThis message will selfdestruct in: {}".format(user.id,user.name,self.selfdestructtimerreport))
         sendit = await ctx.send(embed=embed)
         self.messageids.append(sendit.id)
         
