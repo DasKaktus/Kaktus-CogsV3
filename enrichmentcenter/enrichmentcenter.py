@@ -412,13 +412,15 @@ class EnrichmentCenter(commands.Cog):
             for msgid, timeleft in self.msgtimer.items():
                 if self.msgtimer[msgid] <= 5:
                     self.msgtimer[msgid] = timeleft - 1
-                    print(timeleft - 1)
                     if timeleft - 1 == 0:
                         self.msgtimerdelete.append(msgid)
                         
             for msgid in self.msgtimerdelete:
                 try:
-                    message = await self.ctx.channel.get_message(msgid)
+                    try:
+                        message = await self.ctx.channel.get_message(msgid)
+                    except AttributeError:
+                        message = await self.ctx.channel.fetch_message(msgid)
                     await message.delete()
                 except Exception:
                     pass
