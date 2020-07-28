@@ -454,6 +454,7 @@ class EnrichmentCenter(commands.Cog):
         return msg
         
     async def sendCodeBlock(self, ctx, language: str, msg: str, embed = True):
+        self.ctx = ctx
         msg = fixPlaceholderText(ctx, msg)
         if embed:
             embed = discord.Embed(color=0xEE2222, title='Aperture Science Laboratories')
@@ -463,7 +464,6 @@ class EnrichmentCenter(commands.Cog):
         else:
             sendit = await ctx.send(box(msg, lang=language)) 
         setTimer(sendit.id)
-        self.ctx = ctx
         
     async def editMessageTimer(self, message, timeleft):
         # Check if embed    
@@ -520,6 +520,8 @@ class EnrichmentCenter(commands.Cog):
                     # Message is deleted
                     del self.msglasttimer[msgid]
                     continue
+                
+                print("{} - {}".format(str(msgid), str(timeleft)))
                 editMessageTimer(message, timeleft - 1)    
                 
                 # Reduce the time or delete message
