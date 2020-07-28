@@ -486,7 +486,7 @@ class EnrichmentCenter(commands.Cog):
                 break;
 
     # Task Loops
-    @tasks.loop(seconds=10.0)
+    @tasks.loop(seconds=1.0)
     async def messageTimer(self):
         if hasattr(self, 'ctx'):
             for msgid, timeleft in list(self.msgtimer.items()):
@@ -497,51 +497,27 @@ class EnrichmentCenter(commands.Cog):
                     # Message is deleted
                     del self.msgtimer[msgid]
                     continue
-                
-                print("{} - {}".format(str(msgid), str(timeleft)))
-                await self.editMessageTimer(message, timeleft - 10)
                     
-                # Reduce the time or move to the last timer
-                if timeleft - 10 == 10:
+                self.msgtimer[msgid] = timeleft - 1
+                
+                if timeleft == 0:
                     del self.msgtimer[msgid]
-                    self.msglasttimer[msgid] = 10
-                else:
-                    self.msgtimer[msgid] = timeleft - 10
-                    
-                    
-    @tasks.loop(seconds=1.0)
-    async def messageLastTimer(self):
-        if hasattr(self, 'ctx'):
-            for msgid, timeleft in list(self.msglasttimer.items()):
-                # Try to get message
-                try:
-                    message = await self.ctx.channel.fetch_message(msgid)
-                except:
-                    # Message is deleted
-                    del self.msglasttimer[msgid]
-                    continue
-                
-                print("{} - {}".format(str(msgid), str(timeleft)))
-                await self.editMessageTimer(message, timeleft - 1)    
-                
-                # Reduce the time or delete message
-                if timeleft - 1 == 0:
-                    del self.msglasttimer[msgid]
                     try:
                         await message.delete()
                     except:
                         pass
-                else:
-                    self.msgtimer[msgid] = timeleft - 1
+                    continue
                 
+                if timeleft > 5:
+                    if timeleft % 10 == 0:
+                        await self.editMessageTimer(message, self.msgtimer[msgid])
+                else:
+                    await self.editMessageTimer(message, self.msgtimer[msgid])
+                                   
     @messageTimer.before_loop
     async def before_messageTimer(self):            
         await self.bot.wait_until_ready()
         
-    @messageLastTimer.before_loop
-    async def before_messageLastTimer(self):            
-        await self.bot.wait_until_ready()                
-                
     async def _get_guild_channels(self, guild):
         return await self.config.guild(guild).wlchannels()
         
