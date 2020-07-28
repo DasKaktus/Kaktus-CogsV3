@@ -419,7 +419,7 @@ class EnrichmentCenter(commands.Cog):
                 try:
                     message = await self.ctx.channel.get_message(msgid)
                     await message.delete()
-                except: Exception:
+                except Exception:
                     pass
                 del self.msgtimer[msgid]
 
