@@ -94,7 +94,7 @@ class EnrichmentCenter(commands.Cog):
         curr_stage = await member_settings.stage()
         
         try:
-            ctx.message.delete()
+            await ctx.message.delete()
         except Exception:
             pass
         
