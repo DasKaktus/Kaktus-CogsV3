@@ -412,6 +412,7 @@ class EnrichmentCenter(commands.Cog):
             for msgid, timeleft in self.msgtimer.items():
                 if self.msgtimer[msgid] <= 5:
                     self.msgtimer[msgid] = timeleft - 1
+                    print(timeleft - 1)
                     if timeleft - 1 == 0:
                         self.msgtimerdelete.append(msgid)
                         
