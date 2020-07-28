@@ -307,24 +307,24 @@ class EnrichmentCenter(commands.Cog):
                 await self.sendCodeBlock(ctx, "diff", Stage30.text1)
                 break;
             if case('aperture-science-endcredits-glados-sa-1'):
-                await self.sendcodeblock(ctx, "http", endcredits1.text1)
+                await self.sendCodeBlock(ctx, "http", Endcredits1.text1)
                 break;
             if case('aperture-science-endcredits-glados-sa-2'):
-                await self.sendcodeblock(ctx, "http", endcredits2.text1)
+                await self.sendCodeBlock(ctx, "http", Endcredits2.text1)
                 break;
             if case('aperture-science-endcredits-glados-sa-3'):
-                await self.sendcodeblock(ctx, "http", endcredits3.text1)
+                await self.sendCodeBlock(ctx, "http", Endcredits3.text1)
                 break;
             if case('aperture-science-endcredits-glados-sa-4'):
-                await self.sendcodeblock(ctx, "http", endcredits4.text1)
-                await self.sendcodeblock(ctx, "diff", endcredits4.text2)
+                await self.sendCodeBlock(ctx, "http", Endcredits4.text1)
+                await self.sendCodeBlock(ctx, "diff", Endcredits4.text2)
                 break;
             if case('aperture-science-endcredits-thanks-for-playing'):
-                await self.sendcodeblock(ctx, "fix", endcredits5.text1)
-                await self.sendcodeblock(ctx, "diff", endcredits5.text2)
+                await self.sendCodeBlock(ctx, "fix", Endcredits5.text1)
+                await self.sendCodeBlock(ctx, "diff", Endcredits5.text2)
                 break;
             if case('aperture-science-cake-core-recipe-'):
-                await self.sendcodeblock(ctx, "diff", endcreditscakerecipe.text1)
+                await self.sendCodeBlock(ctx, "diff", EndcreditsCakeRecipe.text1)
                 break;
     
     async def userProgress(self, onstage, user):
