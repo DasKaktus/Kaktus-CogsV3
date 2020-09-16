@@ -1,4 +1,6 @@
 from .stattracker import Stattracker
 
 def setup(bot):
-    bot.add_cog(Stattracker(bot))
+    pathlib.Path(path).mkdir(exist_ok=True, parents=True)
+    cog = Stattracker(bot)
+    bot.add_cog(cog)
