@@ -127,7 +127,7 @@ class Stattracker(commands.Cog):
                         await self.bot.say(ctx.message.author.mention + ", Ha ha ha ha ha... Mac.. You Sir are hilarious")
                     else:
                         url = 'https://www.baver.se/bfv/index.php?pf=' + str(pform) + '&user=' + playername.replace(" ", "%20")
-                        await fetch_image(self, ctx, ctx.message.author, url, playername, platform)
+                        await fetch_image(self, ctx, ctx.message.author, url, playername, platform, self.session)
                 else:
                     await self.bot.say(ctx.message.author.mention + ", please specify a valid platform. (PSN, XBOX or PC)")
             except Exception as exc:
@@ -157,8 +157,8 @@ class Stattracker(commands.Cog):
             chanlist.remove(channel)
 
 
-async def fetch_image(self, ctx, duser, urlen, user, platform):
-    async with aiohttp.get(urlen) as response:
+async def fetch_image(self, ctx, duser, urlen, user, platform, session):
+    async with session.get(urlen) as response:
         if response.headers['Content-Type'] == "image/png":
             return await self.bot.send_file(ctx.message.channel, io.BytesIO(await response.read()), filename=user + '.png')
         else:
