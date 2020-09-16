@@ -128,9 +128,8 @@ class Stattracker(commands.Cog):
                         await fetch_image(self, ctx, ctx.message.author, url, playername, platform)
                 else:
                     await self.bot.say(ctx.message.author.mention + ", please specify a valid platform. (PSN, XBOX or PC)")
-            except Exception as e:
-                #await self.bot.say("error: " + e.message + " -- " + e.args)
-                err = e.message
+            except Exception as exc:
+                log.exception("Unexpected exception (%s): ", type(exc), exc_info=exc)
 
     def __unload(self):
         """Unload"""
