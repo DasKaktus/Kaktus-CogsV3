@@ -160,6 +160,7 @@ class Stattracker(commands.Cog):
 async def fetch_image(self, ctx, duser, urlen, user, platform, session):
     async with session.get(urlen) as response:
         if response.headers['Content-Type'] == "image/png":
-            return await self.bot.send_file(ctx.message.channel, io.BytesIO(await response.read()), filename=user + '.png')
+            return await ctx.message.channel.send(file=discord.File(io.BytesIO(await response.read()), user + '.png'))
+            #return await self.bot.send_file(ctx.message.channel, io.BytesIO(await response.read()), filename=user + '.png')
         else:
             return await self.bot.say("Sorry " + duser.mention + ", could not find the player `"+ user + "`")
