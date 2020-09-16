@@ -132,7 +132,7 @@ class Stattracker(commands.Cog):
                 err = e.message
 
     def __unload(self):
-		
+        #
     async def _get_guild_channels(self, guild):
         return await self.config.guild(guild).wlchannels()
         
