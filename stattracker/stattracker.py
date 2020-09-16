@@ -125,12 +125,12 @@ class Stattracker(commands.Cog):
                 pform = p.get(platform.upper(), 0)
                 if pform:
                     if pform == 4:
-                        await self.bot.say(ctx.message.author.mention + ", Ha ha ha ha ha... Mac.. You Sir are hilarious")
+                        await ctx.message.channel.send(ctx.message.author.mention + ", Ha ha ha ha ha... Mac.. You Sir are hilarious")
                     else:
                         url = 'https://www.baver.se/bfv/index.php?pf=' + str(pform) + '&user=' + playername.replace(" ", "%20")
                         await fetch_image(self, ctx, ctx.message.author, url, playername, platform, self.session)
                 else:
-                    await self.bot.say(ctx.message.author.mention + ", please specify a valid platform. (PSN, XBOX or PC)")
+                    await ctx.message.channel.send(ctx.message.author.mention + ", please specify a valid platform. (PSN, XBOX or PC)")
             except Exception as exc:
                 log.exception("Unexpected exception (%s): ", type(exc), exc_info=exc)
 
@@ -164,4 +164,4 @@ async def fetch_image(self, ctx, duser, urlen, user, platform, session):
             return await ctx.message.channel.send(file=discord.File(io.BytesIO(await response.read()), user + '.png'))
             #return await self.bot.send_file(ctx.message.channel, io.BytesIO(await response.read()), filename=user + '.png')
         else:
-            return await self.bot.say("Sorry " + duser.mention + ", could not find the player `"+ user + "`")
+            return await ctx.message.channel.send("Sorry " + duser.mention + ", could not find the player `"+ user + "`")
