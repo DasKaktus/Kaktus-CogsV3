@@ -3,7 +3,9 @@ import json
 import aiohttp
 from redbot.core import commands, checks, Config
 from redbot.core.data_manager import bundled_data_path
-import pathlib
+import logging
+
+log = logging.getLogger("red.kaktuscog.stattracker")
 
 class Stattracker(commands.Cog):
 
