@@ -3,6 +3,7 @@ import json
 import aiohttp
 from redbot.core import commands, checks, Config
 from redbot.core.data_manager import bundled_data_path
+import pathlib
 
 class Stattracker(commands.Cog):
 
