@@ -11,7 +11,7 @@ class Stattracker(commands.Cog):
     __version__ = "2.0"
     
     # Settings variables
-    default_guild = {"whitelist": [], "whitelist": True }
+    default_guild = {"wlchannels": [], "whitelist": True }
 
     def __init__(self, bot):
         self.bot = bot
