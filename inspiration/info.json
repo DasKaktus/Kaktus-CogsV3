@@ -1,0 +1,15 @@
+{
+	"author": [
+		"OGKaktus #5299"
+	],
+	"description": "Get a random inspirational card from http://inspirobot.me",
+    "install_msg": "Thanks, inspiration are now installed",
+    "permissions" : [
+		"embed_links"
+	],
+	"short": Get inspirational cards",
+	"tags": [
+		"inspire",
+        "inspirobot"
+	]
+}
