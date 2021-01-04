@@ -39,7 +39,7 @@ class Inspiration(commands.Cog):
         """Configuration commands."""
         pass
     
-    @enrichmentcenter.group()
+    @inspiration.group()
     @checks.mod_or_permissions(manage_messages=True)
     @commands.guild_only()
     async def channel(self, ctx):
