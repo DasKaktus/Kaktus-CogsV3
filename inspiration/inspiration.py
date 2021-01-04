@@ -94,3 +94,14 @@ class Inspiration(commands.Cog):
             name="Channels:", value="\n".join([ctx.guild.get_channel(x).mention for x in channels])
         )
         await ctx.send(embed=emb)
+        
+    async def _get_guild_channels(self, guild):
+        return await self.config.guild(guild).wlchannels()
+        
+    async def _add_guild_channel(self, guild, channel):
+        async with self.config.guild(guild).wlchannels() as chanlist:
+            chanlist.append(channel)
+            
+    async def _remove_guild_channel(self, guild, channel):
+        async with self.config.guild(guild).wlchannels() as chanlist:
+            chanlist.remove(channel)
