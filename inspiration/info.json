@@ -7,7 +7,7 @@
     "permissions" : [
 		"embed_links"
 	],
-	"short": Get inspirational cards",
+	"short": "Get inspirational cards",
 	"tags": [
 		"inspire",
         "inspirobot"
